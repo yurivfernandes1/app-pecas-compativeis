@@ -1,0 +1,410 @@
+[
+    {
+        "codigo": "LA1Z",
+        "nome": "Light Sahara Sand",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LA6U",
+        "nome": "Dark Teal Pearl",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LA7Y",
+        "nome": "Pewter Gray",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LA9V",
+        "nome": "Brilliant Black",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LB5T",
+        "nome": "Steel Blue",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LB6T",
+        "nome": "Turquoise",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LB7Z",
+        "nome": "Satin Silver",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LC2U",
+        "nome": "Sherry",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LC3T",
+        "nome": "Pearl Red",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LC3Y",
+        "nome": "Bordeaud Red",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LC5P",
+        "nome": "Dusty Mauve Pearl",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LC6P",
+        "nome": "Dragon Green",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LC6U",
+        "nome": "Classic Green",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LD7V",
+        "nome": "Platinum Grey",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LH5Y",
+        "nome": "Smoke Silver Blue",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LH5Z",
+        "nome": "Deep Atlantis Blue",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LK3A",
+        "nome": "Paprika Red",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LK4U",
+        "nome": "Ice Grey Violet",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LK4Z",
+        "nome": "Bromberry",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LL5V",
+        "nome": "Jamaica Aqua Blue",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LP3D",
+        "nome": "Flash Red",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LP6M",
+        "nome": "Caribbean Teal",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LY3D",
+        "nome": "Tornado Red",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LY3H",
+        "nome": "Laser Red",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LY3Y",
+        "nome": "Cerise Red",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LY6P",
+        "nome": "Ragusa Green",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LY7P",
+        "nome": "Titanium Gray",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LY7T",
+        "nome": "Crystal Silver",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LY9B",
+        "nome": "Brilliant Black",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LZ3N",
+        "nome": "Rubin Red",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LZ4V",
+        "nome": "Amethyst Grey",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LZ5N",
+        "nome": "Minerva Blue",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LZ6P",
+        "nome": "Gomera",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LZ6U",
+        "nome": "Emerald",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "L041",
+        "nome": "Black",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "L90E",
+        "nome": "Alpine White",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "R902",
+        "nome": "Arctic White",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LB9A",
+        "nome": "Candy White",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LC4T",
+        "nome": "Twilight Violet",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LC5U",
+        "nome": "Aqua Blue",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LC6P",
+        "nome": "Emerald Green Mica",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LC9Z",
+        "nome": "Black Magic Metallic",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LG4R",
+        "nome": "Soft Violet",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LG5P",
+        "nome": "Silk Blue",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LG5Q",
+        "nome": "Catalina Blue",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LG6S",
+        "nome": "Sequoia Green Metallic",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LG7N",
+        "nome": "Bright Surf",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LG7X",
+        "nome": "Suede Silver Metallic",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LK2Y",
+        "nome": "Cinnabar",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LK7Y",
+        "nome": "Storm Grey Metallic",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LN5Y",
+        "nome": "Windsor Blue Metallic",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LP3G",
+        "nome": "Flash Red",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LY1B",
+        "nome": "Brilliant Yellow",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LY1Z",
+        "nome": "Bamboo Metallic",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LY3Z",
+        "nome": "Autumn Red Metallic",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LY4N",
+        "nome": "Byzanz Mica",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LY5T",
+        "nome": "Pelican Blue Metallic",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LY6L",
+        "nome": "Tropic Green Metallic",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LY6M",
+        "nome": "Aqua Green Metallic",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LY7M",
+        "nome": "Aluminum Silver Metallic",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LY9G",
+        "nome": "Casablanca White",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LZ1T",
+        "nome": "Cashmere Mica",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LZ5L",
+        "nome": "Ming Blue Mica",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LZ5T",
+        "nome": "Europa Blue Mica",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LZ8P",
+        "nome": "Sable Brown Mica",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LZ9U",
+        "nome": "Volcano Black Mica",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LC3M",
+        "nome": "Memory Red Metallic",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN / AUDI"
+    },
+    {
+        "codigo": "LG5R",
+        "nome": "Windsor Blue Metallic",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN / AUDI"
+    }
+]
