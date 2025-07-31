@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { colors } from '../styles/GlobalStyles';
 
@@ -59,59 +59,6 @@ const ProtectionOverlay = styled.div`
     }
     100% {
       transform: translate(-50%, -50%) rotate(-45deg) translateX(100px);
-    }
-  }
-`;
-
-const AlertOverlay = styled.div<{ $show: boolean }>`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10001;
-  opacity: ${props => props.$show ? 1 : 0};
-  visibility: ${props => props.$show ? 'visible' : 'hidden'};
-  transition: all 0.3s ease;
-`;
-
-const AlertContent = styled.div`
-  background: ${colors.surface};
-  border: 2px solid ${colors.primary};
-  border-radius: 15px;
-  padding: 2rem;
-  text-align: center;
-  max-width: 400px;
-  
-  h3 {
-    color: ${colors.primary};
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  p {
-    color: ${colors.white};
-    font-size: 1.1rem;
-    line-height: 1.5;
-    margin-bottom: 1.5rem;
-  }
-  
-  button {
-    background: ${colors.primary};
-    color: ${colors.white};
-    border: none;
-    padding: 0.8rem 2rem;
-    border-radius: 25px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    
-    &:hover {
-      background: ${colors.red[700]};
     }
   }
 `;
