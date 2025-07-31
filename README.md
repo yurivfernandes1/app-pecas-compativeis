@@ -271,4 +271,9 @@ Para suporte técnico ou dúvidas sobre o projeto, entre em contato através dos
 ---
 
 **© 2025 Falando de GTI - Grupo iFernandes. Todos os direitos reservados.**
+
+## 🔄 Status de Deploy
+
+✅ **Último Build**: Configuração do Cloudflare corrigida - pasta `public` agora está versionada corretamente
+
 App com peças compatíveis do golf mk3
