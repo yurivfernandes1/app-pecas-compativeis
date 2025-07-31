@@ -171,6 +171,10 @@ export const Container = styled.div`
   ${media.desktop} {
     padding: 0 3rem;
   }
+  
+  @media (max-width: 480px) {
+    padding: 0 0.75rem;
+  }
 `;
 
 // Componente de cartão base - Tema escuro
@@ -306,12 +310,23 @@ export const Grid = styled.div<{ columns?: number; gap?: string }>`
   grid-template-columns: repeat(${props => props.columns || 1}, 1fr);
   gap: ${props => props.gap || '1rem'};
 
+  ${media.mobile} {
+    grid-template-columns: 1fr;
+    gap: ${props => props.gap === '2rem' ? '1rem' : props.gap || '0.75rem'};
+  }
+
   ${media.tablet} {
     grid-template-columns: repeat(${props => Math.min(props.columns || 1, 2)}, 1fr);
+    gap: ${props => props.gap || '1rem'};
   }
 
   ${media.desktop} {
     grid-template-columns: repeat(${props => props.columns || 1}, 1fr);
+    gap: ${props => props.gap || '1rem'};
+  }
+  
+  @media (max-width: 480px) {
+    gap: 0.5rem;
   }
 `;
 

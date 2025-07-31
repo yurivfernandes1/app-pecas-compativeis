@@ -24,6 +24,10 @@ const PageContainer = styled.div`
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
   min-height: 100vh;
   padding: 2rem 0;
+  
+  ${media.mobile} {
+    padding: 1rem 0;
+  }
 `;
 
 const HeroSection = styled.section`
@@ -34,6 +38,11 @@ const HeroSection = styled.section`
   text-align: center;
   position: relative;
   overflow: hidden;
+  
+  ${media.mobile} {
+    padding: 2rem 0 1.5rem;
+    margin-bottom: 2rem;
+  }
   
   &::before {
     content: '';
@@ -84,6 +93,11 @@ const SearchBox = styled.div`
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
   
+  ${media.mobile} {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+  
   &:focus-within {
     border-color: ${colors.primary};
     box-shadow: 0 8px 32px rgba(220, 38, 38, 0.2);
@@ -99,6 +113,11 @@ const SearchInput = styled.input`
   transition: all 0.3s ease;
   background: rgba(255, 255, 255, 0.1);
   color: ${colors.white};
+  
+  ${media.mobile} {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+  }
   
   &:focus {
     outline: none;
@@ -119,6 +138,10 @@ const ContentGrid = styled.div`
   
   ${media.desktop} {
     grid-template-columns: 1.2fr 1fr;
+  }
+  
+  ${media.mobile} {
+    gap: 1.5rem;
   }
 `;
 
@@ -148,6 +171,11 @@ const FuseBoxContainer = styled.div`
   border-radius: 15px;
   padding: 2rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  
+  ${media.mobile} {
+    padding: 1rem;
+    border-radius: 12px;
+  }
 `;
 
 const FuseBoxDiagram = styled.div`
@@ -157,7 +185,14 @@ const FuseBoxDiagram = styled.div`
   padding: 1.5rem;
   position: relative;
   max-width: 100%;
-  margin: 0; /* Removido auto para alinhar à esquerda */
+  margin: 0;
+  overflow-x: auto;
+  
+  ${media.mobile} {
+    padding: 0.75rem;
+    border-radius: 8px;
+    border-width: 2px;
+  }
 `;
 
 // Grid de fusíveis (linha única com todos os fusíveis)
@@ -167,6 +202,13 @@ const FuseGrid = styled.div`
   gap: 0.2rem;
   margin-bottom: 1rem;
   justify-items: center;
+  min-width: 100%;
+  
+  ${media.mobile} {
+    gap: 0.1rem;
+    grid-template-columns: repeat(22, minmax(18px, 1fr));
+    font-size: 0.7rem;
+  }
 `;
 
 const FuseSlot = styled.div<{ $color: FuseColor; $highlighted?: boolean; $isEmpty?: boolean }>`
@@ -182,7 +224,16 @@ const FuseSlot = styled.div<{ $color: FuseColor; $highlighted?: boolean; $isEmpt
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
-  min-width: 30px; /* Garantir tamanho mínimo */
+  min-width: 30px;
+  
+  ${media.mobile} {
+    width: 18px;
+    height: 35px;
+    min-width: 18px;
+    font-size: 0.5rem;
+    border-width: 1px;
+    border-radius: 3px;
+  }
   
   background-color: ${props => {
     if (props.$isEmpty) return '#e0e0e0';
@@ -207,6 +258,13 @@ const FuseSlot = styled.div<{ $color: FuseColor; $highlighted?: boolean; $isEmpt
     transform: scale(1.05);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   }
+  
+  @media (max-width: 480px) {
+    width: 16px;
+    height: 30px;
+    min-width: 16px;
+    font-size: 0.45rem;
+  }
 `;
 
 // Grid de relés (2 linhas de 6 relés cada)
@@ -215,6 +273,11 @@ const RelayGrid = styled.div`
   grid-template-columns: repeat(6, 1fr);
   gap: 0.5rem;
   margin-bottom: 1rem;
+  
+  ${media.mobile} {
+    gap: 0.25rem;
+    grid-template-columns: repeat(6, minmax(30px, 1fr));
+  }
 `;
 
 const RelaySlot = styled.div<{ $highlighted?: boolean }>`
@@ -232,6 +295,13 @@ const RelaySlot = styled.div<{ $highlighted?: boolean }>`
   cursor: pointer;
   transition: all 0.3s ease;
   
+  ${media.mobile} {
+    width: 30px;
+    height: 30px;
+    font-size: 0.5rem;
+    border-width: 1px;
+  }
+  
   ${props => props.$highlighted && `
     transform: scale(1.1);
     box-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
@@ -243,6 +313,12 @@ const RelaySlot = styled.div<{ $highlighted?: boolean }>`
     transform: scale(1.05);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     background-color: ${colors.primary};
+  }
+  
+  @media (max-width: 480px) {
+    width: 25px;
+    height: 25px;
+    font-size: 0.45rem;
   }
 `;
 
@@ -274,6 +350,11 @@ const ColorLegend = styled.div`
   gap: 1rem;
   margin-top: 1rem;
   flex-wrap: wrap;
+  
+  ${media.mobile} {
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
 `;
 
 const LegendItem = styled.div<{ $color: FuseColor }>`
@@ -286,11 +367,23 @@ const LegendItem = styled.div<{ $color: FuseColor }>`
   padding: 0.5rem 1rem;
   border-radius: 8px;
   
+  ${media.mobile} {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.7rem;
+    gap: 0.4rem;
+  }
+  
   &::before {
     content: '';
     width: 20px;
     height: 20px;
     border-radius: 3px;
+    
+    ${media.mobile} {
+      width: 16px;
+      height: 16px;
+    }
+    
     background-color: ${props => {
       switch (props.$color) {
         case 'red': return '#ff4444';

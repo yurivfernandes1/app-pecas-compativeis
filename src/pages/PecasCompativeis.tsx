@@ -39,6 +39,11 @@ const HeroSection = styled.section`
   position: relative;
   overflow: hidden;
   
+  ${media.mobile} {
+    padding: 2rem 0 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
   &::before {
     content: '';
     position: absolute;
@@ -63,7 +68,8 @@ const HeroContent = styled.div`
     text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     
     ${media.mobile} {
-      font-size: 2rem;
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
     }
   }
   
@@ -73,6 +79,12 @@ const HeroContent = styled.div`
     max-width: 700px;
     margin: 0 auto;
     line-height: 1.6;
+    
+    ${media.mobile} {
+      font-size: 1rem;
+      padding: 0 1rem;
+      line-height: 1.5;
+    }
   }
 `;
 
@@ -88,6 +100,11 @@ const FiltersCard = styled(Card)`
   border: 2px solid transparent;
   transition: all 0.3s ease;
   
+  ${media.mobile} {
+    padding: 1rem;
+    border-radius: 15px;
+  }
+  
   &:focus-within {
     border-color: ${colors.primary};
     box-shadow: 0 10px 40px rgba(220, 38, 38, 0.2);
@@ -101,6 +118,10 @@ const FiltersGrid = styled.div`
   
   ${media.tablet} {
     grid-template-columns: 2fr 1fr 1fr;
+  }
+  
+  ${media.mobile} {
+    gap: 1rem;
   }
 `;
 
@@ -339,6 +360,11 @@ const PecasGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 1.5rem;
+  
+  ${media.mobile} {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 `;
 
 const CollapsibleContent = styled.div<{ $expanded?: boolean }>`
@@ -360,6 +386,11 @@ const PecaCard = styled(Card)`
   position: relative;
   overflow: hidden;
   border-left: 4px solid ${colors.primary};
+  
+  ${media.mobile} {
+    padding: 1rem;
+    border-radius: 12px;
+  }
   
   &::before {
     content: '';

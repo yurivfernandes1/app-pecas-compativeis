@@ -198,11 +198,7 @@ const Home: React.FC = () => {
           <Title style={{ textAlign: 'center', marginBottom: '2rem' }}>
             Funcionalidades Principais
           </Title>
-          <Grid columns={3} gap="2rem" style={{
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            ...(window.innerWidth < 900 ? { gridTemplateColumns: '1fr' } : {}),
-            ...(window.innerWidth < 600 ? { gap: '1rem' } : {})
-          }}>
+          <Grid columns={3} gap="2rem">
             <FeatureCard as={Link} to="/pecas" style={{ textDecoration: 'none', color: 'inherit' }}>
               <span className="icon">🔧</span>
               <h3>Peças Compatíveis</h3>

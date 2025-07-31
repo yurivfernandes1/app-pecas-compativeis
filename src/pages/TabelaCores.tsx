@@ -8,6 +8,10 @@ const SearchSection = styled.section`
   background: ${colors.gray[900]};
   padding: 2rem 0;
   border-bottom: 1px solid ${colors.gray[800]};
+  
+  ${media.mobile} {
+    padding: 1.5rem 0;
+  }
 `;
 
 const SearchForm = styled.div`
@@ -18,6 +22,11 @@ const SearchForm = styled.div`
 
   ${media.tablet} {
     grid-template-columns: 1fr;
+  }
+  
+  ${media.mobile} {
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
   }
 `;
 
@@ -38,6 +47,11 @@ const ColorCard = styled(Card)`
     grid-template-columns: 80px 1fr;
     gap: 1rem;
     align-items: center;
+    
+    ${media.mobile} {
+      grid-template-columns: 60px 1fr;
+      gap: 0.75rem;
+    }
   }
 
   .color-preview {
@@ -53,6 +67,12 @@ const ColorCard = styled(Card)`
     font-weight: 500;
     position: relative;
     overflow: hidden;
+    
+    ${media.mobile} {
+      width: 60px;
+      height: 45px;
+      font-size: 0.65rem;
+    }
     
     &.has-color {
       border-color: ${colors.gray[600]};
@@ -74,6 +94,11 @@ const ColorCard = styled(Card)`
       padding: 1px 3px;
       border-radius: 2px;
       font-family: monospace;
+      
+      ${media.mobile} {
+        font-size: 0.5rem;
+        padding: 1px 2px;
+      }
     }
   }
 
@@ -83,6 +108,11 @@ const ColorCard = styled(Card)`
       font-size: 1.125rem;
       font-weight: 600;
       margin-bottom: 0.5rem;
+      
+      ${media.mobile} {
+        font-size: 1rem;
+        margin-bottom: 0.3rem;
+      }
     }
 
     .code {
@@ -96,6 +126,11 @@ const ColorCard = styled(Card)`
       display: inline-block;
       margin-bottom: 0.5rem;
       border: 1px solid ${colors.gray[700]};
+      
+      ${media.mobile} {
+        font-size: 0.75rem;
+        padding: 0.2rem 0.4rem;
+      }
     }
 
     .meta {
@@ -105,6 +140,12 @@ const ColorCard = styled(Card)`
       grid-template-columns: 1fr 1fr;
       gap: 0.5rem;
       
+      ${media.mobile} {
+        font-size: 0.8rem;
+        grid-template-columns: 1fr;
+        gap: 0.3rem;
+      }
+      
       .info-item {
         display: flex;
         flex-direction: column;
@@ -113,10 +154,18 @@ const ColorCard = styled(Card)`
         .label {
           font-weight: 600;
           color: ${colors.gray[300]};
+          
+          ${media.mobile} {
+            font-size: 0.75rem;
+          }
         }
         
         .value {
           color: ${colors.gray[400]};
+          
+          ${media.mobile} {
+            font-size: 0.75rem;
+          }
           
           &.vw-code {
             background: ${colors.gray[800]};
@@ -128,6 +177,11 @@ const ColorCard = styled(Card)`
             font-weight: 600;
             display: inline-block;
             width: fit-content;
+            
+            ${media.mobile} {
+              font-size: 0.65rem;
+              padding: 0.1rem 0.3rem;
+            }
           }
           
           &.observacao {

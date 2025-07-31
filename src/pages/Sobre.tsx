@@ -4,6 +4,10 @@ import { Container, Card, colors, media } from '../styles/GlobalStyles';
 
 const AboutSection = styled.section`
   padding: 2rem 0;
+  
+  ${media.mobile} {
+    padding: 1rem 0;
+  }
 `;
 
 const HeroCard = styled(Card)`
@@ -42,6 +46,10 @@ const ContentGrid = styled.div`
 
   ${media.desktop} {
     grid-template-columns: 2fr 1fr;
+  }
+  
+  ${media.mobile} {
+    gap: 1.5rem;
   }
 `;
 
@@ -149,6 +157,11 @@ const TechStack = styled.div`
   gap: 1rem;
   margin: 1.5rem 0;
 
+  ${media.mobile} {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 0.75rem;
+  }
+
   .tech {
     background: ${colors.gray[800]};
     padding: 0.75rem;
@@ -158,6 +171,11 @@ const TechStack = styled.div`
     color: ${colors.white};
     border-left: 4px solid ${colors.primary};
     border: 1px solid ${colors.gray[700]};
+    
+    ${media.mobile} {
+      padding: 0.5rem;
+      font-size: 0.8rem;
+    }
   }
 `;
 
