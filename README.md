@@ -203,7 +203,20 @@ O projeto usa **React Scripts** com configurações padrão. Para customizaçõe
 
 ## 🚀 Deploy
 
-### Produção (Recomendado)
+### Cloudflare Pages (Recomendado)
+
+**Configurações necessárias no painel do Cloudflare Pages:**
+
+```
+Build command: npm run build
+Build output directory: build
+Root directory: / (raiz do projeto)
+Environment variables: (opcional)
+  - REACT_APP_GA_TRACKING_ID
+  - REACT_APP_META_PIXEL_ID
+```
+
+### Outros Provedores
 ```bash
 # Build para produção
 npm run build
@@ -274,6 +287,11 @@ Para suporte técnico ou dúvidas sobre o projeto, entre em contato através dos
 
 ## 🔄 Status de Deploy
 
-✅ **Último Build**: Configuração do Cloudflare corrigida - pasta `public` agora está versionada corretamente
+✅ **Último Build**: Build compilado com sucesso - Cloudflare deve usar `build` directory em vez de `dist`
+
+⚙️ **Configuração do Cloudflare Pages**:
+- Build command: `npm run build` 
+- Build output directory: `build` (IMPORTANTE: não `dist`)
+- Root directory: `/`
 
 App com peças compatíveis do golf mk3

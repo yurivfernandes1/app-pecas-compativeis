@@ -1,0 +1,15 @@
+# Cloudflare Pages Configuration
+# Este arquivo serve como documentação das configurações corretas para deploy
+
+# Build Settings:
+# - Build command: npm run build
+# - Build output directory: build
+# - Root directory: / (project root)
+# - Environment variables: REACT_APP_* (opcional)
+
+# Framework: React (Create React App)
+# Node version: 18+ (detected automatically)
+# Build tool: React Scripts
+
+# O React cria a pasta 'build' após o comando 'npm run build'
+# Certifique-se de que o Cloudflare Pages está configurado para usar 'build' como output directory
