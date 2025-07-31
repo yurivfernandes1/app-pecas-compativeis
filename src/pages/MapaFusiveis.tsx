@@ -316,36 +316,6 @@ const InfoPanel = styled(Card)<{ $highlighted?: boolean }>`
   color: ${colors.white};
 `;
 
-const FuseDetails = styled.div`
-  h3 {
-    color: ${colors.white};
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
-  
-  .detail-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    
-    &:last-child {
-      border-bottom: none;
-    }
-  }
-  
-  .label {
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.9);
-  }
-  
-  .value {
-    color: rgba(255, 255, 255, 0.8);
-  }
-`;
-
 const FuseList = styled.div`
   max-height: 400px;
   overflow-y: auto;
@@ -718,8 +688,9 @@ const MapaFusiveis: React.FC = () => {
     return relaysInRow;
   };
 
-  const selectedFuseData = selectedFuse ? fusePositions.find(f => f.id === selectedFuse) : null;
-  const selectedRelayData = selectedRelay ? relayPositions.find(r => r.id === selectedRelay) : null;
+  // Dados removidos temporariamente para evitar warnings no build
+  // const selectedFuseData = selectedFuse ? fusePositions.find(f => f.id === selectedFuse) : null;
+  // const selectedRelayData = selectedRelay ? relayPositions.find(r => r.id === selectedRelay) : null;
 
   return (
     <ScreenProtection>
