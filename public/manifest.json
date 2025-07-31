@@ -1,0 +1,39 @@
+{
+    "short_name": "Golf MK3 Peças",
+    "name": "Golf MK3 - Peças Compatíveis | Falando de GTI",
+    "description": "Consulte peças compatíveis para seu Golf MK3 com nossa base de dados completa. Por Falando de GTI.",
+    "icons": [
+        {
+            "src": "https://raw.githubusercontent.com/yurivfernandes/falando-de-gti-frontend/refs/heads/main/src/public/favicon/favicon.jpeg",
+            "sizes": "64x64 32x32 24x24 16x16",
+            "type": "image/jpeg"
+        },
+        {
+            "src": "https://raw.githubusercontent.com/yurivfernandes/falando-de-gti-frontend/refs/heads/main/src/public/galeria/logo.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "https://raw.githubusercontent.com/yurivfernandes/falando-de-gti-frontend/refs/heads/main/src/public/galeria/logo.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#DC2626",
+    "background_color": "#F9FAFB",
+    "categories": [
+        "automotive",
+        "utilities"
+    ],
+    "lang": "pt-BR",
+    "scope": "/",
+    "orientation": "portrait-primary",
+    "related_applications": [
+        {
+            "platform": "web",
+            "url": "https://falandodegti.com.br"
+        }
+    ]
+}

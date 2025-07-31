@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://app.falandodegti.com.br/sitemap.xml
+
+# Falando de GTI - Golf MK3 Peças Compatíveis
+# Desenvolvido por: Yuri Fernandes
+# Canal: https://youtube.com/falandodegti
