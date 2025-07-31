@@ -1,0 +1,77 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AnalyticsService } from './AnalyticsService';
+
+export interface SecurityEvent {
+  id: string;
+  type: 'screenshot_attempt' | 'recording_attempt' | 'data_extraction' | 'unauthorized_access' | 'content_violation';
+  timestamp: string;
+  severity: 'low' | 'medium' | 'high' | 'critical';
+  details: any;
+  userAgent?: string;
+  deviceInfo?: any;
+  location?: string;
+  resolved: boolean;
+}
+
+export interface SecurityMetrics {
+  totalEvents: number;
+  eventsByType: Record<string, number>;
+  eventsBySeverity: Record<string, number>;
+  recentEvents: SecurityEvent[];
+  violationRate: number;
+  protectionEffectiveness: number;
+  lastUpdated: string;
+}
+
+export interface SecurityAlert {
+  id: string;
+  title: string;
+  message: string;
+  severity: 'low' | 'medium' | 'high' | 'critical';
+  timestamp: string;
+  acknowledged: boolean;
+  actions: string[];
+}
+
+class SecurityMonitoringService {
+  private static instance: SecurityMonitoringService;
+  private events: SecurityEvent[] = [];
+  private alerts: SecurityAlert[] = [];
+  private readonly STORAGE_KEY = '@golf_mk3_security_events';
+  private readonly ALERTS_KEY = '@golf_mk3_security_alerts';
+  private readonly MAX_EVENTS = 1000;
+  private readonly MAX_ALERTS = 50;
+
+  private constructor() {
+    this.loadStoredData();
+    this.startPeriodicCleanup();
+  }
+
+  static getInstance(): SecurityMonitoringService {
+    if (!SecurityMonitoringService.instance) {
+      SecurityMonitoringService.instance = new SecurityMonitoringService();
+    }
+    return SecurityMonitoringService.instance;
+  }
+
+  // Registrar evento de segurança
+  async logSecurityEvent(
+    type: SecurityEvent['type'],
+    details: any,
+    severity: SecurityEvent['severity'] = 'medium'
+  ): Promise<string> {
+    const event: SecurityEvent = {
+      id: `sec_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      type,
+      timestamp: new Date().toISOString(),
+      severity,
+      details,
+      userAgent: this.getUserAgent(),
+      deviceInfo: this.getDeviceInfo(),
+      location: await this.getLocation(),
+      resolved: false,
+    };\n\n    this.events.unshift(event);\n\n    // Manter apenas os últimos N eventos\n    if (this.events.length > this.MAX_EVENTS) {\n      this.events = this.events.slice(0, this.MAX_EVENTS);\n    }\n\n    // Salvar no storage\n    await this.saveEvents();\n\n    // Enviar para analytics\n    AnalyticsService.trackEvent('security_event', {\n      eventId: event.id,\n      eventType: type,\n      severity,\n      timestamp: event.timestamp,\n    });\n\n    // Verificar se precisa gerar alerta\n    await this.checkForAlerts(event);\n\n    console.warn(`[Security] ${type.toUpperCase()}: ${JSON.stringify(details)}`);\n\n    return event.id;\n  }\n\n  // Verificar e gerar alertas baseados em eventos\n  private async checkForAlerts(event: SecurityEvent): Promise<void> {\n    const recentEvents = this.getRecentEvents(60 * 60 * 1000); // Última hora\n    const sameTypeEvents = recentEvents.filter(e => e.type === event.type);\n\n    // Alerta por frequência alta\n    if (sameTypeEvents.length >= 5) {\n      await this.createAlert(\n        'high_frequency_violations',\n        `Múltiplas tentativas de ${event.type}`,\n        `Detectadas ${sameTypeEvents.length} tentativas de ${event.type} na última hora`,\n        'high',\n        ['block_user', 'increase_monitoring', 'review_logs']\n      );\n    }\n\n    // Alerta por severidade crítica\n    if (event.severity === 'critical') {\n      await this.createAlert(\n        'critical_security_event',\n        'Evento de Segurança Crítico',\n        `Evento crítico detectado: ${event.type}`,\n        'critical',\n        ['immediate_review', 'contact_admin', 'block_access']\n      );\n    }\n\n    // Alerta por padrões suspeitos\n    const suspiciousPatterns = this.detectSuspiciousPatterns(recentEvents);\n    if (suspiciousPatterns.length > 0) {\n      await this.createAlert(\n        'suspicious_patterns',\n        'Padrões Suspeitos Detectados',\n        `Detectados padrões suspeitos: ${suspiciousPatterns.join(', ')}`,\n        'medium',\n        ['analyze_patterns', 'increase_monitoring']\n      );\n    }\n  }\n\n  // Criar alerta de segurança\n  private async createAlert(\n    type: string,\n    title: string,\n    message: string,\n    severity: SecurityAlert['severity'],\n    actions: string[]\n  ): Promise<void> {\n    // Verificar se já existe alerta similar recente\n    const recentSimilar = this.alerts.find(\n      alert => \n        alert.title === title && \n        !alert.acknowledged &&\n        new Date(alert.timestamp) > new Date(Date.now() - 30 * 60 * 1000) // 30 minutos\n    );\n\n    if (recentSimilar) {\n      return; // Não criar alerta duplicado\n    }\n\n    const alert: SecurityAlert = {\n      id: `alert_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,\n      title,\n      message,\n      severity,\n      timestamp: new Date().toISOString(),\n      acknowledged: false,\n      actions,\n    };\n\n    this.alerts.unshift(alert);\n\n    // Manter apenas os últimos N alertas\n    if (this.alerts.length > this.MAX_ALERTS) {\n      this.alerts = this.alerts.slice(0, this.MAX_ALERTS);\n    }\n\n    await this.saveAlerts();\n\n    // Enviar para analytics\n    AnalyticsService.trackEvent('security_alert', {\n      alertId: alert.id,\n      alertType: type,\n      severity,\n      timestamp: alert.timestamp,\n    });\n\n    console.error(`[Security Alert] ${severity.toUpperCase()}: ${title} - ${message}`);\n  }\n\n  // Detectar padrões suspeitos\n  private detectSuspiciousPatterns(events: SecurityEvent[]): string[] {\n    const patterns: string[] = [];\n\n    // Padrão: Múltiplos tipos de violação do mesmo usuário\n    const eventTypes = new Set(events.map(e => e.type));\n    if (eventTypes.size >= 3) {\n      patterns.push('multiple_violation_types');\n    }\n\n    // Padrão: Eventos em sequência rápida\n    const rapidEvents = events.filter((event, index) => {\n      if (index === 0) return false;\n      const prevEvent = events[index - 1];\n      const timeDiff = new Date(prevEvent.timestamp).getTime() - new Date(event.timestamp).getTime();\n      return timeDiff < 5000; // Menos de 5 segundos\n    });\n\n    if (rapidEvents.length >= 3) {\n      patterns.push('rapid_sequence');\n    }\n\n    // Padrão: Tentativas de extração de dados\n    const extractionAttempts = events.filter(e => e.type === 'data_extraction');\n    if (extractionAttempts.length >= 2) {\n      patterns.push('data_extraction_attempts');\n    }\n\n    return patterns;\n  }\n\n  // Obter métricas de segurança\n  getSecurityMetrics(): SecurityMetrics {\n    const now = Date.now();\n    const last24h = now - 24 * 60 * 60 * 1000;\n    const recentEvents = this.events.filter(\n      event => new Date(event.timestamp).getTime() > last24h\n    );\n\n    const eventsByType: Record<string, number> = {};\n    const eventsBySeverity: Record<string, number> = {};\n\n    recentEvents.forEach(event => {\n      eventsByType[event.type] = (eventsByType[event.type] || 0) + 1;\n      eventsBySeverity[event.severity] = (eventsBySeverity[event.severity] || 0) + 1;\n    });\n\n    // Calcular taxa de violação (eventos por hora)\n    const violationRate = recentEvents.length / 24;\n\n    // Calcular efetividade da proteção (eventos resolvidos / total)\n    const resolvedEvents = recentEvents.filter(e => e.resolved).length;\n    const protectionEffectiveness = recentEvents.length > 0 \n      ? (resolvedEvents / recentEvents.length) * 100 \n      : 100;\n\n    return {\n      totalEvents: recentEvents.length,\n      eventsByType,\n      eventsBySeverity,\n      recentEvents: recentEvents.slice(0, 10),\n      violationRate,\n      protectionEffectiveness,\n      lastUpdated: new Date().toISOString(),\n    };\n  }\n\n  // Obter alertas ativos\n  getActiveAlerts(): SecurityAlert[] {\n    return this.alerts.filter(alert => !alert.acknowledged);\n  }\n\n  // Obter todos os alertas\n  getAllAlerts(): SecurityAlert[] {\n    return [...this.alerts];\n  }\n\n  // Reconhecer alerta\n  async acknowledgeAlert(alertId: string): Promise<boolean> {\n    const alert = this.alerts.find(a => a.id === alertId);\n    if (!alert) return false;\n\n    alert.acknowledged = true;\n    await this.saveAlerts();\n\n    AnalyticsService.trackEvent('security_alert_acknowledged', {\n      alertId,\n      timestamp: new Date().toISOString(),\n    });\n\n    return true;\n  }\n\n  // Marcar evento como resolvido\n  async resolveEvent(eventId: string): Promise<boolean> {\n    const event = this.events.find(e => e.id === eventId);\n    if (!event) return false;\n\n    event.resolved = true;\n    await this.saveEvents();\n\n    AnalyticsService.trackEvent('security_event_resolved', {\n      eventId,\n      eventType: event.type,\n      timestamp: new Date().toISOString(),\n    });\n\n    return true;\n  }\n\n  // Obter eventos recentes\n  private getRecentEvents(timeWindow: number): SecurityEvent[] {\n    const cutoff = Date.now() - timeWindow;\n    return this.events.filter(\n      event => new Date(event.timestamp).getTime() > cutoff\n    );\n  }\n\n  // Gerar relatório de segurança\n  generateSecurityReport(): {\n    summary: SecurityMetrics;\n    alerts: SecurityAlert[];\n    recommendations: string[];\n    trends: any;\n  } {\n    const metrics = this.getSecurityMetrics();\n    const alerts = this.getActiveAlerts();\n    const recommendations = this.generateRecommendations(metrics);\n    const trends = this.analyzeTrends();\n\n    return {\n      summary: metrics,\n      alerts,\n      recommendations,\n      trends,\n    };\n  }\n\n  // Gerar recomendações baseadas nas métricas\n  private generateRecommendations(metrics: SecurityMetrics): string[] {\n    const recommendations: string[] = [];\n\n    if (metrics.violationRate > 5) {\n      recommendations.push('Alta taxa de violações detectada. Considere aumentar as medidas de proteção.');\n    }\n\n    if (metrics.protectionEffectiveness < 80) {\n      recommendations.push('Efetividade da proteção baixa. Revise os mecanismos de segurança.');\n    }\n\n    if (metrics.eventsByType.screenshot_attempt > 10) {\n      recommendations.push('Muitas tentativas de screenshot. Considere implementar proteção mais rigorosa.');\n    }\n\n    if (metrics.eventsBySeverity.critical > 0) {\n      recommendations.push('Eventos críticos detectados. Revisão imediata necessária.');\n    }\n\n    if (recommendations.length === 0) {\n      recommendations.push('Sistema de segurança funcionando adequadamente.');\n    }\n\n    return recommendations;\n  }\n\n  // Analisar tendências\n  private analyzeTrends(): any {\n    const last7Days = Array.from({ length: 7 }, (_, i) => {\n      const date = new Date();\n      date.setDate(date.getDate() - i);\n      return date.toISOString().split('T')[0];\n    }).reverse();\n\n    const dailyEvents = last7Days.map(date => {\n      const dayEvents = this.events.filter(event => \n        event.timestamp.startsWith(date)\n      );\n      return {\n        date,\n        count: dayEvents.length,\n        types: [...new Set(dayEvents.map(e => e.type))],\n      };\n    });\n\n    return {\n      dailyEvents,\n      trend: this.calculateTrend(dailyEvents.map(d => d.count)),\n    };\n  }\n\n  // Calcular tendência\n  private calculateTrend(values: number[]): 'increasing' | 'decreasing' | 'stable' {\n    if (values.length < 2) return 'stable';\n    \n    const first = values.slice(0, Math.floor(values.length / 2));\n    const second = values.slice(Math.floor(values.length / 2));\n    \n    const firstAvg = first.reduce((a, b) => a + b, 0) / first.length;\n    const secondAvg = second.reduce((a, b) => a + b, 0) / second.length;\n    \n    const diff = secondAvg - firstAvg;\n    \n    if (Math.abs(diff) < 1) return 'stable';\n    return diff > 0 ? 'increasing' : 'decreasing';\n  }\n\n  // Limpar dados antigos\n  async cleanupOldData(daysToKeep: number = 30): Promise<number> {\n    const cutoff = new Date();\n    cutoff.setDate(cutoff.getDate() - daysToKeep);\n    \n    const initialCount = this.events.length;\n    this.events = this.events.filter(\n      event => new Date(event.timestamp) > cutoff\n    );\n    \n    // Limpar alertas antigos reconhecidos\n    this.alerts = this.alerts.filter(\n      alert => !alert.acknowledged || new Date(alert.timestamp) > cutoff\n    );\n    \n    await this.saveEvents();\n    await this.saveAlerts();\n    \n    const removedCount = initialCount - this.events.length;\n    console.log(`[Security] Cleaned up ${removedCount} old security events`);\n    \n    return removedCount;\n  }\n\n  // Utilitários privados\n  private getUserAgent(): string {\n    if (typeof navigator !== 'undefined') {\n      return navigator.userAgent;\n    }\n    return 'Unknown';\n  }\n\n  private getDeviceInfo(): any {\n    return {\n      platform: typeof navigator !== 'undefined' ? navigator.platform : 'Unknown',\n      language: typeof navigator !== 'undefined' ? navigator.language : 'Unknown',\n      screenResolution: typeof screen !== 'undefined' \n        ? `${screen.width}x${screen.height}` \n        : 'Unknown',\n    };\n  }\n\n  private async getLocation(): Promise<string> {\n    // Implementar geolocalização se necessário\n    // Por enquanto, retorna informação básica\n    return 'Unknown';\n  }\n\n  // Persistência\n  private async saveEvents(): Promise<void> {\n    try {\n      await AsyncStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.events));\n    } catch (error) {\n      console.error('[Security] Failed to save events:', error);\n    }\n  }\n\n  private async saveAlerts(): Promise<void> {\n    try {\n      await AsyncStorage.setItem(this.ALERTS_KEY, JSON.stringify(this.alerts));\n    } catch (error) {\n      console.error('[Security] Failed to save alerts:', error);\n    }\n  }\n\n  private async loadStoredData(): Promise<void> {\n    try {\n      const [eventsData, alertsData] = await Promise.all([\n        AsyncStorage.getItem(this.STORAGE_KEY),\n        AsyncStorage.getItem(this.ALERTS_KEY),\n      ]);\n\n      if (eventsData) {\n        this.events = JSON.parse(eventsData);\n      }\n\n      if (alertsData) {\n        this.alerts = JSON.parse(alertsData);\n      }\n    } catch (error) {\n      console.error('[Security] Failed to load stored data:', error);\n      this.events = [];\n      this.alerts = [];\n    }\n  }\n\n  // Limpeza periódica\n  private startPeriodicCleanup(): void {\n    // Executar limpeza a cada 24 horas\n    setInterval(() => {\n      this.cleanupOldData();\n    }, 24 * 60 * 60 * 1000);\n  }\n\n  // Exportar dados para análise\n  exportSecurityData(): {\n    events: SecurityEvent[];\n    alerts: SecurityAlert[];\n    metrics: SecurityMetrics;\n    exportedAt: string;\n  } {\n    return {\n      events: this.events,\n      alerts: this.alerts,\n      metrics: this.getSecurityMetrics(),\n      exportedAt: new Date().toISOString(),\n    };\n  }\n}\n\nexport default SecurityMonitoringService.getInstance();"} 
+ToolResult: SUCCESS - Created the golf-mk3-app/src/services/SecurityMonitoringService.ts file. 
+<function_calls>
+<invoke name="fsWrite">
+<parameter name="path">golf-mk3-app/src/components/admin/SecurityDashboard.tsx

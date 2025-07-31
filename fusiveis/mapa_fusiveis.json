@@ -1,0 +1,106 @@
+{
+    "fusiveis": {
+        "1": {
+            "funcao": "Farol baixo esquerda",
+            "amperagem": 10
+        },
+        "2": {
+            "funcao": "Farol baixo direita",
+            "amperagem": 10
+        },
+        "3": {
+            "funcao": "Luzes da placa",
+            "amperagem": 10
+        },
+        "4": {
+            "funcao": "Limpa-vidros traseiro e sistema de máquina de lavar",
+            "amperagem": 15
+        },
+        "5": {
+            "funcao": "Limpador de pára-brisas",
+            "amperagem": 15
+        },
+        "6": {
+            "funcao": "Ventilador de ar fresco a/c",
+            "amperagem": 20
+        },
+        "7": {
+            "funcao": "Luzes traseiras direita",
+            "amperagem": 10
+        },
+        "8": {
+            "funcao": "Luzes traseiras esquerda",
+            "amperagem": 10
+        },
+        "9": {
+            "funcao": "Desembaçador traseiro",
+            "amperagem": 20
+        },
+        "10": {
+            "funcao": "Faróis de nevoeiro",
+            "amperagem": 15
+        },
+        "11": {
+            "funcao": "Farol alto, à esquerda",
+            "amperagem": 10
+        },
+        "12": {
+            "funcao": "Farol alto, à direita",
+            "amperagem": 10
+        },
+        "13": {
+            "funcao": "—",
+            "amperagem": null
+        },
+        "14": {
+            "funcao": "Luzes de back-up",
+            "amperagem": 15
+        },
+        "15": {
+            "funcao": "Eletrônico do motor",
+            "amperagem": 10
+        },
+        "16": {
+            "funcao": "Teto solar, mapa dianteiro / luz de teto",
+            "amperagem": 15
+        },
+        "17": {
+            "funcao": "Piscas de emergência",
+            "amperagem": 10
+        },
+        "18": {
+            "funcao": "Bomba de combustível",
+            "amperagem": 20
+        },
+        "19": {
+            "funcao": "Ventilador de arrefecimento",
+            "amperagem": 30
+        },
+        "20": {
+            "funcao": "Luz de freio",
+            "amperagem": 10
+        },
+        "21": {
+            "funcao": "Luzes interiores, relógio, compartimento de bagagem de luz",
+            "amperagem": 15
+        },
+        "22": {
+            "funcao": "Isqueiro, liberação compartimento das bagagens de rádio",
+            "amperagem": 10
+        }
+    },
+    "reles": {
+        "R1": "Ar condicionado, controle do clima, encerramento do ar condicionado, Terminal 15, corte de alimentação de tensão",
+        "R2": "Lavagem/limpeza traseira",
+        "R3": "Gestão do motor",
+        "R4": "Descarga do contato X",
+        "R5": "Controle de cruzeiro",
+        "R6": "Luzes de aviso de perigo",
+        "R7": "Lava-faróis",
+        "R8": "Lavagem/limpeza intermitente",
+        "R9": "Som de aviso 'Luzes acesas'",
+        "R10": "Ponte da luz de nevoeiro",
+        "R11": "Ponte da buzina",
+        "R12": "Bomba de combustível, velas de incandescência"
+    }
+}

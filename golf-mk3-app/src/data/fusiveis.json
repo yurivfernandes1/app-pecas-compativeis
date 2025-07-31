@@ -1,0 +1,351 @@
+{
+    "fusiveis": [
+        {
+            "id": "f1",
+            "posicao": "1",
+            "amperagem": "10A",
+            "funcao": "Luzes de posição traseiras",
+            "tipo": "fusivel",
+            "localizacao": "caixa_principal",
+            "coordenadas": {
+                "x": 50,
+                "y": 80
+            }
+        },
+        {
+            "id": "f2",
+            "posicao": "2",
+            "amperagem": "15A",
+            "funcao": "Faróis baixos",
+            "tipo": "fusivel",
+            "localizacao": "caixa_principal",
+            "coordenadas": {
+                "x": 100,
+                "y": 80
+            }
+        },
+        {
+            "id": "f3",
+            "posicao": "3",
+            "amperagem": "10A",
+            "funcao": "Faróis altos",
+            "tipo": "fusivel",
+            "localizacao": "caixa_principal",
+            "coordenadas": {
+                "x": 150,
+                "y": 80
+            }
+        },
+        {
+            "id": "f4",
+            "posicao": "4",
+            "amperagem": "15A",
+            "funcao": "Pisca-pisca",
+            "tipo": "fusivel",
+            "localizacao": "caixa_principal",
+            "coordenadas": {
+                "x": 200,
+                "y": 80
+            }
+        },
+        {
+            "id": "f5",
+            "posicao": "5",
+            "amperagem": "10A",
+            "funcao": "Luz de freio",
+            "tipo": "fusivel",
+            "localizacao": "caixa_principal",
+            "coordenadas": {
+                "x": 250,
+                "y": 80
+            }
+        },
+        {
+            "id": "f6",
+            "posicao": "6",
+            "amperagem": "15A",
+            "funcao": "Buzina",
+            "tipo": "fusivel",
+            "localizacao": "caixa_principal",
+            "coordenadas": {
+                "x": 300,
+                "y": 80
+            }
+        },
+        {
+            "id": "f7",
+            "posicao": "7",
+            "amperagem": "20A",
+            "funcao": "Limpador para-brisa",
+            "tipo": "fusivel",
+            "localizacao": "caixa_principal",
+            "coordenadas": {
+                "x": 50,
+                "y": 130
+            }
+        },
+        {
+            "id": "f8",
+            "posicao": "8",
+            "amperagem": "25A",
+            "funcao": "Ventilador do radiador",
+            "tipo": "fusivel",
+            "localizacao": "caixa_principal",
+            "coordenadas": {
+                "x": 100,
+                "y": 130
+            }
+        },
+        {
+            "id": "f9",
+            "posicao": "9",
+            "amperagem": "15A",
+            "funcao": "Ar condicionado",
+            "tipo": "fusivel",
+            "localizacao": "caixa_principal",
+            "coordenadas": {
+                "x": 150,
+                "y": 130
+            }
+        },
+        {
+            "id": "f10",
+            "posicao": "10",
+            "amperagem": "10A",
+            "funcao": "Rádio/CD Player",
+            "tipo": "fusivel",
+            "localizacao": "caixa_principal",
+            "coordenadas": {
+                "x": 200,
+                "y": 130
+            }
+        },
+        {
+            "id": "f11",
+            "posicao": "11",
+            "amperagem": "15A",
+            "funcao": "Acendedor de cigarro",
+            "tipo": "fusivel",
+            "localizacao": "caixa_principal",
+            "coordenadas": {
+                "x": 250,
+                "y": 130
+            }
+        },
+        {
+            "id": "f12",
+            "posicao": "12",
+            "amperagem": "10A",
+            "funcao": "Luzes internas",
+            "tipo": "fusivel",
+            "localizacao": "caixa_principal",
+            "coordenadas": {
+                "x": 300,
+                "y": 130
+            }
+        },
+        {
+            "id": "f13",
+            "posicao": "13",
+            "amperagem": "20A",
+            "funcao": "Vidros elétricos",
+            "tipo": "fusivel",
+            "localizacao": "caixa_principal",
+            "coordenadas": {
+                "x": 50,
+                "y": 180
+            }
+        },
+        {
+            "id": "f14",
+            "posicao": "14",
+            "amperagem": "15A",
+            "funcao": "Travas elétricas",
+            "tipo": "fusivel",
+            "localizacao": "caixa_principal",
+            "coordenadas": {
+                "x": 100,
+                "y": 180
+            }
+        },
+        {
+            "id": "f15",
+            "posicao": "15",
+            "amperagem": "10A",
+            "funcao": "Computador de bordo",
+            "tipo": "fusivel",
+            "localizacao": "caixa_principal",
+            "coordenadas": {
+                "x": 150,
+                "y": 180
+            }
+        },
+        {
+            "id": "f16",
+            "posicao": "16",
+            "amperagem": "5A",
+            "funcao": "Painel de instrumentos",
+            "tipo": "fusivel",
+            "localizacao": "caixa_principal",
+            "coordenadas": {
+                "x": 200,
+                "y": 180
+            }
+        },
+        {
+            "id": "f17",
+            "posicao": "17",
+            "amperagem": "15A",
+            "funcao": "Sistema de injeção",
+            "tipo": "fusivel",
+            "localizacao": "caixa_principal",
+            "coordenadas": {
+                "x": 250,
+                "y": 180
+            }
+        },
+        {
+            "id": "f18",
+            "posicao": "18",
+            "amperagem": "10A",
+            "funcao": "Bomba de combustível",
+            "tipo": "fusivel",
+            "localizacao": "caixa_principal",
+            "coordenadas": {
+                "x": 300,
+                "y": 180
+            }
+        },
+        {
+            "id": "r1",
+            "posicao": "R1",
+            "amperagem": "30A",
+            "funcao": "Relé principal da injeção",
+            "tipo": "rele",
+            "localizacao": "caixa_reles",
+            "coordenadas": {
+                "x": 80,
+                "y": 50
+            }
+        },
+        {
+            "id": "r2",
+            "posicao": "R2",
+            "amperagem": "30A",
+            "funcao": "Relé da bomba de combustível",
+            "tipo": "rele",
+            "localizacao": "caixa_reles",
+            "coordenadas": {
+                "x": 130,
+                "y": 50
+            }
+        },
+        {
+            "id": "r3",
+            "posicao": "R3",
+            "amperagem": "40A",
+            "funcao": "Relé do ventilador do radiador",
+            "tipo": "rele",
+            "localizacao": "caixa_reles",
+            "coordenadas": {
+                "x": 180,
+                "y": 50
+            }
+        },
+        {
+            "id": "r4",
+            "posicao": "R4",
+            "amperagem": "30A",
+            "funcao": "Relé do ar condicionado",
+            "tipo": "rele",
+            "localizacao": "caixa_reles",
+            "coordenadas": {
+                "x": 230,
+                "y": 50
+            }
+        },
+        {
+            "id": "r5",
+            "posicao": "R5",
+            "amperagem": "20A",
+            "funcao": "Relé dos faróis",
+            "tipo": "rele",
+            "localizacao": "caixa_reles",
+            "coordenadas": {
+                "x": 80,
+                "y": 100
+            }
+        },
+        {
+            "id": "r6",
+            "posicao": "R6",
+            "amperagem": "15A",
+            "funcao": "Relé da buzina",
+            "tipo": "rele",
+            "localizacao": "caixa_reles",
+            "coordenadas": {
+                "x": 130,
+                "y": 100
+            }
+        },
+        {
+            "id": "r7",
+            "posicao": "R7",
+            "amperagem": "10A",
+            "funcao": "Relé do pisca-pisca",
+            "tipo": "rele",
+            "localizacao": "caixa_reles",
+            "coordenadas": {
+                "x": 180,
+                "y": 100
+            }
+        },
+        {
+            "id": "r8",
+            "posicao": "R8",
+            "amperagem": "25A",
+            "funcao": "Relé do limpador",
+            "tipo": "rele",
+            "localizacao": "caixa_reles",
+            "coordenadas": {
+                "x": 230,
+                "y": 100
+            }
+        }
+    ],
+    "localizacoes": [
+        {
+            "id": "caixa_principal",
+            "nome": "Caixa Principal de Fusíveis",
+            "descricao": "Localizada no painel, lado esquerdo do motorista",
+            "imagem": "mapa_fusiveis.png"
+        },
+        {
+            "id": "caixa_reles",
+            "nome": "Caixa de Relés",
+            "descricao": "Localizada no compartimento do motor, próximo à bateria",
+            "imagem": "mapa_caixa_fusiveis_reles.png"
+        }
+    ],
+    "tipos": [
+        {
+            "id": "fusivel",
+            "nome": "Fusível",
+            "descricao": "Dispositivo de proteção que interrompe o circuito em caso de sobrecarga"
+        },
+        {
+            "id": "rele",
+            "nome": "Relé",
+            "descricao": "Interruptor eletromagnético que controla circuitos de alta corrente"
+        }
+    ],
+    "amperagens": [
+        "5A",
+        "10A",
+        "15A",
+        "20A",
+        "25A",
+        "30A",
+        "40A"
+    ]
+}

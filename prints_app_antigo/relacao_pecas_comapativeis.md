@@ -1,4 +1,3 @@
-
 # RELAÇÃO DE PEÇAS COMPATÍVEIS GOLF MK3
 
 ## Itens Gerais
@@ -246,3 +245,181 @@
 - **Sensor Posição Borboleta GTI GLX:**
 	- VW Golf 2.0 GTI 16V (1992 até 1999)
 	- VW Golf 2.0 GTI 8V (1992 até 1999)
+
+## Peças das imagens 7, 8 e 9
+
+- **Tampa do Reservatório de Expansão:**
+  - Cordoba, Ibiza, Toledo, Inca
+  - Gol, Parati, Saveiro até 2009
+  - Golf 91-97
+- **Reservatório de Expansão (com sensor):**
+  - SEAT: Cordoba, Ibiza
+  - VW: Golf, Passat, 96/...
+- **Rolamento de Roda Traseira:**
+  - VW Gol todos (exceto geração 5)
+  - VW Parati todos (exceto geração 5)
+  - VW Saveiro todos (exceto geração 5)
+- **Rolamento Roda Dianteira:**
+  - 39x72x37
+  - 40x72x37
+  - Santana todos 95/...
+- **Rolamento Tensor Correia Dentada:**
+  - Del Rey, Pampa, Scala 1.8 8V AP 90/97
+  - Escort 1.6 8V AP 90/96
+  - Escort XR3 2.0 8V AP 90/96
+  - Verona 1.8 8V AP 90/96
+  - Versailles, Royale 1.8 8V AP 91/96
+- **Correia Dentada 1.8:**
+  - Ford Belina de 1989 a 1991
+  - Ford Del Rey de 1989 a 1991
+  - Ford Escort de 1983 a 2003
+- **Sensor Posição Borboleta GTI GLX:**
+  - VW Golf 2.0 GTI 16V ano 1992 até 1999
+  - VW Golf 2.0 GTI 8V ano 1992 até 1999
+  - VW Passat 2.0 16V 1994 até 1996
+- **Sensor Borboleta Golf GL 1.8Mi:**
+  - Golf 1.8Mi 94>98
+  - Passat Alemão 2.0 95>98
+  - Polo Classic 01>
+- **Correia Dentada GTI GLX:**
+  - Largura: 18.1mm
+  - Nº de Dentes: 124
+  - Correias AP 124x180...
+- **Suporte superior do amortecedor suspensão dianteira:**
+  - Golf GLX 95/95
+  - Golf GTI 94/95
+  - Golf 95/01
+- **Kit do amortecedor suspensão dianteira (suporte, rolamento, etc):**
+  - Bora 94/97
+  - Golf GL 95/98
+  - Golf GLX 96/98
+- **Válvula equalizadora freio:**
+  - Uno Vivace (precisa trocar haste)
+  - Fox Cross Fox Voyage G5 (adaptar fixação de 1 parafuso)
+  - Cordoba, Ibiza, Polo Classic (plug play)
+- **Sonda Lambda:**
+  - Gol 1997 a 2004
+  - Parati 1997 a 2004
+  - Polo 1997 a 2002
+- **Bobina de Ignição:**
+  - Escort Europeu CHT 1.6 93/96
+  - Escort Europeu AP 1.8, 2.0 93/96
+  - Verona Europeu AP 1.8, 2.0 93/96
+- **Rotor Distribuidor:**
+  - Gol GII
+  - 1.0Mi 16V 1996-1999 Gas
+  - 1.6/1.8/2.0Mi 1996-2005 Álc/Gas
+- **Distribuidor Motor:**
+  - AP Mi 3 vias
+  - Gol, Saveiro, Parati, Santana
+  - Gol 94/02, 03/06, 06/10
+- **Sensor Fase Hall:**
+  - Parati II 1.0Mi 16V ano 08.1997 a 04.1999
+  - Kombi 1.6Mi ano 11.1997 a 2005
+  - Kombi 1.6Mi ano 02.1998 a 2005
+
+## Peças das imagens 10 e 11
+
+- **Disco de Freio:**
+  - Santana 94/03
+  - Versailles 94/96
+  - Golf GLX/GTI até 98
+- **Flexível Escapamento:**
+  - Verona/Apollo 1.8 92
+  - Bora 2000 até 2011
+  - Apollo 92
+- **Junta Carter:**
+  - Gol/Golf/Polo Classic MI 1.6/1.8/2.0 97
+  - Golf GL GLX GTI 95 a 97 Motor AP
+- **Bujão Carter:**
+  - Golf 94/98 Passat/Gol
+  - Golf/Jetta/Tiguan/Passat
+  - Gol/polo/golf/saveiro/fox
+- **Sapata de Freio:**
+  - Golf 1.8/2.0 93 a 98
+  - Polo Classic até 02
+  - Polo após 02
+- **Módulo de Ignição:**
+  - Escort/Polo/Golf/Verona
+- **Porca e Guarnição Tanque Combustível:**
+  - VW
+  - Gol/Logus/Saveiro/Polo Classic/Golf
+  - Audi
+- **Puxador do Encosto do Banco Traseiro:**
+  - Gol G2, G3, G4 1996
+- **Amortecedor Tampa Traseira:**
+  - Audi A3/VW Golf/Polo Todos
+- **Rolamento do Coxim do Amortecedor:**
+  - Bora (após 2000)
+  - Passat Alemão (94 a 97)
+  - Golf GL GLX GTI (95 a 98)
+- **Batente Coxim Superior Amortecedor Traseiro:**
+  - Golf 94 a 98, Polo Classic 96 a 2002
+- **Mola Traseira:**
+  - Ford: Royale 2/4 portas 1991 até 1996
+  - Ford: Versailles 4 portas 1991 até 1996
+  - Ford: Quantum 1985 até 2002
+- **Sensor de Temperatura Água:**
+  - Gol 98+
+  - Parati 98+
+  - Santana MI
+- **Cebolão Radiador:**
+  - Golf A3 1.8L/2.0L c/ ar-cond. gasol. 1993=>1999
+  - Golf A3 2.8L c/ ar-cond. gasol. 1996=>1999
+  - Jetta A3 1.8L/2.0L c/ ar-cond. gasol. 1993=>1999
+- **Filtro de Óleo:**
+  - Gol/Passat/Saveiro/Fox/Santana/Golf/Kombi/Bora/Passat/Voyage/Logus/Pointer/Polo/Quantum
+  - Motor AP Gol/Santana/Passat/Golf 1.6/1.8/2.0
+- **Tampa do Óleo do Motor:**
+  - (imagem não mostra aplicações, mas pode ser incluída para completar a lista)
+
+## Peças das imagens 12 e 13
+
+- **Interruptor de Luz de Ré:**
+  - Chery: Celer
+  - Apollo
+  - Logus
+- **Bomba de Combustível:**
+  - Gol 1.6 8v Gasolina 97/04 (velocidade máxima 190km/h)
+  - Corsa, Astra, Vectra, Blazer, S10
+  - Fiorino Furgão / Pick-up 1.5 MPI 09.97 a 06.02
+- **Correia Alternador e Ar:**
+  - Perfil PK
+  - Número de nervuras: 6
+  - Altura (h) [mm]: 5
+- **Coxim Motor Golf Tras. Esq.:**
+  - SK1815 Golf 2.0 94/98 GLM/GLX/GTI
+  - SK1815 Passat 2.0 94/97 câmbio automático
+  - SK1815 Polo Classic 1.8 96/...
+- **Pinhão Velocímetro:**
+  - 02A/409197 A3 1.8 99/06
+  - SEAT
+  - 02A/409197 Cordoba 1.9 00/02
+- **Filtro Bomba Combustível:**
+  - ASF0002 Cordoba 1.8
+  - ASF0002 Ibiza 1.8
+  - VW
+- **Coxim Amortecedor Dianteiro (com rolamento):**
+  - Audi
+  - SK426R A3 99/...
+- **Puxador do Encosto do Banco Traseiro:**
+  - Gol G2, G3, G4 1996
+  - Gol G2, G3, G4 1997
+  - Gol G2, G3, G4 1998
+- **Tambor Freio Traseiro:**
+  - Gol 1.6 8V C 2P de 1974 até 1987
+  - Gol 1.3 8V C 2P 1980
+  - Gol 1.6 8V CL 2P de 1980 até 1996
+- **Bieleta Dianteira:**
+  - Golf 92/95...07/98
+- **Válvula Termostática:**
+  - Volkswagen Gol 1.6 1.8 2.0 AP de 1986 até 2009
+  - Chevrolet Omega/Suprema CD 3.0 MPFI de 1992 até 1994
+  - Ford Escort motor AP todos
+- **Retentor dianteiro do virabrequim (lado polia):**
+  - 32x47x10mm
+  - (Ford) [AP] Belina 1.8 todos
+- **Trava Cabo Embreagem:**
+  - Golf/Polo Classic/Cordoba/Ibiza
+- **Amortecedor Tampa Traseira:**
+  - Audi A3/VW Golf/Polo Todos

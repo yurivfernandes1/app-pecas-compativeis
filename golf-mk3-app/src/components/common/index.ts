@@ -1,0 +1,11 @@
+// Exportar todos os componentes comuns
+export { Button } from './Button';
+export { Card } from './Card';
+export { SearchBar } from './SearchBar';
+export { LoadingSpinner } from './LoadingSpinner';
+export { Toast } from './Toast';
+export { EmptyState } from './EmptyState';
+export { FilterModal } from './FilterModal';
+export { ShareButton } from './ShareButton';
+export { Watermark } from './Watermark';
+export { ProtectionOverlay } from './ProtectionOverlay';

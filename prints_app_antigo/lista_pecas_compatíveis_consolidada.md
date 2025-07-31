@@ -1,0 +1,98 @@
+# Lista Consolidada de Peças Compatíveis Golf MK3
+
+## 1. Itens Gerais e Motor
+- Velas: Palio 1.6 16v
+- Cabos de vela: Gol AP, Escort motor AP (usa também o da bobina, precisa tirar a capa metálica)
+- Tampa do distribuidor: Gol AP, VW 1.0/1.6/1.8/2.0 MI TDS 96>, Ford Escort 1.6L, Guia/XR3 TDS 1.8 93>
+- Bobina: Gol, Santana, Logus/Verona (3 pinos), Escort Europeu CHT 1.6 93/96, Escort Europeu AP 1.8/2.0 93/96, Verona Europeu AP 1.8/2.0 93/96
+- Rotor do distribuidor: Bosch final 350 ou Bosch final 277
+- Filtro de ar: Gol Bola 96, Logus, Polo, Gol
+- Filtro de óleo: Gol AP, Motor AP Gol/Santana/Passat/Golf 1.6/1.8/2.0, Gol/Passat/Saveiro/Fox/Santana/Golf/Kombi/Bora/Passat/Voyage/Logus/Pointer/Polo/Quantum
+- Filtro de combustível: Monza, Fiat Tempra (94-99), Ford Escort (93-96), Ford Royale (92-93)
+- Filtro de cabine: VW Crossfox Total Flex AP 1.6 MI, VW Fox City 1.0 8V MI EA111, VW Fox City 1.0 8V Total Flex EA111
+- Filtro bomba combustível: ASF0002 Cordoba 1.8, ASF0002 Ibiza 1.8, VW
+- Bomba de combustível: Refil Bosch, Gol 1.6 8v Gasolina 97/04, Corsa, Astra, Vectra, Blazer, S10, Fiorino Furgão/Pick-up 1.5 MPI 09.97 a 06.02
+- Regulador de pressão: Gol 1.6 MI
+- Correia do hidráulico: Hidráulico da Pampa
+- Correias dentadas (3): Golf mesmo
+- Correia dentada 1.8: Ford Belina 89-91, Ford Del Rey 89-91, Ford Escort 83-03
+- Correia dentada GTI GLX: Largura 18.1mm, 124 dentes, correias AP 124x180
+- Correia alternador e ar: Perfil PK, 6 nervuras, altura 5mm
+- Correia direção hidráulica: 10AV0765, Avx10x685, AV10X757
+- Correia acessórios alternador s/ar: C6PK0894, 6PK0895
+- Correia alternador direção A/C bomba: Golf 1.8 MI 8V GL 4P (90-99), Golf 1.8 8V Cabriolet 2P (92)
+- Tensor correia dentada: Gol AP (necessita troca do prisioneiro)
+- Bronzinas de biela: Motor AP
+- Bronzinas de mancal com anel de encosto junto: Motor AP
+- Casquilhos: Santana 2.0
+- Anti chama: Golf GLX, GTI 2.0, Golf 1.9 L Diesel, Cordoba, Audi 1.8/1.9 Diesel
+- Atuador marcha lenta: Golf 2.0 92-02, Golf 1.8 96-98, Passat 1.6 94-95
+- Sensor posição borboleta GTI GLX: Golf 2.0 GTI 16V 92-99, Golf 2.0 GTI 8V 92-99, Passat 2.0 16V 94-96
+- Sensor borboleta Golf GL 1.8Mi: Golf 1.8Mi 94-98, Passat Alemão 2.0 95-98, Polo Classic 01>
+- Sensor fase Hall: Parati II 1.0Mi 16V 08.1997 a 04.1999, Kombi 1.6Mi 11.1997 a 2005, Kombi 1.6Mi 02.1998 a 2005
+- Sensor luz freio: VW Gol/Golf/Passat/Santana, Santana, Quantum, Parati, Gol, Polo Classic, Golf
+- Sensor temperatura água: Gol 98+, Parati 98+, Santana MI
+- Sonda lambda: Gol 97-04, Parati 97-04, Polo 97-02
+- Interruptor de luz de ré: Chery Celer, Apollo, Logus
+- Interruptor do óleo: Polo
+- Módulo de ignição: Escort, Polo, Golf, Verona
+
+## 2. Transmissão, Embreagem e Trambulador
+- Kit de embreagem: Escort c/ motor AP até 92
+- Cabo de embreagem: Golf 1.8 MI 8V GL 4P (90-99), Golf 1.8 8V Cabriolet 2P (92)
+- Trava cabo embreagem: Golf/Polo Classic/Cordoba/Ibiza
+- Buchas do trambulador: Escort c/ motor AP até 92
+- Gatilho garfo acionador da embreagem: Escort/Verona/Golf 1.8
+
+## 3. Suspensão, Direção e Freios
+- Bieletas Golf GL, GLX, GTI 94-98: Original VW, KIT&CIA
+- Coxins amortecedor dianteiro: Golf GL, GLX, GTI 94-98, Audi, SK426R A3 99/..., com rolamento
+- Coxim dianteiro motor: Escort 96-96, Verona 93-96, Logus 96-96
+- Coxim motor golf tras. esq.: SK1815 Golf 2.0 94/98 GLM/GLX/GTI, Passat 2.0 94/97 câmbio automático, Polo Classic 1.8 96/...
+- Rolamento do coxim do amortecedor: Bora (após 2000), Passat Alemão (94-97), Golf GL GLX GTI (95-98)
+- Batente coxim superior amortecedor traseiro: Golf 94-98, Polo Classic 96-02
+- Amortecedor tampa traseira: Audi A3, VW Golf, Polo Todos
+- Amortecedor dianteiro e traseiro: VW Golf/Seat Ibiza/Cordoba, Seat Cordoba (todos) 95/02
+- Suporte superior do amortecedor suspensão dianteira: Golf GLX 95/95, Golf GTI 94/95, Golf 95/01
+- Kit do amortecedor suspensão dianteira: Bora 94/97, Golf GL 95/98, Golf GLX 96/98
+- Rolamento tensor correia dentada: Del Rey, Pampa, Scala 1.8 8V AP 90/97, Escort 1.6 8V AP 90/96, Escort XR3 2.0 8V AP 90/96, Verona 1.8 8V AP 90/96, Versailles, Royale 1.8 8V AP 91/96
+- Rolamento dianteiro: Gol GIII (tem que usinar o cubo), 39x72x37, 40x72x37, Santana todos 95/...
+- Rolamento traseiro: Santana, VW Gol/Parati/Saveiro todos (exceto geração 5)
+- Homocinética: Santana
+- Coifa da homocinética embutida na flange do câmbio: Kombi ~1986
+- Ponteiras/terminais de direção: Original VW, Nakata, VilaFranca
+- Calço do banco: Santana, Gol, Voyage
+- Mola dianteira: Golf, Beetle, Bora
+- Mola traseira: Ford Royale 2/4 portas 91-96, Versailles 4 portas 91-96, Quantum 85-02
+- Disco de freio: Santana 94/03, Versailles 94/96, Golf GLX/GTI até 98, Gol 1.8
+- Sapata de freio: Golf 1.8/2.0 93-98, Polo Classic até 02, Polo após 02
+- Tambor freio traseiro: Gol 1.6 8V C 2P 74-87, Gol 1.3 8V C 2P 80, Gol 1.6 8V CL 2P 80-96
+- Válvula equalizadora freio: Polo Classic, Gol, Parati, Saveiro, G2/G3, Uno Vivace, Fox Cross Fox Voyage G5, Cordoba, Ibiza
+- Flexível escapamento: Verona/Apollo 1.8 92, Bora 2000-2011, Apollo 92
+- Bucha traseira da bandeja dianteira: Golf GL/GLX 95/98, Golf GTI 94/98, Passat Variant 94/97
+- Bucha dianteira da bandeja dianteira: Seat Cordoba 95/..., Cordoba Vario 99/..., Inca 98/...
+- Bucha da bieleta: Polo até 2002, Golf 92/02
+- Bieleta dianteira: Golf 92/95...07/98
+
+## 4. Sistema de Arrefecimento
+- Bomba d'água: Gol AP, VW motor 1.6/1.8/2.0 AP (todos com polia V), VW Gol/Parati 1.6/1.8/2.0 AP 83-95
+- Pescoço bomba d'água: VW
+- Reservatório de expansão (com sensor): SEAT Cordoba/Ibiza, VW Golf/Passat 96/...
+- Tampa do reservatório de expansão: Cordoba, Ibiza, Toledo, Inca, Gol, Parati, Saveiro até 2009, Golf 91-97
+- Cebolão radiador: Golf A3 1.8L/2.0L c/ ar-cond. gasol. 93=>99, Golf A3 2.8L c/ ar-cond. gasol. 96=>99, Jetta A3 1.8L/2.0L c/ ar-cond. gasol. 93=>99
+- Sensor de temperatura água: Gol 98+, Parati 98+, Santana MI
+- Ventilador do radiador: Vectra
+
+## 5. Lataria, Acabamento e Outros
+- Haste do limpador traseiro Mk3: Parati G2/G3/G4
+- Lâmpada do painel: Corsa
+- Protetor carter: Seat, GP-426 Cordoba, VW
+- Cubo volante: Serve no Golf antigo quadrado e no Gol Bola
+- Puxador do encosto do banco traseiro: Gol G2, G3, G4 1996, 1997, 1998
+- Junta carter: Gol/Golf/Polo Classic MI 1.6/1.8/2.0 97, Golf GL GLX GTI 95 a 97 Motor AP
+- Bujão carter: Golf 94/98 Passat/Gol, Golf/Jetta/Tiguan/Passat, Gol/polo/golf/saveiro/fox
+- Porca e guarnição tanque combustível: VW, Gol/Logus/Saveiro/Polo Classic/Golf, Audi
+
+---
+
+Seção consolidada com base em todas as listas e imagens fornecidas. Caso queira separar por mais categorias ou detalhar aplicações, posso ajustar conforme sua necessidade!
