@@ -13,3 +13,4 @@
 
 # O React cria a pasta 'build' após o comando 'npm run build'
 # Certifique-se de que o Cloudflare Pages está configurado para usar 'build' como output directory
+--
