@@ -50,6 +50,10 @@ const FeaturesSection = styled.section`
   ${media.mobile} {
     padding: 2rem 0;
   }
+
+  @media (max-width: 600px) {
+    padding: 1.2rem 0;
+  }
 `;
 
 const FeatureCard = styled(Card)`
@@ -82,6 +86,19 @@ const FeatureCard = styled(Card)`
     font-size: 3rem;
     margin-bottom: 1rem;
     display: block;
+  }
+
+  @media (max-width: 600px) {
+    padding: 1rem 0.5rem;
+    h3 {
+      font-size: 1.1rem;
+    }
+    .icon {
+      font-size: 2.2rem;
+    }
+    p {
+      font-size: 0.95rem;
+    }
   }
 `;
 
@@ -178,10 +195,14 @@ const Home: React.FC = () => {
 
       <FeaturesSection>
         <Container>
-          <Title style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <Title style={{ textAlign: 'center', marginBottom: '2rem' }}>
             Funcionalidades Principais
           </Title>
-          <Grid columns={3} gap="2rem">
+          <Grid columns={3} gap="2rem" style={{
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            ...(window.innerWidth < 900 ? { gridTemplateColumns: '1fr' } : {}),
+            ...(window.innerWidth < 600 ? { gap: '1rem' } : {})
+          }}>
             <FeatureCard as={Link} to="/pecas" style={{ textDecoration: 'none', color: 'inherit' }}>
               <span className="icon">🔧</span>
               <h3>Peças Compatíveis</h3>
