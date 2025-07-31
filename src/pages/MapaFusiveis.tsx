@@ -189,9 +189,15 @@ const FuseBoxDiagram = styled.div`
   overflow-x: auto;
   
   ${media.mobile} {
-    padding: 0.75rem;
-    border-radius: 8px;
-    border-width: 2px;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border-width: 1px;
+    overflow-x: hidden;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0.3rem;
+    border-radius: 4px;
   }
 `;
 
@@ -205,9 +211,16 @@ const FuseGrid = styled.div`
   min-width: 100%;
   
   ${media.mobile} {
-    gap: 0.1rem;
-    grid-template-columns: repeat(22, minmax(18px, 1fr));
-    font-size: 0.7rem;
+    gap: 0.05rem;
+    grid-template-columns: repeat(22, minmax(12px, 1fr));
+    font-size: 0.6rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(22, minmax(10px, 1fr));
+    gap: 0.02rem;
+    font-size: 0.5rem;
   }
 `;
 
@@ -227,12 +240,12 @@ const FuseSlot = styled.div<{ $color: FuseColor; $highlighted?: boolean; $isEmpt
   min-width: 30px;
   
   ${media.mobile} {
-    width: 18px;
-    height: 35px;
-    min-width: 18px;
-    font-size: 0.5rem;
+    width: 12px;
+    height: 24px;
+    min-width: 12px;
+    font-size: 0.4rem;
     border-width: 1px;
-    border-radius: 3px;
+    border-radius: 2px;
   }
   
   background-color: ${props => {
@@ -260,10 +273,17 @@ const FuseSlot = styled.div<{ $color: FuseColor; $highlighted?: boolean; $isEmpt
   }
   
   @media (max-width: 480px) {
-    width: 16px;
-    height: 30px;
-    min-width: 16px;
-    font-size: 0.45rem;
+    width: 10px;
+    height: 20px;
+    min-width: 10px;
+    font-size: 0.35rem;
+  }
+  
+  @media (max-width: 360px) {
+    width: 8px;
+    height: 16px;
+    min-width: 8px;
+    font-size: 0.3rem;
   }
 `;
 
@@ -275,8 +295,14 @@ const RelayGrid = styled.div`
   margin-bottom: 1rem;
   
   ${media.mobile} {
-    gap: 0.25rem;
-    grid-template-columns: repeat(6, minmax(30px, 1fr));
+    gap: 0.2rem;
+    grid-template-columns: repeat(6, minmax(20px, 1fr));
+    margin-bottom: 0.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 0.1rem;
+    grid-template-columns: repeat(6, minmax(18px, 1fr));
   }
 `;
 
@@ -296,10 +322,11 @@ const RelaySlot = styled.div<{ $highlighted?: boolean }>`
   transition: all 0.3s ease;
   
   ${media.mobile} {
-    width: 30px;
-    height: 30px;
-    font-size: 0.5rem;
+    width: 20px;
+    height: 20px;
+    font-size: 0.4rem;
     border-width: 1px;
+    border-radius: 2px;
   }
   
   ${props => props.$highlighted && `
@@ -316,9 +343,15 @@ const RelaySlot = styled.div<{ $highlighted?: boolean }>`
   }
   
   @media (max-width: 480px) {
-    width: 25px;
-    height: 25px;
-    font-size: 0.45rem;
+    width: 18px;
+    height: 18px;
+    font-size: 0.35rem;
+  }
+  
+  @media (max-width: 360px) {
+    width: 16px;
+    height: 16px;
+    font-size: 0.3rem;
   }
 `;
 
@@ -343,6 +376,17 @@ const SectionLabel = styled.div`
   margin-bottom: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 1px;
+  
+  ${media.mobile} {
+    font-size: 0.6rem;
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.5px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.5rem;
+    margin-bottom: 0.2rem;
+  }
 `;
 const ColorLegend = styled.div`
   display: flex;
@@ -352,8 +396,14 @@ const ColorLegend = styled.div`
   flex-wrap: wrap;
   
   ${media.mobile} {
-    gap: 0.5rem;
-    margin-top: 0.75rem;
+    gap: 0.3rem;
+    margin-top: 0.5rem;
+    justify-content: space-around;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 0.2rem;
+    margin-top: 0.3rem;
   }
 `;
 
@@ -368,9 +418,15 @@ const LegendItem = styled.div<{ $color: FuseColor }>`
   border-radius: 8px;
   
   ${media.mobile} {
-    font-size: 0.75rem;
-    padding: 0.4rem 0.7rem;
-    gap: 0.4rem;
+    font-size: 0.6rem;
+    padding: 0.25rem 0.5rem;
+    gap: 0.25rem;
+    border-radius: 4px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.55rem;
+    padding: 0.2rem 0.4rem;
   }
   
   &::before {
@@ -380,8 +436,14 @@ const LegendItem = styled.div<{ $color: FuseColor }>`
     border-radius: 3px;
     
     ${media.mobile} {
-      width: 16px;
-      height: 16px;
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+    }
+    
+    @media (max-width: 480px) {
+      width: 10px;
+      height: 10px;
     }
     
     background-color: ${props => {
@@ -413,9 +475,21 @@ const FuseList = styled.div`
   max-height: 400px;
   overflow-y: auto;
   
+  ${media.mobile} {
+    max-height: 300px;
+  }
+  
+  @media (max-width: 480px) {
+    max-height: 250px;
+  }
+  
   /* Scrollbar personalizada */
   &::-webkit-scrollbar {
     width: 8px;
+    
+    ${media.mobile} {
+      width: 4px;
+    }
   }
   
   &::-webkit-scrollbar-track {
@@ -460,28 +534,77 @@ const FuseItemHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   
+  ${media.mobile} {
+    padding: 0.75rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+  
   .fuse-number {
     font-weight: bold;
     color: ${colors.primary};
     margin-right: 0.5rem;
+    
+    ${media.mobile} {
+      font-size: 0.9rem;
+      margin-right: 0.3rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 0.8rem;
+    }
   }
   
   .fuse-function {
     color: ${colors.white};
     font-size: 0.9rem;
     flex: 1;
+    
+    ${media.mobile} {
+      font-size: 0.8rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 0.75rem;
+      flex-basis: 100%;
+      order: 3;
+      margin-top: 0.25rem;
+    }
   }
   
   .fuse-amperage {
     color: rgba(255, 255, 255, 0.7);
     font-size: 0.8rem;
     margin-left: 1rem;
+    
+    ${media.mobile} {
+      font-size: 0.75rem;
+      margin-left: 0.5rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 0.7rem;
+      margin-left: 0;
+    }
   }
   
   .expand-icon {
     color: rgba(255, 255, 255, 0.6);
     margin-left: 0.5rem;
     transition: transform 0.3s ease;
+    
+    ${media.mobile} {
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 0.8rem;
+      margin-left: 0;
+    }
     
     &.expanded {
       transform: rotate(180deg);
@@ -561,23 +684,64 @@ const RelayItemHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   
+  ${media.mobile} {
+    padding: 0.75rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+  
   .relay-id {
     font-weight: bold;
     color: ${colors.primary};
     margin-right: 0.5rem;
     min-width: 40px;
+    
+    ${media.mobile} {
+      font-size: 0.9rem;
+      min-width: 30px;
+      margin-right: 0.3rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 0.8rem;
+      min-width: 25px;
+    }
   }
   
   .relay-description {
     color: ${colors.white};
     font-size: 0.9rem;
     flex: 1;
+    
+    ${media.mobile} {
+      font-size: 0.8rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 0.75rem;
+      flex-basis: 100%;
+      order: 3;
+      margin-top: 0.25rem;
+    }
   }
   
   .expand-icon {
     color: rgba(255, 255, 255, 0.6);
     margin-left: 0.5rem;
     transition: transform 0.3s ease;
+    
+    ${media.mobile} {
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 0.8rem;
+      margin-left: 0;
+    }
     
     &.expanded {
       transform: rotate(180deg);
