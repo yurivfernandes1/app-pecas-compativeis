@@ -1,8 +1,19 @@
 import React, { useState, useMemo } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Container, Title, Input, Card, Grid, colors, media } from '../styles/GlobalStyles';
 import ScreenProtection from '../components/ScreenProtection';
 import coresData from '../data/cores-vw.json';
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 
 const SearchSection = styled.section`
   background: ${colors.gray[900]};
@@ -31,15 +42,20 @@ const SearchForm = styled.div`
 `;
 
 const ColorCard = styled(Card)`
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all 0.3s ease;
   cursor: pointer;
   background: ${colors.surface};
-  border: 1px solid ${colors.gray[800]};
+  border: 2px solid transparent;
+  border-left: 4px solid ${colors.primary};
+  position: relative;
+  overflow: hidden;
+  animation: ${fadeIn} 0.6s ease-out;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px 0 rgba(220, 38, 38, 0.2);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(220, 38, 38, 0.25);
     border-color: ${colors.primary};
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, rgba(220, 38, 38, 0.02) 100%);
   }
 
   .color-info {
@@ -215,15 +231,22 @@ const ResultsCount = styled.div`
 const YearSection = styled.div`
   margin-bottom: 2rem;
   border: 1px solid ${colors.gray[800]};
-  border-radius: 8px;
+  border-radius: 15px;
   overflow: hidden;
-  background: ${colors.gray[900]};
+  background: ${colors.surface};
+  border-left: 4px solid ${colors.primary};
+  animation: fadeIn 0.6s ease-out;
+  
+  ${media.mobile} {
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+  }
 `;
 
 const YearHeader = styled.button`
   width: 100%;
-  padding: 1rem 1.5rem;
-  background: ${colors.gray[800]};
+  padding: 1.5rem;
+  background: ${colors.surface};
   border: none;
   color: ${colors.white};
   text-align: left;
@@ -233,16 +256,29 @@ const YearHeader = styled.button`
   align-items: center;
   font-size: 1.125rem;
   font-weight: 600;
-  transition: background-color 0.2s;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+
+  ${media.mobile} {
+    padding: 1rem;
+    font-size: 1rem;
+  }
 
   &:hover {
-    background: ${colors.gray[700]};
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.15) 0%, rgba(220, 38, 38, 0.08) 100%);
+    border-color: ${colors.primary};
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.15);
   }
 
   .year-info {
     display: flex;
     align-items: center;
     gap: 1rem;
+    
+    ${media.mobile} {
+      gap: 0.75rem;
+    }
   }
 
   .year-count {
@@ -252,11 +288,21 @@ const YearHeader = styled.button`
     border-radius: 12px;
     font-size: 0.75rem;
     font-weight: 500;
+    
+    ${media.mobile} {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.4rem;
+    }
   }
 
   .chevron {
-    transition: transform 0.2s;
+    transition: transform 0.3s ease;
     font-size: 1.25rem;
+    color: ${colors.primary};
+    
+    ${media.mobile} {
+      font-size: 1.1rem;
+    }
     
     &.expanded {
       transform: rotate(180deg);
@@ -264,15 +310,28 @@ const YearHeader = styled.button`
   }
 `;
 
-const YearContent = styled.div<{ $isExpanded: boolean }>`
+const YearContent = styled.div<{ isExpanded: boolean }>`
   overflow: hidden;
-  transition: all 0.3s ease-in-out;
-  opacity: ${props => props.$isExpanded ? '1' : '0'};
-  max-height: ${props => props.$isExpanded ? '2000px' : '0'};
+  opacity: ${props => props.isExpanded ? '1' : '0'};
+  max-height: ${props => props.isExpanded ? '2000px' : '0'};
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: ${colors.surface};
+  border-bottom: 2px solid ${colors.primary};
+  padding: ${props => props.isExpanded ? '1.5rem' : '0'};
   
+  ${media.mobile} {
+    padding: ${props => props.isExpanded ? '1rem' : '0'};
+    max-height: ${props => props.isExpanded ? 'none' : '0'};
+    transition: all 0.3s ease;
+  }
+
   .content-inner {
-    padding: ${props => props.$isExpanded ? '1.5rem' : '0 1.5rem'};
-    transition: padding 0.3s ease-in-out;
+    min-height: 0;
+    height: auto;
+    
+    ${media.mobile} {
+      display: ${props => props.isExpanded ? 'block' : 'none'};
+    }
   }
 `;
 
@@ -550,7 +609,7 @@ const TabelaCores: React.FC = () => {
                       ▼
                     </span>
                   </YearHeader>
-                  <YearContent $isExpanded={expandedYears.has(year)}>
+                  <YearContent isExpanded={expandedYears.has(year)}>
                     <div className="content-inner">
                       <Grid columns={2} gap="1.5rem">
                         {cores.map((cor, index) => (

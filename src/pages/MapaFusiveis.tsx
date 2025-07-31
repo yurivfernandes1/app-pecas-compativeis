@@ -449,9 +449,9 @@ const LegendItem = styled.div<{ $color: FuseColor }>`
     background-color: ${props => {
       switch (props.$color) {
         case 'red': return '#ff4444';
-        case 'blue': return '#6B7280'; // Cinza ao invés de azul
+        case 'blue': return '#4444ff'; // Azul correto
         case 'yellow': return '#ffdd44'; // Amarelo mais escuro
-        case 'green': return '#9CA3AF'; // Cinza claro ao invés de verde
+        case 'green': return '#44ff44'; // Verde correto
         default: return '#ff4444';
       }
     }};
