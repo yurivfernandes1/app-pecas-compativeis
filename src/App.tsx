@@ -4,6 +4,7 @@ import { GlobalStyle, Watermark } from './styles/GlobalStyles';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import SocialModal from './components/SocialModal';
+import InstallPWA from './components/InstallPWA';
 import { useAppProtection } from './hooks/useAppProtection';
 import Home from './pages/Home';
 import PecasCompativeis from './pages/PecasCompativeis';
@@ -31,6 +32,7 @@ const AppContent: React.FC = () => {
         © 2025 Falando de GTI - Todos os direitos reservados
       </Watermark>
       
+      <InstallPWA />
       {showModal && <SocialModal onClose={closeModal} />}
     </>
   );
