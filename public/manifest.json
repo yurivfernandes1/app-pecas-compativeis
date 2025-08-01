@@ -4,17 +4,17 @@
     "description": "Consulte peças compatíveis para seu Golf MK3 com nossa base de dados completa. Por Falando de GTI.",
     "icons": [
         {
-            "src": "https://raw.githubusercontent.com/yurivfernandes/falando-de-gti-frontend/refs/heads/main/src/public/favicon/favicon.jpeg",
+            "src": "https://raw.githubusercontent.com/yurivfernandes/app-pecas-compativeis/refs/heads/main/logo/Perfil%201.png?token=GHSAT0AAAAAADBIUU2SYHGPZZKHRNLMLQKC2EMBQGQ",
             "sizes": "64x64 32x32 24x24 16x16",
-            "type": "image/jpeg"
+            "type": "image/png"
         },
         {
-            "src": "https://raw.githubusercontent.com/yurivfernandes/falando-de-gti-frontend/refs/heads/main/src/public/galeria/logo.png",
+            "src": "https://raw.githubusercontent.com/yurivfernandes/app-pecas-compativeis/refs/heads/main/logo/Perfil%201.png?token=GHSAT0AAAAAADBIUU2SYHGPZZKHRNLMLQKC2EMBQGQ",
             "type": "image/png",
             "sizes": "192x192"
         },
         {
-            "src": "https://raw.githubusercontent.com/yurivfernandes/falando-de-gti-frontend/refs/heads/main/src/public/galeria/logo.png",
+            "src": "https://raw.githubusercontent.com/yurivfernandes/app-pecas-compativeis/refs/heads/main/logo/Perfil%201.png?token=GHSAT0AAAAAADBIUU2SYHGPZZKHRNLMLQKC2EMBQGQ",
             "type": "image/png",
             "sizes": "512x512"
         }
