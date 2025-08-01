@@ -185,7 +185,7 @@ const Home: React.FC = () => {
           <HeroTitle>Peças Compatíveis para Golf MK3</HeroTitle>
           <HeroSubtitle>
             Encontre facilmente peças compatíveis com seu Volkswagen Golf MK3. 
-            Base de dados com 91 peças verificadas para facilitar suas pesquisas.
+            Base de dados com 77 peças verificadas para facilitar suas pesquisas.
           </HeroSubtitle>
           <Button as={Link} to="/pecas" variant="primary">
             Buscar Peças Agora
@@ -203,7 +203,7 @@ const Home: React.FC = () => {
               <span className="icon">🔧</span>
               <h3>Peças Compatíveis</h3>
               <p>
-                Consulte nossa base de dados com 91 peças compatíveis 
+                Consulte nossa base de dados com 77 peças compatíveis 
                 organizadas por categoria para facilitar sua busca.
               </p>
               <Button variant="secondary">Explorar Peças</Button>
@@ -236,7 +236,7 @@ const Home: React.FC = () => {
         <Container>
           <Grid columns={4} gap="2rem">
             <StatCard>
-              <span className="number">91</span>
+              <span className="number">77</span>
               <span className="label">Peças Catalogadas</span>
             </StatCard>
             <StatCard>

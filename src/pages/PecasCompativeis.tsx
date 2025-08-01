@@ -766,7 +766,7 @@ const PecasCompativeis: React.FC = () => {
             </h1>
             <p>
               Encontre peças compatíveis para seu Golf MK3 em nossa base de dados completa. 
-              91 peças catalogadas com informações verificadas de compatibilidade.
+              77 peças catalogadas com informações verificadas de compatibilidade.
             </p>
           </HeroContent>
         </Container>
