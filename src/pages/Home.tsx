@@ -4,7 +4,26 @@ import { Link } from 'react-router-dom';
 import { Container, Title, Button, Card, Grid, colors, media } from '../styles/GlobalStyles';
 
 const PageWrapper = styled.div`
-  background: ${colors.background};
+        <StatsContainer>
+          <Grid columns={4} gap="2rem">
+            <StatCard>
+              <span className="number">76</span>
+              <span className="label">Peças Catalogadas</span>
+            </StatCard>
+            <StatCard>
+              <span className="number">22</span>
+              <span className="label">Fusíveis Mapeados</span>
+            </StatCard>
+            <StatCard>
+              <span className="number">24</span>
+              <span className="label">Códigos de Cores</span>
+            </StatCard>
+            <StatCard>
+              <span className="number">100%</span>
+              <span className="label">Dados Verificados</span>
+            </StatCard>
+          </Grid>
+        </Container>rs.background};
   min-height: 100vh;
 `;
 
@@ -185,7 +204,7 @@ const Home: React.FC = () => {
           <HeroTitle>Peças Compatíveis para Golf MK3</HeroTitle>
           <HeroSubtitle>
             Encontre facilmente peças compatíveis com seu Volkswagen Golf MK3. 
-            Base de dados completa e verificada para facilitar suas pesquisas.
+            Base de dados com 76 peças verificadas para facilitar suas pesquisas.
           </HeroSubtitle>
           <Button as={Link} to="/pecas" variant="primary">
             Buscar Peças Agora
@@ -203,7 +222,7 @@ const Home: React.FC = () => {
               <span className="icon">🔧</span>
               <h3>Peças Compatíveis</h3>
               <p>
-                Consulte nossa base de dados completa com centenas de peças compatíveis 
+                Consulte nossa base de dados com 76 peças compatíveis 
                 organizadas por categoria para facilitar sua busca.
               </p>
               <Button variant="secondary">Explorar Peças</Button>
@@ -236,7 +255,7 @@ const Home: React.FC = () => {
         <Container>
           <Grid columns={4} gap="2rem">
             <StatCard>
-              <span className="number">500+</span>
+              <span className="number">76</span>
               <span className="label">Peças Catalogadas</span>
             </StatCard>
             <StatCard>
@@ -244,7 +263,7 @@ const Home: React.FC = () => {
               <span className="label">Fusíveis Mapeados</span>
             </StatCard>
             <StatCard>
-              <span className="number">60+</span>
+              <span className="number">24</span>
               <span className="label">Códigos de Cores</span>
             </StatCard>
             <StatCard>

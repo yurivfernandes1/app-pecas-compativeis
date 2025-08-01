@@ -268,7 +268,7 @@ const Sobre: React.FC = () => {
 
           <SidebarContent>
             <StatCard>
-              <span className="number">500+</span>
+              <span className="number">76</span>
               <span className="label">Peças Catalogadas</span>
             </StatCard>
 
@@ -278,7 +278,7 @@ const Sobre: React.FC = () => {
             </StatCard>
 
             <StatCard>
-              <span className="number">60+</span>
+              <span className="number">24</span>
               <span className="label">Códigos de Cores</span>
             </StatCard>
 

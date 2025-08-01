@@ -13,7 +13,7 @@ O **Golf MK3 Peças Compatíveis** é uma aplicação web moderna e responsiva d
 
 ### ✨ Funcionalidades Principais
 
-- 🔧 **Peças Compatíveis**: Base completa com centenas de peças organizadas por categoria
+- 🔧 **Peças Compatíveis**: Base completa com 76 peças organizadas por categoria
 - ⚡ **Mapa de Fusíveis**: Diagrama interativo da caixa de fusíveis e relés
 - 🎨 **Tabela de Cores**: Códigos de cores VW completos por ano e modelo
 - 🔍 **Busca Avançada**: Filtros por categoria, veículo e termo de busca
@@ -120,7 +120,7 @@ src/
 ## 📊 Base de Dados
 
 ### Peças Compatíveis
-- **500+ peças** catalogadas e verificadas
+- **76 peças** catalogadas e verificadas
 - **5 categorias** principais: Motor, Transmissão, Suspensão, Arrefecimento, Lataria
 - **Informações detalhadas** de compatibilidade por veículo
 
@@ -130,7 +130,7 @@ src/
 - **Amperagens** e funções específicas
 
 ### Tabela de Cores
-- **60+ códigos** de cores VW
+- **24 códigos** de cores VW
 - **Dados de 1994-1997** organizados por ano
 - **Referências visuais** quando disponíveis
 

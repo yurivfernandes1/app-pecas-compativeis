@@ -60,9 +60,9 @@ app-pecas-compativeis/
 - **Sobre**: Informações do projeto
 
 #### ✅ **Base de Dados JSON**
-- **500+ peças** organizadas por categoria
+- **76 peças** organizadas por categoria
 - **22 fusíveis** com funções e amperagens
-- **60+ códigos** de cores VW (1994-1997)
+- **24 códigos** de cores VW (1994-1997)
 
 #### ✅ **Design System**
 - **Paleta**: Vermelho (#DC2626), Cinza escuro, Branco
