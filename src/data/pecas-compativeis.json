@@ -1,4 +1,131 @@
 {
+    "Sistema de Iluminação": {
+        "Lâmpada farol baixo H4": [
+            "Golf GL 1.8 mexicano 96-98",
+            "Golf GL 1.8 alemão 95-98",
+            "Cordoba 1.6/1.8 95-02",
+            "Ibiza 1.4/1.6 93-99"
+        ],
+        "Lâmpada farol baixo HB4": [
+            "Golf GTI 2.0 8V fluxo cruzado mexicano 93-98",
+            "Golf GLX 2.0 8V fluxo cruzado mexicano 93-98"
+        ],
+        "Lâmpada farol baixo H1": [
+            "Golf GTI 2.0 8V fluxo cruzado alemão 92-98 (Foco Duplo E-Code)",
+            "Golf GLX 2.0 8V fluxo cruzado alemão 92-98 (Foco Duplo E-Code)"
+        ],
+        "Lâmpada farol alto H1": [
+            "Golf GTI 2.0 8V fluxo cruzado alemão 92-98 (Foco Duplo E-Code)",
+            "Golf GLX 2.0 8V fluxo cruzado alemão 92-98 (Foco Duplo E-Code)",
+            "Golf GTI 2.0 8V fluxo cruzado mexicano 93-98",
+            "Golf GLX 2.0 8V fluxo cruzado mexicano 93-98",
+            "Passat B4 94-96",
+            "Cordoba SX/GLX 95-02"
+        ],
+        "Lâmpada farol de milha H3": [
+            "Golf GTI 2.0 mexicano 93-98 (com faróis auxiliares)",
+            "Golf GLX 2.0 mexicano 93-98 (com faróis auxiliares)",
+            "Golf GTI 2.0 alemão 92-98 (com faróis auxiliares)",
+            "Golf GLX 2.0 alemão 92-98 (com faróis auxiliares)",
+            "Santana 2.0 Mi 97-03",
+            "Parati 1.8/2.0 97-02"
+        ],
+        "Lâmpada pisca dianteira PY21W": [
+            "Golf GL 1.8 mexicano 96-98",
+            "Golf GL 1.8 alemão 95-98",
+            "Golf GTI 2.0 mexicano 93-98",
+            "Golf GLX 2.0 mexicano 93-98",
+            "Golf GTI 2.0 alemão 92-98",
+            "Golf GLX 2.0 alemão 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 1.6/1.8 95-02"
+        ],
+        "Lâmpada lanterna traseira P21W": [
+            "Golf GL 1.8 mexicano 96-98",
+            "Golf GL 1.8 alemão 95-98",
+            "Golf GTI 2.0 mexicano 93-98",
+            "Golf GLX 2.0 mexicano 93-98",
+            "Golf GTI 2.0 alemão 92-98",
+            "Golf GLX 2.0 alemão 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02"
+        ],
+        "Lâmpada freio/lanterna P21/5W": [
+            "Golf GL 1.8 mexicano 96-98",
+            "Golf GL 1.8 alemão 95-98",
+            "Golf GTI 2.0 mexicano 93-98",
+            "Golf GLX 2.0 mexicano 93-98",
+            "Golf GTI 2.0 alemão 92-98",
+            "Golf GLX 2.0 alemão 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02"
+        ],
+        "Lâmpada pisca traseira PY21W": [
+            "Golf GL 1.8 mexicano 96-98",
+            "Golf GL 1.8 alemão 95-98",
+            "Golf GTI 2.0 mexicano 93-98",
+            "Golf GLX 2.0 mexicano 93-98",
+            "Golf GTI 2.0 alemão 92-98",
+            "Golf GLX 2.0 alemão 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02"
+        ],
+        "Lâmpada ré W16W": [
+            "Golf GL 1.8 mexicano 96-98",
+            "Golf GL 1.8 alemão 95-98",
+            "Golf GTI 2.0 mexicano 93-98",
+            "Golf GLX 2.0 mexicano 93-98",
+            "Golf GTI 2.0 alemão 92-98",
+            "Golf GLX 2.0 alemão 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02"
+        ],
+        "Lâmpada luz da placa W5W": [
+            "Golf GL 1.8 mexicano 96-98",
+            "Golf GL 1.8 alemão 95-98",
+            "Golf GTI 2.0 mexicano 93-98",
+            "Golf GLX 2.0 mexicano 93-98",
+            "Golf GTI 2.0 alemão 92-98",
+            "Golf GLX 2.0 alemão 92-98",
+            "Polo Classic 96-02",
+            "Santana 97-03"
+        ],
+        "Lâmpada lanterna lateral W5W": [
+            "Golf GL 1.8 mexicano 96-98",
+            "Golf GL 1.8 alemão 95-98",
+            "Golf GTI 2.0 mexicano 93-98",
+            "Golf GLX 2.0 mexicano 93-98",
+            "Golf GTI 2.0 alemão 92-98",
+            "Golf GLX 2.0 alemão 92-98",
+            "Polo Classic 96-02"
+        ],
+        "Lâmpada painel T5 (W2W)": [
+            "Golf GL 1.8 mexicano 96-98",
+            "Golf GL 1.8 alemão 95-98",
+            "Golf GTI 2.0 mexicano 93-98",
+            "Golf GLX 2.0 mexicano 93-98",
+            "Golf GTI 2.0 alemão 92-98",
+            "Golf GLX 2.0 alemão 92-98",
+            "Polo Classic 96-02",
+            "Santana 97-03"
+        ],
+        "Lâmpada teto W5W": [
+            "Golf GL 1.8 mexicano 96-98",
+            "Golf GL 1.8 alemão 95-98",
+            "Golf GTI 2.0 mexicano 93-98",
+            "Golf GLX 2.0 mexicano 93-98",
+            "Golf GTI 2.0 alemão 92-98",
+            "Golf GLX 2.0 alemão 92-98",
+            "Polo Classic 96-02",
+            "Santana 97-03"
+        ],
+        "Lâmpada porta-luvas W5W": [
+            "Golf GLX 2.0 mexicano 93-98",
+            "Golf GLX 2.0 alemão 92-98",
+            "Polo Classic SLX 96-02",
+            "Cordoba GLX 95-02"
+        ]
+    },
     "Itens Gerais e Motor": {
         "Velas": [
             "Palio 1.6 16v"

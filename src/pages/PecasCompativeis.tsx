@@ -88,6 +88,87 @@ const HeroContent = styled.div`
   }
 `;
 
+const InfoSection = styled.section`
+  margin-bottom: 2rem;
+`;
+
+const InfoCard = styled.div`
+  background: ${colors.surface};
+  border-radius: 15px;
+  border: 2px solid transparent;
+  border-left: 4px solid ${colors.primary};
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  
+  &:hover {
+    border-color: ${colors.primary};
+    box-shadow: 0 10px 40px rgba(220, 38, 38, 0.15);
+  }
+`;
+
+const InfoHeader = styled.div<{ $expanded?: boolean }>`
+  padding: 1.5rem 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(220, 38, 38, 0.05);
+  
+  ${media.mobile} {
+    padding: 1rem 1.5rem;
+  }
+  
+  h3 {
+    color: ${colors.white};
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    
+    ${media.mobile} {
+      font-size: 1rem;
+    }
+  }
+  
+  .icon {
+    color: ${colors.primary};
+    font-size: 1.2rem;
+  }
+  
+  .expand-icon {
+    color: ${colors.primary};
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+    transform: ${props => props.$expanded ? 'rotate(180deg)' : 'rotate(0deg)'};
+  }
+`;
+
+const InfoContent = styled.div<{ $expanded?: boolean }>`
+  max-height: ${props => props.$expanded ? '1000px' : '0'};
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  padding: ${props => props.$expanded ? '0 2rem 2rem' : '0 2rem'};
+  
+  ${media.mobile} {
+    padding: ${props => props.$expanded ? '0 1.5rem 1.5rem' : '0 1.5rem'};
+  }
+  
+  p {
+    color: ${colors.gray[300]};
+    line-height: 1.7;
+    margin: 0;
+    text-align: justify;
+    
+    ${media.mobile} {
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+  }
+`;
+
 const FiltersSection = styled.section`
   margin-bottom: 3rem;
 `;
@@ -539,6 +620,11 @@ const PecasCompativeis: React.FC = () => {
   const [selectedVehicle, setSelectedVehicle] = useState('');
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
   const [expandedVehicles, setExpandedVehicles] = useState<Set<string>>(new Set());
+  const [infoExpanded, setInfoExpanded] = useState(false);
+
+  const toggleInfo = () => {
+    setInfoExpanded(!infoExpanded);
+  };
 
   const toggleCategory = (categoria: string) => {
     const newExpanded = new Set(expandedCategories);
@@ -628,13 +714,36 @@ const PecasCompativeis: React.FC = () => {
             </h1>
             <p>
               Encontre peças compatíveis para seu Golf MK3 em nossa base de dados completa. 
-              76 peças catalogadas com informações verificadas de compatibilidade.
+              89 peças catalogadas com informações verificadas de compatibilidade.
             </p>
           </HeroContent>
         </Container>
       </HeroSection>
 
       <Container>
+        <InfoSection>
+          <InfoCard>
+            <InfoHeader $expanded={infoExpanded} onClick={toggleInfo}>
+              <h3>
+                <i className="fas fa-info-circle icon"></i>
+                Como identificar se meu MK3 é Mexicano ou Alemão?
+              </h3>
+              <i className="fas fa-chevron-down expand-icon"></i>
+            </InfoHeader>
+            <InfoContent $expanded={infoExpanded}>
+              <p>
+                A terceira geração do Golf foi lançada na Europa no final de 1991, porém em países como o Brasil e os Estados Unidos, eles só chegaram em 1994.
+                <br/><br/>
+                No Brasil o MK3 chegou inicialmente somente na versão GTI em 1994, com modelos produzidos ainda em 1993 mas no ano modelo 1994. Em 1995 com a versão GL importada da alemanha, com o motor 1.8 monoponto e a versão GLX importada do México. Em 1996 a VW passou a trazer a versão GL do México já com o motor 1.8 com injeção multiponto.
+                <br/><br/>
+                Ou seja, a única versão do Golf MK3 trazida da Alemanha é o GL no ano de 1995.
+                <br/><br/>
+                Tirando alguns Golf's MK3 na versão VR6 e Cabrio trazidos em poucas unidades da Alemanha pela fábrica, e da versão GL 1995 com motor monoponto, todas as demais versões foram trazidas do México. O Golf MK3 não foi produzido no Brasil nem mesmo na Argentina e a versão GLX só foi produzida no México.
+              </p>
+            </InfoContent>
+          </InfoCard>
+        </InfoSection>
+
         <FiltersSection>
           <FiltersCard>
             <FiltersGrid>
