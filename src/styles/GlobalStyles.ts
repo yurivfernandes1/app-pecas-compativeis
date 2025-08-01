@@ -116,7 +116,7 @@ export const GlobalStyle = createGlobalStyle`
       monospace;
   }
 
-  // Prevenção de screenshot (básica)
+  // Prevenção de screenshot (básica) - com exceções específicas para PWA
   body {
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -126,12 +126,27 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-tap-highlight-color: transparent;
   }
 
-  // Permitir seleção apenas em elementos específicos
-  input, textarea, [data-selectable="true"] {
-    -webkit-user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
-    user-select: text;
+  // Permitir seleção e interação em elementos específicos
+  input, textarea, select, [data-selectable="true"], button {
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
+    -webkit-touch-callout: default !important;
+    -webkit-tap-highlight-color: rgba(220, 38, 38, 0.2) !important;
+    pointer-events: auto !important;
+  }
+  
+  // Garantir que inputs funcionem corretamente em PWA
+  input[type="text"], input[type="search"], textarea {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    touch-action: manipulation !important;
+    -webkit-touch-callout: default !important;
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    user-select: text !important;
   }
 
   // Scrollbar escura customizada (oculta)

@@ -114,6 +114,17 @@ const SearchInput = styled.input`
   background: rgba(255, 255, 255, 0.1);
   color: ${colors.white};
   
+  /* Configurações específicas para PWA */
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  user-select: text !important;
+  -webkit-touch-callout: default !important;
+  -webkit-tap-highlight-color: rgba(220, 38, 38, 0.2) !important;
+  touch-action: manipulation !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  pointer-events: auto !important;
+  
   ${media.mobile} {
     padding: 0.8rem 1rem;
     font-size: 0.9rem;
@@ -124,6 +135,9 @@ const SearchInput = styled.input`
     border-color: ${colors.primary};
     background: rgba(255, 255, 255, 0.15);
     box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    user-select: text !important;
   }
   
   &::placeholder {
@@ -974,6 +988,10 @@ const MapaFusiveis: React.FC = () => {
                 placeholder="🔍 Pesquisar por função, número do fusível ou amperagem..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck="false"
               />
             </SearchBox>
           </SearchSection>

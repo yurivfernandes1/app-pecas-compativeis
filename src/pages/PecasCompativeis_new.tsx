@@ -125,11 +125,25 @@ const SearchInput = styled.input`
   transition: all 0.3s ease;
   background: ${colors.gray[50]};
   
+  /* Configurações específicas para PWA */
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  user-select: text !important;
+  -webkit-touch-callout: default !important;
+  -webkit-tap-highlight-color: rgba(220, 38, 38, 0.2) !important;
+  touch-action: manipulation !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  pointer-events: auto !important;
+  
   &:focus {
     outline: none;
     border-color: ${colors.primary};
     background: ${colors.white};
     box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1);
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    user-select: text !important;
   }
   
   &::placeholder {
@@ -146,11 +160,23 @@ const Select = styled.select`
   cursor: pointer;
   transition: all 0.3s ease;
   
+  /* Configurações específicas para PWA */
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  user-select: text !important;
+  -webkit-touch-callout: default !important;
+  -webkit-tap-highlight-color: rgba(220, 38, 38, 0.2) !important;
+  touch-action: manipulation !important;
+  pointer-events: auto !important;
+  
   &:focus {
     outline: none;
     border-color: ${colors.primary};
     background: ${colors.white};
     box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1);
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    user-select: text !important;
   }
 `;
 
@@ -442,6 +468,10 @@ const PecasCompativeis: React.FC = () => {
                   placeholder="🔍 Digite o nome da peça ou veículo..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
+                  autoComplete="off"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck="false"
                 />
               </FilterGroup>
               
