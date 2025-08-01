@@ -238,6 +238,11 @@ const StatsContainer = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1.5rem;
   margin-bottom: 3rem;
+  
+  ${media.mobile} {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 `;
 
 const StatCard = styled.div`
@@ -250,6 +255,10 @@ const StatCard = styled.div`
   border-left: 4px solid ${colors.primary};
   transition: all 0.3s ease;
   animation: ${fadeIn} 0.8s ease-out;
+  
+  ${media.mobile} {
+    padding: 1.5rem 1rem;
+  }
   
   &:hover {
     border-color: ${colors.primary};
@@ -267,12 +276,20 @@ const StatCard = styled.div`
     color: ${colors.primary};
     display: block;
     margin-bottom: 0.5rem;
+    
+    ${media.mobile} {
+      font-size: 2rem;
+    }
   }
   
   .label {
     font-size: 1rem;
     color: ${colors.gray[300]};
     font-weight: 500;
+    
+    ${media.mobile} {
+      font-size: 0.9rem;
+    }
   }
   
   .icon {
@@ -280,6 +297,11 @@ const StatCard = styled.div`
     color: ${colors.primary};
     margin-bottom: 1rem;
     opacity: 0.8;
+    
+    ${media.mobile} {
+      font-size: 1.5rem;
+      margin-bottom: 0.8rem;
+    }
   }
 `;
 
