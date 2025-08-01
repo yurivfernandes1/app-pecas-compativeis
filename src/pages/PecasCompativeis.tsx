@@ -147,7 +147,7 @@ const InfoHeader = styled.div<{ $expanded?: boolean }>`
 `;
 
 const InfoContent = styled.div<{ $expanded?: boolean }>`
-  max-height: ${props => props.$expanded ? '1000px' : '0'};
+  max-height: ${props => props.$expanded ? '1500px' : '0'};
   overflow: hidden;
   transition: max-height 0.4s ease, padding 0.4s ease;
   padding: ${props => props.$expanded ? '0 2rem 2rem' : '0 2rem'};
@@ -166,6 +166,32 @@ const InfoContent = styled.div<{ $expanded?: boolean }>`
       font-size: 0.95rem;
       line-height: 1.6;
     }
+  }
+`;
+
+const VideoContainer = styled.div`
+  margin: 1.5rem 0;
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 12px;
+  }
+  
+  ${media.mobile} {
+    margin: 1rem 0;
+    border-radius: 8px;
   }
 `;
 
@@ -731,6 +757,14 @@ const PecasCompativeis: React.FC = () => {
               <i className="fas fa-chevron-down expand-icon"></i>
             </InfoHeader>
             <InfoContent $expanded={infoExpanded}>
+              <VideoContainer>
+                <iframe
+                  src="https://www.youtube.com/embed/Q5OUwh7BFS4"
+                  title="Como identificar se meu Golf MK3 é Mexicano ou Alemão"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </VideoContainer>
               <p>
                 A terceira geração do Golf foi lançada na Europa no final de 1991, porém em países como o Brasil e os Estados Unidos, eles só chegaram em 1994.
                 <br/><br/>
