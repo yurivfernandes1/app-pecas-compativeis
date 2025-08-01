@@ -268,7 +268,7 @@ const Sobre: React.FC = () => {
 
           <SidebarContent>
             <StatCard>
-              <span className="number">76</span>
+              <span className="number">91</span>
               <span className="label">Peças Catalogadas</span>
             </StatCard>
 
