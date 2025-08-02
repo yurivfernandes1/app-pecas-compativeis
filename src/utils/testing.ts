@@ -170,7 +170,10 @@ export class AppTester {
         const href = link.getAttribute('href');
         const textContent = link.textContent?.trim() || '';
         
-        if (!href || href === '#' || href.startsWith('javascript:')) {
+        // Detecta links inválidos ou vazios
+        const isInvalidHref = !href || href === '#' || href.indexOf('javascript') === 0;
+        
+        if (isInvalidHref) {
           // Apenas reportar links sem href se eles não forem decorativos
           if (textContent && !link.getAttribute('aria-hidden')) {
             invalidLinks.push(`Link ${index + 1}: "${textContent}" has invalid href: "${href}"`);
