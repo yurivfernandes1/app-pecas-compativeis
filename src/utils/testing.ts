@@ -170,7 +170,7 @@ export class AppTester {
         const href = link.getAttribute('href');
         const textContent = link.textContent?.trim() || '';
         
-        if (!href || href === '#' || href === 'javascript:void(0)') {
+        if (!href || href === '#' || href.startsWith('javascript:')) {
           // Apenas reportar links sem href se eles não forem decorativos
           if (textContent && !link.getAttribute('aria-hidden')) {
             invalidLinks.push(`Link ${index + 1}: "${textContent}" has invalid href: "${href}"`);
@@ -466,7 +466,7 @@ export class AppTester {
         
         // Tentar fazer uma requisição simples para favicon (sempre existe)
         const testUrl = window.location.origin + '/favicon.ico';
-        const response = await fetch(testUrl, { 
+        await fetch(testUrl, { 
           method: 'HEAD',
           cache: 'no-cache',
           signal: controller.signal,

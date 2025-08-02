@@ -926,7 +926,6 @@ const MapaFusiveis: React.FC = () => {
     const relaysInRow = [];
     for (let i = startIndex; i <= endIndex; i++) {
       const relayId = `R${i}`;
-      const relayData = relayPositions.find(r => r.id === relayId);
       const isHighlighted = selectedRelay === relayId;
       
       relaysInRow.push(
