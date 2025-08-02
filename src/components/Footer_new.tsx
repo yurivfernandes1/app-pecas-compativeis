@@ -223,7 +223,7 @@ const Footer: React.FC = () => {
             © 2025 Falando de GTI - Todos os direitos reservados.
           </p>
           <p>
-            Desenvolvido com <i className="fas fa-heart"></i> por Yuri Fernandes | 
+            Desenvolvido por Yuri Fernandes | 
             Este app é uma ferramenta educacional e informativa. Sempre consulte um profissional 
             qualificado antes de realizar qualquer modificação em seu veículo.
           </p>
