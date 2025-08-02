@@ -195,21 +195,24 @@ const FuseBoxDiagram = styled.div`
   background: rgba(0, 0, 0, 0.3);
   border: 3px solid rgba(255, 255, 255, 0.3);
   border-radius: 10px;
-  padding: 1.5rem;
+  padding: 2rem;
   position: relative;
   max-width: 100%;
-  margin: 0;
+  margin: 0 auto;
   overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   
   ${media.mobile} {
-    padding: 0.5rem;
+    padding: 1rem;
     border-radius: 6px;
     border-width: 1px;
     overflow-x: hidden;
   }
   
   @media (max-width: 480px) {
-    padding: 0.3rem;
+    padding: 0.8rem;
     border-radius: 4px;
   }
 `;
@@ -304,18 +307,26 @@ const FuseSlot = styled.div<{ $color: FuseColor; $highlighted?: boolean; $isEmpt
 const RelayGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 0.5rem;
+  gap: 0.8rem;
   margin-bottom: 1rem;
+  justify-items: center;
+  max-width: 100%;
   
   ${media.mobile} {
-    gap: 0.3rem;
-    grid-template-columns: repeat(6, minmax(44px, 1fr));
+    gap: 0.4rem;
+    grid-template-columns: repeat(6, minmax(50px, 1fr));
     margin-bottom: 0.5rem;
+    justify-content: center;
   }
   
   @media (max-width: 480px) {
+    gap: 0.3rem;
+    grid-template-columns: repeat(6, minmax(46px, 1fr));
+  }
+  
+  @media (max-width: 360px) {
     gap: 0.25rem;
-    grid-template-columns: repeat(6, minmax(40px, 1fr));
+    grid-template-columns: repeat(6, minmax(42px, 1fr));
   }
 `;
 
@@ -335,11 +346,11 @@ const RelaySlot = styled.div<{ $highlighted?: boolean }>`
   transition: all 0.3s ease;
   
   ${media.mobile} {
-    width: 44px;
-    height: 44px;
-    font-size: 0.65rem;
+    width: 60px;
+    height: 60px;
+    font-size: 0.75rem;
     border-width: 1px;
-    border-radius: 3px;
+    border-radius: 5px;
   }
   
   ${props => props.$highlighted && `
@@ -356,15 +367,15 @@ const RelaySlot = styled.div<{ $highlighted?: boolean }>`
   }
   
   @media (max-width: 480px) {
-    width: 40px;
-    height: 40px;
-    font-size: 0.6rem;
+    width: 56px;
+    height: 56px;
+    font-size: 0.7rem;
   }
   
   @media (max-width: 360px) {
-    width: 36px;
-    height: 36px;
-    font-size: 0.55rem;
+    width: 52px;
+    height: 52px;
+    font-size: 0.65rem;
   }
 `;
 
