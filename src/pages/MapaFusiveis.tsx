@@ -310,13 +310,13 @@ const RelayGrid = styled.div`
   
   ${media.mobile} {
     gap: 0.3rem;
-    grid-template-columns: repeat(6, minmax(30px, 1fr));
+    grid-template-columns: repeat(6, minmax(44px, 1fr));
     margin-bottom: 0.5rem;
   }
   
   @media (max-width: 480px) {
-    gap: 0.2rem;
-    grid-template-columns: repeat(6, minmax(26px, 1fr));
+    gap: 0.25rem;
+    grid-template-columns: repeat(6, minmax(40px, 1fr));
   }
 `;
 
@@ -336,11 +336,11 @@ const RelaySlot = styled.div<{ $highlighted?: boolean }>`
   transition: all 0.3s ease;
   
   ${media.mobile} {
-    width: 30px;
-    height: 30px;
-    font-size: 0.5rem;
+    width: 44px;
+    height: 44px;
+    font-size: 0.65rem;
     border-width: 1px;
-    border-radius: 2px;
+    border-radius: 3px;
   }
   
   ${props => props.$highlighted && `
@@ -357,15 +357,15 @@ const RelaySlot = styled.div<{ $highlighted?: boolean }>`
   }
   
   @media (max-width: 480px) {
-    width: 26px;
-    height: 26px;
-    font-size: 0.45rem;
+    width: 40px;
+    height: 40px;
+    font-size: 0.6rem;
   }
   
   @media (max-width: 360px) {
-    width: 22px;
-    height: 22px;
-    font-size: 0.4rem;
+    width: 36px;
+    height: 36px;
+    font-size: 0.55rem;
   }
 `;
 
