@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { Container, Card, colors, media } from '../styles/GlobalStyles';
 import ScreenProtection from '../components/ScreenProtection';
-import Tooltip from '../components/Tooltip';
 import fusiveisData from '../data/mapa-fusiveis.json';
 
 // Tipos
@@ -801,8 +800,6 @@ const MapaFusiveis: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedFuse, setSelectedFuse] = useState<number | null>(null);
   const [selectedRelay, setSelectedRelay] = useState<string | null>(null);
-  const [hoveredFuse, setHoveredFuse] = useState<number | null>(null);
-  const [hoveredRelay, setHoveredRelay] = useState<string | null>(null);
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
 
   // Função para lidar com clique em fusível
@@ -910,22 +907,15 @@ const MapaFusiveis: React.FC = () => {
       const isEmpty = !fuse || fuse.funcao === '—';
       
       fusesInRow.push(
-        <Tooltip
+        <FuseSlot
           key={i}
-          content={fuse ? `F${i}: ${fuse.funcao} (${fuse.amperagem}A)` : `F${i}: Vazio`}
-          visible={hoveredFuse === i}
+          $color={fuse ? fuse.color : 'red'}
+          $highlighted={isHighlighted}
+          $isEmpty={isEmpty}
+          onClick={() => handleFuseClick(i)}
         >
-          <FuseSlot
-            $color={fuse ? fuse.color : 'red'}
-            $highlighted={isHighlighted}
-            $isEmpty={isEmpty}
-            onClick={() => handleFuseClick(i)}
-            onMouseEnter={() => setHoveredFuse(i)}
-            onMouseLeave={() => setHoveredFuse(null)}
-          >
-            {i}
-          </FuseSlot>
-        </Tooltip>
+          {i}
+        </FuseSlot>
       );
     }
     return fusesInRow;
@@ -940,20 +930,13 @@ const MapaFusiveis: React.FC = () => {
       const isHighlighted = selectedRelay === relayId;
       
       relaysInRow.push(
-        <Tooltip
+        <RelaySlot
           key={relayId}
-          content={relayData ? `${relayId}: ${relayData.descricao}` : relayId}
-          visible={hoveredRelay === relayId}
+          $highlighted={isHighlighted}
+          onClick={() => handleRelayClick(relayId)}
         >
-          <RelaySlot
-            $highlighted={isHighlighted}
-            onClick={() => handleRelayClick(relayId)}
-            onMouseEnter={() => setHoveredRelay(relayId)}
-            onMouseLeave={() => setHoveredRelay(null)}
-          >
-            {relayId}
-          </RelaySlot>
-        </Tooltip>
+          {relayId}
+        </RelaySlot>
       );
     }
     return relaysInRow;
