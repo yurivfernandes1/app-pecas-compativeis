@@ -225,15 +225,15 @@ const FuseGrid = styled.div`
   min-width: 100%;
   
   ${media.mobile} {
-    gap: 0.05rem;
-    grid-template-columns: repeat(22, minmax(12px, 1fr));
+    gap: 0.1rem;
+    grid-template-columns: repeat(22, minmax(18px, 1fr));
     font-size: 0.6rem;
     margin-bottom: 0.5rem;
   }
   
   @media (max-width: 480px) {
-    grid-template-columns: repeat(22, minmax(10px, 1fr));
-    gap: 0.02rem;
+    grid-template-columns: repeat(22, minmax(15px, 1fr));
+    gap: 0.05rem;
     font-size: 0.5rem;
   }
 `;
@@ -254,10 +254,10 @@ const FuseSlot = styled.div<{ $color: FuseColor; $highlighted?: boolean; $isEmpt
   min-width: 30px;
   
   ${media.mobile} {
-    width: 12px;
-    height: 24px;
-    min-width: 12px;
-    font-size: 0.4rem;
+    width: 18px;
+    height: 36px;
+    min-width: 18px;
+    font-size: 0.5rem;
     border-width: 1px;
     border-radius: 2px;
   }
@@ -287,17 +287,17 @@ const FuseSlot = styled.div<{ $color: FuseColor; $highlighted?: boolean; $isEmpt
   }
   
   @media (max-width: 480px) {
-    width: 10px;
-    height: 20px;
-    min-width: 10px;
-    font-size: 0.35rem;
+    width: 15px;
+    height: 30px;
+    min-width: 15px;
+    font-size: 0.45rem;
   }
   
   @media (max-width: 360px) {
-    width: 8px;
-    height: 16px;
-    min-width: 8px;
-    font-size: 0.3rem;
+    width: 12px;
+    height: 24px;
+    min-width: 12px;
+    font-size: 0.4rem;
   }
 `;
 
@@ -309,14 +309,14 @@ const RelayGrid = styled.div`
   margin-bottom: 1rem;
   
   ${media.mobile} {
-    gap: 0.2rem;
-    grid-template-columns: repeat(6, minmax(20px, 1fr));
+    gap: 0.3rem;
+    grid-template-columns: repeat(6, minmax(30px, 1fr));
     margin-bottom: 0.5rem;
   }
   
   @media (max-width: 480px) {
-    gap: 0.1rem;
-    grid-template-columns: repeat(6, minmax(18px, 1fr));
+    gap: 0.2rem;
+    grid-template-columns: repeat(6, minmax(26px, 1fr));
   }
 `;
 
@@ -336,9 +336,9 @@ const RelaySlot = styled.div<{ $highlighted?: boolean }>`
   transition: all 0.3s ease;
   
   ${media.mobile} {
-    width: 20px;
-    height: 20px;
-    font-size: 0.4rem;
+    width: 30px;
+    height: 30px;
+    font-size: 0.5rem;
     border-width: 1px;
     border-radius: 2px;
   }
@@ -357,15 +357,15 @@ const RelaySlot = styled.div<{ $highlighted?: boolean }>`
   }
   
   @media (max-width: 480px) {
-    width: 18px;
-    height: 18px;
-    font-size: 0.35rem;
+    width: 26px;
+    height: 26px;
+    font-size: 0.45rem;
   }
   
   @media (max-width: 360px) {
-    width: 16px;
-    height: 16px;
-    font-size: 0.3rem;
+    width: 22px;
+    height: 22px;
+    font-size: 0.4rem;
   }
 `;
 
