@@ -3,7 +3,6 @@ import styled, { keyframes } from 'styled-components';
 import { Container, Card, colors, media } from '../styles/GlobalStyles';
 import ScreenProtection from '../components/ScreenProtection';
 import { useAppMonitoring } from '../hooks';
-import { useAppStats } from '../utils/appStats';
 import pecasData from '../data/pecas-compativeis.json';
 
 const fadeIn = keyframes`
@@ -678,7 +677,6 @@ const PecasCompativeis: React.FC = () => {
 
   // Sistema de monitoramento e estatísticas centralizadas
   const { logUserInteraction, logError, logDebug } = useAppMonitoring('PecasCompativeis');
-  const appStats = useAppStats();
 
   // Funções auxiliares com logging
   const handleSearchChange = (value: string) => {
@@ -803,9 +801,6 @@ const PecasCompativeis: React.FC = () => {
 
   const totalPecas = Object.values(results).reduce((sum, pecas) => sum + pecas.length, 0);
   const totalCategorias = Object.keys(results).length;
-  const totalVeiculos = new Set(
-    Object.values(results).flat().flatMap(p => p.veiculos)
-  ).size;
 
   const categorias = Object.keys(pecasData);
   const todosVeiculos = Array.from(new Set(
