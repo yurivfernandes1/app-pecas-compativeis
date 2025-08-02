@@ -6,32 +6,31 @@ export const useSocialModals = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalCount, setModalCount] = useState(0);
   const [lastModalTime, setLastModalTime] = useState(0);
+  const [isFirstModal, setIsFirstModal] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
-    // Don't show modals on home page
-    if (location.pathname === '/') {
-      return;
-    }
-
-    // Check if enough time has passed since last modal (3 minutes = 180000ms)
     const now = Date.now();
     const timeSinceLastModal = now - lastModalTime;
     
-    // Set up modal timer (3 minutes = 180000ms)
+    // Determinar o tempo para o próximo modal
+    const modalDelay = isFirstModal ? 5000 : 300000; // 5 segundos na primeira vez, depois 5 minutos (300000ms)
+    
+    // Set up modal timer
     const modalTimer = setTimeout(() => {
-      // Limit to 3 modals per session to avoid being too annoying
-      if (modalCount < 3 && timeSinceLastModal >= 180000) {
+      // Verificar se é o primeiro modal ou se já passou tempo suficiente desde o último
+      if (isFirstModal || timeSinceLastModal >= 300000) {
         setShowModal(true);
         setModalCount(prev => prev + 1);
         setLastModalTime(now);
+        setIsFirstModal(false);
       }
-    }, 180000); // 3 minutes
+    }, modalDelay);
 
     return () => {
       clearTimeout(modalTimer);
     };
-  }, [location.pathname, modalCount, lastModalTime]);
+  }, [location.pathname, modalCount, lastModalTime, isFirstModal]);
 
   const closeModal = () => {
     setShowModal(false);
