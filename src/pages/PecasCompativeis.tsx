@@ -922,11 +922,6 @@ const PecasCompativeis: React.FC = () => {
         </FiltersSection>
 
         <StatsContainer>
-          <StatCard data-testid="total-sistema-stat">
-            <div className="icon">�</div>
-            <span className="number">{appStats.totalPecas}</span>
-            <span className="label">Peças no Sistema</span>
-          </StatCard>
           <StatCard data-testid="pecas-filtradas-stat">
             <div className="icon">�🔧</div>
             <span className="number">{totalPecas}</span>
@@ -936,11 +931,6 @@ const PecasCompativeis: React.FC = () => {
             <div className="icon">📂</div>
             <span className="number">{totalCategorias}</span>
             <span className="label">Categorias Exibidas</span>
-          </StatCard>
-          <StatCard data-testid="veiculos-stat">
-            <div className="icon">🚗</div>
-            <span className="number">{totalVeiculos}</span>
-            <span className="label">Veículos Encontrados</span>
           </StatCard>
         </StatsContainer>
 
