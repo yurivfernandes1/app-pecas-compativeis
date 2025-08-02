@@ -507,6 +507,11 @@
         "Pestana interna do vidro": [
             "Para Golf GLX/GL - Gol G2 e G4 2 portas.",
             "Para Golf GTI - Fox 2 portas."
+        ],
+        "Máquina de vidro": [
+            "GTI 2.0 (pode usar do GLX e GL)",
+            "GLX (pode usar do GL)",
+            "GL (pode usar do GLX)"
         ]
     }
 }

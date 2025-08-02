@@ -84,3 +84,7 @@ export const useAnalytics = () => {
 
   return { trackEvent, trackPageView };
 };
+
+// Re-export hooks específicos
+export { useAppProtection } from './useAppProtection';
+export { default as useAppMonitoring } from './useAppMonitoring';

@@ -11,6 +11,7 @@ import PecasCompativeis from './pages/PecasCompativeis';
 import MapaFusiveis from './pages/MapaFusiveis';
 import TabelaCores from './pages/TabelaCores';
 import Sobre from './pages/Sobre';
+import Diagnosticos from './pages/Diagnosticos';
 
 const AppContent: React.FC = () => {
   const { showModal, closeModal } = useAppProtection();
@@ -25,6 +26,7 @@ const AppContent: React.FC = () => {
           <Route path="/fusiveis" element={<MapaFusiveis />} />
           <Route path="/cores" element={<TabelaCores />} />
           <Route path="/sobre" element={<Sobre />} />
+          <Route path="/diag-sys-internal-2025" element={<Diagnosticos />} />
         </Routes>
       </main>
       <Footer />

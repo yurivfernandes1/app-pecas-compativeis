@@ -965,11 +965,11 @@ const MapaFusiveis: React.FC = () => {
 
   return (
     <ScreenProtection>
-      <PageContainer>
+      <PageContainer data-testid="mapa-fusiveis-page">
         <HeroSection>
           <Container>
             <HeroContent>
-              <h1>
+              <h1 data-testid="page-title">
                 <i className="fas fa-bolt"></i> Mapa de Fusíveis Golf MK3
               </h1>
               <p>

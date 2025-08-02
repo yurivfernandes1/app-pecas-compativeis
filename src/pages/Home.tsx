@@ -2,6 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Container, Title, Button, Card, Grid, colors, media } from '../styles/GlobalStyles';
+import { logger } from '../utils';
+import { useAppMonitoring } from '../hooks';
+import { useAppStats } from '../utils/appStats';
 
 const PageWrapper = styled.div`
   background: ${colors.background};
@@ -168,26 +171,68 @@ const CTASection = styled.section`
 `;
 
 const Home: React.FC = () => {
+  const { logUserInteraction } = useAppMonitoring('Home');
+  const stats = useAppStats();
+
   React.useEffect(() => {
+    // Log da visualização da página
+    logger.info('Página Home carregada', 'Home', {
+      userAgent: navigator.userAgent,
+      timestamp: new Date().toISOString(),
+      url: window.location.href
+    });
+
     // Track page view
     if (window.gtag) {
       window.gtag('event', 'page_view', {
         page_title: 'Home',
         page_location: window.location.href
       });
+      logger.debug('Google Analytics page view tracked', 'Home');
     }
   }, []);
 
+  const handleFeatureClick = (featureName: string, url: string) => {
+    logUserInteraction(`feature_click_${featureName.toLowerCase().replace(/\s+/g, '_')}`, {
+      feature: featureName,
+      destinationUrl: url,
+      timestamp: new Date().toISOString()
+    });
+  };
+
+  const handleShareClick = () => {
+    logUserInteraction('share_button_click', {});
+    
+    if (navigator.share) {
+      navigator.share({
+        title: 'Golf MK3 Peças Compatíveis',
+        text: 'Encontre peças compatíveis para seu Golf MK3',
+        url: window.location.href
+      }).then(() => {
+        logUserInteraction('share_success_web_api', {});
+      }).catch((error) => {
+        logger.error('Erro ao compartilhar via Web Share API', 'Home', error);
+      });
+    } else {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        alert('Link copiado para a área de transferência!');
+        logUserInteraction('share_success_clipboard', {});
+      }).catch((error) => {
+        logger.error('Erro ao copiar link para clipboard', 'Home', error);
+      });
+    }
+  };
+
   return (
-    <PageWrapper>
+    <PageWrapper data-testid="home-page">
       <HeroSection>
         <Container>
-          <HeroTitle>Peças Compatíveis para Golf MK3</HeroTitle>
+          <HeroTitle data-testid="hero-title">Peças Compatíveis para Golf MK3</HeroTitle>
           <HeroSubtitle>
             Encontre facilmente peças compatíveis com seu Volkswagen Golf MK3. 
-            Base de dados com 77 peças verificadas para facilitar suas pesquisas.
+            Base de dados com {stats.totalPecas} peças verificadas para facilitar suas pesquisas.
           </HeroSubtitle>
-          <Button as={Link} to="/pecas" variant="primary">
+          <Button as={Link} to="/pecas" variant="primary" data-testid="search-parts-button">
             Buscar Peças Agora
           </Button>
         </Container>
@@ -198,18 +243,29 @@ const Home: React.FC = () => {
           <Title style={{ textAlign: 'center', marginBottom: '2rem' }}>
             Funcionalidades Principais
           </Title>
-          <Grid columns={3} gap="2rem">
-            <FeatureCard as={Link} to="/pecas" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Grid columns={3} gap="2rem" data-testid="features-grid">
+            <FeatureCard 
+              as={Link} 
+              to="/pecas" 
+              style={{ textDecoration: 'none', color: 'inherit' }}
+              onClick={() => handleFeatureClick('Peças Compatíveis', '/pecas')}
+              data-testid="feature-pecas"
+            >
               <span className="icon">🔧</span>
               <h3>Peças Compatíveis</h3>
               <p>
-                Consulte nossa base de dados com 77 peças compatíveis 
+                Consulte nossa base de dados com {stats.totalPecas} peças compatíveis 
                 organizadas por categoria para facilitar sua busca.
               </p>
               <Button variant="secondary">Explorar Peças</Button>
             </FeatureCard>
 
-            <FeatureCard as={Link} to="/fusiveis" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <FeatureCard 
+              as={Link} 
+              to="/fusiveis" 
+              style={{ textDecoration: 'none', color: 'inherit' }}
+              onClick={() => handleFeatureClick('Mapa de Fusíveis', '/fusiveis')}
+            >
               <span className="icon">⚡</span>
               <h3>Mapa de Fusíveis</h3>
               <p>
@@ -219,7 +275,12 @@ const Home: React.FC = () => {
               <Button variant="secondary">Ver Mapa</Button>
             </FeatureCard>
 
-            <FeatureCard as={Link} to="/cores" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <FeatureCard 
+              as={Link} 
+              to="/cores" 
+              style={{ textDecoration: 'none', color: 'inherit' }}
+              onClick={() => handleFeatureClick('Tabela de Cores', '/cores')}
+            >
               <span className="icon">🎨</span>
               <h3>Tabela de Cores</h3>
               <p>
@@ -235,20 +296,20 @@ const Home: React.FC = () => {
       <StatsSection>
         <Container>
           <Grid columns={4} gap="2rem">
-            <StatCard>
-              <span className="number">77</span>
+            <StatCard data-testid="stat-pecas">
+              <span className="number">{stats.totalPecas}</span>
               <span className="label">Peças Catalogadas</span>
             </StatCard>
-            <StatCard>
-              <span className="number">22</span>
+            <StatCard data-testid="stat-fusiveis">
+              <span className="number">{stats.totalFusiveis}</span>
               <span className="label">Fusíveis Mapeados</span>
             </StatCard>
-            <StatCard>
-              <span className="number">24</span>
+            <StatCard data-testid="stat-cores">
+              <span className="number">{stats.totalCores}</span>
               <span className="label">Códigos de Cores</span>
             </StatCard>
-            <StatCard>
-              <span className="number">100%</span>
+            <StatCard data-testid="stat-verificacao">
+              <span className="number">{stats.dataVerification}</span>
               <span className="label">Dados Verificados</span>
             </StatCard>
           </Grid>
@@ -264,18 +325,7 @@ const Home: React.FC = () => {
           </p>
           <Button 
             variant="primary" 
-            onClick={() => {
-              if (navigator.share) {
-                navigator.share({
-                  title: 'Golf MK3 Peças Compatíveis',
-                  text: 'Encontre peças compatíveis para seu Golf MK3',
-                  url: window.location.href
-                });
-              } else {
-                navigator.clipboard.writeText(window.location.href);
-                alert('Link copiado para a área de transferência!');
-              }
-            }}
+            onClick={handleShareClick}
           >
             Compartilhar App
           </Button>

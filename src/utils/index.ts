@@ -77,13 +77,14 @@ export const throttle = <T extends (...args: any[]) => any>(
   func: T,
   delay: number
 ): ((...args: Parameters<T>) => void) => {
-  let lastCall = 0;
+  let timeoutId: NodeJS.Timeout | null = null;
   
   return (...args: Parameters<T>) => {
-    const now = Date.now();
-    if (now - lastCall >= delay) {
-      lastCall = now;
+    if (timeoutId === null) {
       func.apply(null, args);
+      timeoutId = setTimeout(() => {
+        timeoutId = null;
+      }, delay);
     }
   };
 };
@@ -134,3 +135,7 @@ export const sortByProperty = <T>(
     return 0;
   });
 };
+
+// Re-export logger para facilitar acesso
+export { logger } from './logger';
+export { appTester, healthChecker } from './testing';

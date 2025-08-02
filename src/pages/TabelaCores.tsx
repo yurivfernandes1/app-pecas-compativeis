@@ -517,15 +517,16 @@ const TabelaCores: React.FC = () => {
   return (
     <ScreenProtection>
       <>
-      <SearchSection>
+      <SearchSection data-testid="tabela-cores-page">
         <Container>
-          <Title>Tabela de Cores VW</Title>
+          <Title data-testid="page-title">Tabela de Cores VW</Title>
           <p style={{ marginBottom: '2rem', color: colors.gray[400] }}>
             Encontre o código de cor exato do seu Golf MK3. Use os filtros para refinar sua busca.
           </p>
           
           <SearchForm>
             <Input
+              data-testid="search-input"
               type="text"
               placeholder="Buscar por nome, código de tinta, código VW ou tipo..."
               value={searchTerm}

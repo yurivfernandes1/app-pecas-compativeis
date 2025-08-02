@@ -191,10 +191,10 @@ const Sobre: React.FC = () => {
   }, []);
 
   return (
-    <AboutSection>
+    <AboutSection data-testid="sobre-page">
       <Container>
         <HeroCard>
-          <h1>Sobre o Projeto</h1>
+          <h1 data-testid="page-title">Sobre o Projeto</h1>
           <p>
             Recriando e modernizando a experiência de busca por peças compatíveis 
             para Volkswagen Golf MK3 com tecnologia atual e design responsivo.

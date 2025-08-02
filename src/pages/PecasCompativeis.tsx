@@ -2,6 +2,8 @@ import React, { useState, useMemo } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Container, Card, colors, media } from '../styles/GlobalStyles';
 import ScreenProtection from '../components/ScreenProtection';
+import { useAppMonitoring } from '../hooks';
+import { useAppStats } from '../utils/appStats';
 import pecasData from '../data/pecas-compativeis.json';
 
 const fadeIn = keyframes`
@@ -674,63 +676,130 @@ const PecasCompativeis: React.FC = () => {
   const [expandedVehicles, setExpandedVehicles] = useState<Set<string>>(new Set());
   const [infoExpanded, setInfoExpanded] = useState(false);
 
+  // Sistema de monitoramento e estatísticas centralizadas
+  const { logUserInteraction, logError, logDebug } = useAppMonitoring('PecasCompativeis');
+  const appStats = useAppStats();
+
+  // Funções auxiliares com logging
+  const handleSearchChange = (value: string) => {
+    setSearchTerm(value);
+    logUserInteraction('search', {
+      query: value,
+      length: value.length,
+      timestamp: new Date().toISOString()
+    });
+  };
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    logUserInteraction('filter_category', {
+      category: category || 'all',
+      previousCategory: selectedCategory || 'all'
+    });
+  };
+
+  const handleVehicleChange = (vehicle: string) => {
+    setSelectedVehicle(vehicle);
+    logUserInteraction('filter_vehicle', {
+      vehicle: vehicle || 'all',
+      previousVehicle: selectedVehicle || 'all'
+    });
+  };
+
   const toggleInfo = () => {
     setInfoExpanded(!infoExpanded);
+    logUserInteraction('toggle_info', { expanded: !infoExpanded });
   };
 
   const toggleCategory = (categoria: string) => {
     const newExpanded = new Set(expandedCategories);
-    if (newExpanded.has(categoria)) {
+    const wasExpanded = newExpanded.has(categoria);
+    
+    if (wasExpanded) {
       newExpanded.delete(categoria);
     } else {
       newExpanded.add(categoria);
     }
     setExpandedCategories(newExpanded);
+    
+    logUserInteraction('toggle_category', {
+      categoria,
+      action: wasExpanded ? 'collapse' : 'expand',
+      totalExpanded: newExpanded.size
+    });
   };
 
   const toggleVehiclesList = (cardId: string) => {
     const newExpanded = new Set(expandedVehicles);
-    if (newExpanded.has(cardId)) {
+    const wasExpanded = newExpanded.has(cardId);
+    
+    if (wasExpanded) {
       newExpanded.delete(cardId);
     } else {
       newExpanded.add(cardId);
     }
     setExpandedVehicles(newExpanded);
+    
+    logUserInteraction('toggle_vehicles_list', {
+      cardId,
+      action: wasExpanded ? 'collapse' : 'expand',
+      totalExpanded: newExpanded.size
+    });
   };
 
   const results = useMemo(() => {
+    const startTime = performance.now();
     const resultsMap: { [key: string]: { peca: string; veiculos: string[] }[] } = {};
 
-    Object.entries(pecasData).forEach(([categoria, pecasCategoria]) => {
-      if (selectedCategory && categoria !== selectedCategory) return;
+    try {
+      Object.entries(pecasData).forEach(([categoria, pecasCategoria]) => {
+        if (selectedCategory && categoria !== selectedCategory) return;
 
-      const pecasFiltered: { peca: string; veiculos: string[] }[] = [];
+        const pecasFiltered: { peca: string; veiculos: string[] }[] = [];
 
-      Object.entries(pecasCategoria as any).forEach(([nomePeca, veiculos]) => {
-        // Filtrar por termo de busca
-        if (searchTerm && !nomePeca.toLowerCase().includes(searchTerm.toLowerCase()) &&
-            !(veiculos as string[]).some((v: string) => v.toLowerCase().includes(searchTerm.toLowerCase()))) {
-          return;
-        }
+        Object.entries(pecasCategoria as any).forEach(([nomePeca, veiculos]) => {
+          // Filtrar por termo de busca
+          if (searchTerm && !nomePeca.toLowerCase().includes(searchTerm.toLowerCase()) &&
+              !(veiculos as string[]).some((v: string) => v.toLowerCase().includes(searchTerm.toLowerCase()))) {
+            return;
+          }
 
-        // Filtrar por veículo
-        if (selectedVehicle && !(veiculos as string[]).some((v: string) => v.toLowerCase().includes(selectedVehicle.toLowerCase()))) {
-          return;
-        }
+          // Filtrar por veículo
+          if (selectedVehicle && !(veiculos as string[]).some((v: string) => v.toLowerCase().includes(selectedVehicle.toLowerCase()))) {
+            return;
+          }
 
-        pecasFiltered.push({
-          peca: nomePeca,
-          veiculos: veiculos as string[]
+          pecasFiltered.push({
+            peca: nomePeca,
+            veiculos: veiculos as string[]
+          });
         });
+
+        if (pecasFiltered.length > 0) {
+          resultsMap[categoria] = pecasFiltered;
+        }
       });
 
-      if (pecasFiltered.length > 0) {
-        resultsMap[categoria] = pecasFiltered;
-      }
-    });
+      const processingTime = performance.now() - startTime;
+      const totalResults = Object.values(resultsMap).reduce((sum, pecas) => sum + pecas.length, 0);
+      
+      logDebug('Resultados da busca calculados', {
+        processingTime: `${processingTime.toFixed(2)}ms`,
+        totalResults,
+        totalCategories: Object.keys(resultsMap).length,
+        filters: {
+          searchTerm: searchTerm || 'none',
+          category: selectedCategory || 'all',
+          vehicle: selectedVehicle || 'all'
+        }
+      });
 
-    return resultsMap;
-  }, [searchTerm, selectedCategory, selectedVehicle]);
+      return resultsMap;
+    } catch (error) {
+      logError('Erro ao calcular resultados da busca', { error, filters: { searchTerm, selectedCategory, selectedVehicle } });
+      return {};
+    }
+  }, [searchTerm, selectedCategory, selectedVehicle, logDebug, logError]);
 
   const totalPecas = Object.values(results).reduce((sum, pecas) => sum + pecas.length, 0);
   const totalCategorias = Object.keys(results).length;
@@ -757,11 +826,11 @@ const PecasCompativeis: React.FC = () => {
 
   return (
     <ScreenProtection>
-      <PageContainer>
+      <PageContainer data-testid="pecas-compativeis-page">
       <HeroSection>
         <Container>
           <HeroContent>
-            <h1>
+            <h1 data-testid="page-title">
               <i className="fas fa-cogs"></i> Peças Compatíveis Golf MK3
             </h1>
             <p>
@@ -774,8 +843,8 @@ const PecasCompativeis: React.FC = () => {
 
       <Container>
         <InfoSection>
-          <InfoCard>
-            <InfoHeader $expanded={infoExpanded} onClick={toggleInfo}>
+          <InfoCard data-testid="info-card">
+            <InfoHeader $expanded={infoExpanded} onClick={toggleInfo} data-testid="info-header">
               <h3>
                 <i className="fas fa-info-circle icon"></i>
                 Como identificar se meu MK3 é Mexicano ou Alemão?
@@ -805,15 +874,16 @@ const PecasCompativeis: React.FC = () => {
         </InfoSection>
 
         <FiltersSection>
-          <FiltersCard>
+          <FiltersCard data-testid="filters-card">
             <FiltersGrid>
               <FilterGroup>
                 <label>Buscar Peças</label>
                 <SearchInput
+                  data-testid="search-input"
                   type="text"
                   placeholder="🔍 Digite o nome da peça ou veículo..."
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e) => handleSearchChange(e.target.value)}
                   autoComplete="off"
                   autoCorrect="off"
                   autoCapitalize="off"
@@ -825,7 +895,7 @@ const PecasCompativeis: React.FC = () => {
                 <label>Categoria</label>
                 <Select
                   value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  onChange={(e) => handleCategoryChange(e.target.value)}
                 >
                   <option value="">Todas as categorias</option>
                   {categorias.map(categoria => (
@@ -837,8 +907,9 @@ const PecasCompativeis: React.FC = () => {
               <FilterGroup>
                 <label>Veículo</label>
                 <Select
+                  data-testid="vehicle-select"
                   value={selectedVehicle}
-                  onChange={(e) => setSelectedVehicle(e.target.value)}
+                  onChange={(e) => handleVehicleChange(e.target.value)}
                 >
                   <option value="">Todos os veículos</option>
                   {todosVeiculos.slice(0, 20).map((veiculo: string) => (
@@ -851,32 +922,38 @@ const PecasCompativeis: React.FC = () => {
         </FiltersSection>
 
         <StatsContainer>
-          <StatCard>
-            <div className="icon">🔧</div>
+          <StatCard data-testid="total-sistema-stat">
+            <div className="icon">�</div>
+            <span className="number">{appStats.totalPecas}</span>
+            <span className="label">Peças no Sistema</span>
+          </StatCard>
+          <StatCard data-testid="pecas-filtradas-stat">
+            <div className="icon">�🔧</div>
             <span className="number">{totalPecas}</span>
             <span className="label">Peças Encontradas</span>
           </StatCard>
           <StatCard>
             <div className="icon">📂</div>
             <span className="number">{totalCategorias}</span>
-            <span className="label">Categorias</span>
+            <span className="label">Categorias Exibidas</span>
           </StatCard>
-          <StatCard>
+          <StatCard data-testid="veiculos-stat">
             <div className="icon">🚗</div>
             <span className="number">{totalVeiculos}</span>
-            <span className="label">Veículos Compatíveis</span>
+            <span className="label">Veículos Encontrados</span>
           </StatCard>
         </StatsContainer>
 
-        <ResultsGrid>
+        <ResultsGrid data-testid="results-grid">
           {Object.entries(results).map(([categoria, pecas]) => {
             const isExpanded = expandedCategories.has(categoria);
             
             return (
-              <CategorySection key={categoria}>
+              <CategorySection key={categoria} data-testid={`category-${categoria.toLowerCase().replace(/\s+/g, '-')}`}>
                 <CategoryTitle 
                   $expanded={isExpanded}
                   onClick={() => toggleCategory(categoria)}
+                  data-testid={`category-title-${categoria.toLowerCase().replace(/\s+/g, '-')}`}
                 >
                   <i className={getCategoryIcon(categoria)}></i>
                   <div className="category-info">
