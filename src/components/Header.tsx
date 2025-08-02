@@ -15,14 +15,21 @@ const HeaderContainer = styled.header`
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 80px;
+  gap: 0.5rem;
 
   ${media.tablet} {
+    padding: 0 1rem;
+    gap: 1rem;
+  }
+
+  ${media.desktop} {
     padding: 0 2rem;
+    gap: 1.5rem;
   }
 `;
 
@@ -35,11 +42,20 @@ const Logo = styled(Link)`
   display: flex;
   align-items: center;
   text-decoration: none;
+  flex-shrink: 0;
   
   img {
-    width: 120px;
+    width: 100px;
     height: auto;
     transition: transform 0.3s ease;
+
+    ${media.tablet} {
+      width: 110px;
+    }
+
+    ${media.desktop} {
+      width: 120px;
+    }
   }
   
   &:hover img {
@@ -54,30 +70,46 @@ const Nav = styled.nav`
     display: flex;
     flex: 1;
     justify-content: center;
+    margin: 0 1rem;
+    max-width: 600px;
+  }
+
+  ${media.desktop} {
     margin: 0 2rem;
+    max-width: 700px;
   }
 `;
 
 const NavMenu = styled.ul`
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
   list-style: none;
   margin: 0;
   padding: 0;
+
+  ${media.desktop} {
+    gap: 1.5rem;
+  }
 `;
 
 const NavLink = styled(Link)<{ $isActive: boolean }>`
   color: ${props => props.$isActive ? colors.primary : colors.white};
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 25px;
   transition: all 0.3s ease;
   position: relative;
+  white-space: nowrap;
+
+  ${media.desktop} {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+  }
   
   &::before {
     content: '';
@@ -113,20 +145,40 @@ const NavLink = styled(Link)<{ $isActive: boolean }>`
 
 const SocialLinks = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 0.6rem;
   align-items: center;
+  flex-shrink: 0;
 
-  ${media.mobile} {
-    display: none;
+  ${media.desktop} {
+    gap: 0.8rem;
   }
 `;
 
 const SocialLink = styled.a`
   color: ${colors.white};
-  font-size: 1.2rem;
+  font-size: 1rem;
   transition: all 0.3s ease;
-  padding: 0.5rem;
+  padding: 0.3rem;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  min-height: 32px;
+
+  ${media.tablet} {
+    font-size: 1.1rem;
+    padding: 0.4rem;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  ${media.desktop} {
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    min-width: 40px;
+    min-height: 40px;
+  }
   
   &:hover {
     color: ${colors.primary};
@@ -144,6 +196,7 @@ const MenuToggle = styled.button`
   padding: 0.5rem;
   flex-direction: column;
   gap: 4px;
+  flex-shrink: 0;
   
   span {
     width: 25px;
@@ -160,6 +213,16 @@ const MenuToggle = styled.button`
 
   ${media.tablet} {
     display: none;
+  }
+`;
+
+const MobileRightSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  ${media.tablet} {
+    gap: 1rem;
   }
 `;
 
@@ -260,23 +323,28 @@ const Header: React.FC = () => {
           </NavMenu>
         </Nav>
 
-        <SocialLinks>
-          <SocialLink href="https://www.youtube.com/falandodegti" target="_blank" aria-label="YouTube">
-            <i className="fab fa-youtube"></i>
-          </SocialLink>
-          <SocialLink href="https://www.instagram.com/falandodegti" target="_blank" aria-label="Instagram">
-            <i className="fab fa-instagram"></i>
-          </SocialLink>
-          <SocialLink href="https://www.facebook.com/falandodegti" target="_blank" aria-label="Facebook">
-            <i className="fab fa-facebook"></i>
-          </SocialLink>
-        </SocialLinks>
+        <MobileRightSection>
+          <SocialLinks>
+            <SocialLink href="https://falandodegti.com.br" target="_blank" aria-label="Site Oficial">
+              <i className="fas fa-globe"></i>
+            </SocialLink>
+            <SocialLink href="https://www.youtube.com/falandodegti" target="_blank" aria-label="YouTube">
+              <i className="fab fa-youtube"></i>
+            </SocialLink>
+            <SocialLink href="https://www.instagram.com/falandodegti" target="_blank" aria-label="Instagram">
+              <i className="fab fa-instagram"></i>
+            </SocialLink>
+            <SocialLink href="https://www.facebook.com/falandodegti" target="_blank" aria-label="Facebook">
+              <i className="fab fa-facebook"></i>
+            </SocialLink>
+          </SocialLinks>
 
-        <MenuToggle onClick={handleMenuToggle}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </MenuToggle>
+          <MenuToggle onClick={handleMenuToggle}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </MenuToggle>
+        </MobileRightSection>
 
         <MobileMenu $isOpen={isMenuOpen}>
           <MobileNavList>
