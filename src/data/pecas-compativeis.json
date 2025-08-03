@@ -646,6 +646,10 @@
             "(Ford) (AP) Belina 1.8 Carburado 89> Gasolina",
             "(Ford) (AP) Del Rey 1.8 Carburado 89> Gasolina"
         ],
-        "Máquina de vidro": []
+        "Máquina de vidro": [
+            "GTI - GLX E GL",
+            "GLX - GL",
+            "GL - GLX"
+        ]
     }
 }
