@@ -98,16 +98,78 @@
         "Lâmpada porta-luvas W5W": [
             "Golf GLX 2.0 mexicano 93-98",
             "Golf GLX 2.0 alemão 92-98",
-            "Polo Classic SLX 96-02"
+            "Polo Classic SLX 96-02",
+            "Cordoba GLX 95-02"
+        ],
+        "Lâmpada luz de freio adicional": [
+            "Golf todas as versões 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02",
+            "Gol G2/G3/G4 95-05"
+        ],
+        "Refletor do farol": [
+            "Golf GL H4 92-98",
+            "Golf GLX/GTI foco duplo 92-98",
+            "Polo Classic 96-02"
+        ],
+        "Lente do farol": [
+            "Golf GL 92-98",
+            "Golf GLX/GTI 92-98",
+            "Polo Classic 96-02"
+        ],
+        "Soquete das lâmpadas": [
+            "Golf todas as versões 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02",
+            "Gol G2/G3/G4"
+        ],
+        "Chicote do farol": [
+            "Golf todas as versões 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02"
+        ],
+        "Regulador de farol": [
+            "Golf GLX/GTI 92-98",
+            "Polo Classic SLX 96-02",
+            "Cordoba GLX 95-02"
         ]
     },
     "Motor": {
-        "Velas": [
-            "Palio 1.6 16v"
+        "Protetor Carter": [
+            "Seat GP-426 Cordoba",
+            "VW"
+        ],
+        "Flange Cabeçote": [
+            "087092 Gol",
+            "087092 Golf",
+            "087092 Parati",
+            "087092 Santana",
+            "087092 Polo Classic"
+        ],
+        "Esticador Da Correia Do Alternador": [
+            "034/903555/B Ibiza",
+            "034/903555/B Inca",
+            "VW"
+        ],
+        "Pistão 1.8 Golf Biela Longa": [
+            "Medida: 0.50mm",
+            "(Ford) (AP) Belina 1.8 Carburado 89> Gasolina",
+            "(Ford) (AP) Del Rey 1.8 Carburado 89> Gasolina",
+            "Escort 1.8 AP 90-96",
+            "Verona 1.8 AP 90-96"
+        ],
+        "Velas NGK padrão": [
+            "Palio 1.6 16v",
+            "Fiat Tipo 1.6 IE 93-97",
+            "Fiat Tempra 1.8 IE 94-99",
+            "Chevrolet Kadett 1.8 EFI 89-96",
+            "Chevrolet Monza 1.8 EFI 86-96"
         ],
         "Jogo vela alemão 1.8": [
             "Gol/par/sav/g2/ Polo 1.8/2.0 Santana sp5--- gap 1mm = 1.8 alemão",
-            "(Fiat) [Fiasa] Elba 1.5 SPI 94> Alcool"
+            "(Fiat) [Fiasa] Elba 1.5 SPI 94> Alcool",
+            "Fiat Tempra 1.8 IE 94-99",
+            "Fiat Tipo 1.8 IE 93-97"
         ],
         "Jogo vela mexicano 1.8": [
             "Referência: BUR5ETB-10",
@@ -172,16 +234,26 @@
             "Logus",
             "Polo",
             "Gol",
-            "Gol Bola 96"
+            "Gol Bola 96",
+            "Fiat Tempra 1.8/2.0 94-99",
+            "Fiat Tipo 1.6/1.8 93-97",
+            "Chevrolet Kadett 1.8/2.0 89-96"
         ],
         "Filtro de óleo": [
             "Gol/ Passat/ Saveiro/ Fox/ Santana/ Golf/ Kombi/ Bora/ Passat/ Voyage/ Logus/ Pointer Polo/ Quantum",
-            "Motor AP Gol/Santana/Passat/Golf /1.6/1.8/2.0"
+            "Motor AP Gol/Santana/Passat/Golf /1.6/1.8/2.0",
+            "Fiat Tempra 1.8/2.0 94-99",
+            "Fiat Tipo 1.6/1.8 93-97",
+            "Chevrolet Kadett 1.8/2.0 89-96",
+            "Chevrolet Monza 1.8/2.0 86-96"
         ],
         "Filtro de combustível": [
             "Fiat Tempra de 1994 a 1999",
             "Ford Escort de 1993 a 1996",
-            "Ford Royale de 1992 a 1993"
+            "Ford Royale de 1992 a 1993",
+            "Chevrolet Kadett 1.8/2.0 89-96",
+            "Chevrolet Monza 1.8/2.0 86-96",
+            "Fiat Tipo 1.6/1.8 93-97"
         ],
         "Filtro de cabine": [
             "VW Crossfox Total Flex AP 1.6 MI Total Flex",
@@ -196,12 +268,18 @@
         "Bomba de combustível": [
             "Gol 1.6 8v Gasolina 97/04 velocidade máxima 190kmh",
             "Corsa Astra Vectra Blazer S10",
-            "Fiorino Furgão/Pick-up 1.5 MPI 09.97 a 06.02"
+            "Fiorino Furgão/Pick-up 1.5 MPI 09.97 a 06.02",
+            "Fiat Tempra 1.8 IE 94-99",
+            "Fiat Tipo 1.6/1.8 93-97",
+            "Chevrolet Kadett 1.8 EFI 89-96",
+            "Chevrolet Monza 1.8 EFI 86-96"
         ],
         "Bomba Dagua": [
             "Volkswagen motor 1.6, 1.8 e 2.0 AP Todos com polia V",
             "Volkswagen Gol 1.6, 1.8 e 2.0 AP - 1983 até 1995",
-            "Volkswagen Parati 1.6, 1.8 e 2.0 AP - 1983 até 1995"
+            "Volkswagen Parati 1.6, 1.8 e 2.0 AP - 1983 até 1995",
+            "Ford Escort 1.8 AP 90-96",
+            "Ford Verona 1.8 AP 90-96"
         ],
         "Pescoço Bomba Dagua": [
             "VW"
@@ -552,12 +630,125 @@
         "Retentor dianteiro do virabrequim": [
             "Lado Polia",
             "32x47x10MM",
-            "(Ford) [AP] Belina 1.8 Todos"
+            "(Ford) [AP] Belina 1.8 Todos",
+            "Ford Escort 1.8 AP 90-96",
+            "Ford Verona 1.8 AP 90-96",
+            "Gol 1.6/1.8 AP todos",
+            "Santana 2.0 AP todos"
+        ],
+        "Retentor traseiro do virabrequim": [
+            "Lado Volante",
+            "90x110x12MM",
+            "Gol 1.6/1.8/2.0 AP todos",
+            "Santana 2.0 AP todos",
+            "Golf 1.8/2.0 AP todos",
+            "Ford Escort 1.8 AP 90-96"
+        ],
+        "Junta do cabeçote": [
+            "Golf 1.8 8V AP 92-98",
+            "Golf 2.0 8V AP 92-98",
+            "Gol 1.6/1.8 AP todos",
+            "Santana 2.0 AP todos",
+            "Ford Escort 1.8 AP 90-96"
+        ],
+        "Junta do coletor admissão": [
+            "Golf 1.8 MI 96-98",
+            "Golf 2.0 MI 93-98",
+            "Gol 1.6/1.8 MI 97-05",
+            "Santana 2.0 MI 97-03"
+        ],
+        "Junta do coletor escapamento": [
+            "Golf todas as versões AP",
+            "Gol 1.6/1.8/2.0 AP todos",
+            "Santana 2.0 AP todos",
+            "Ford Escort 1.8 AP 90-96"
+        ],
+        "Óleo do motor": [
+            "Golf todas as versões (15W40 ou 20W50)",
+            "Gol 1.6/1.8/2.0 AP (15W40 ou 20W50)",
+            "Santana 2.0 AP (15W40 ou 20W50)",
+            "Polo Classic 1.8 (15W40)",
+            "Ford Escort 1.8 AP (15W40)"
+        ],
+        "Válvula termostática água": [
+            "Golf todas as versões AP",
+            "Gol 1.6/1.8/2.0 AP todos",
+            "Santana 2.0 AP todos",
+            "Ford Escort 1.8 AP 90-96",
+            "Polo Classic 1.8 96-02"
+        ],
+        "Sensor detonação": [
+            "Golf GTI/GLX 2.0 93-98",
+            "Gol 1.8 MI 97-05",
+            "Santana 2.0 MI 97-03",
+            "Polo Classic 1.8 96-02"
         ],
         "Bieleta Dianteira": [
             "Golf 92/95...07/98"
         ],
-        "Bieleta dianteira": []
+        "Bieleta dianteira": [
+            "Golf 92/95...07/98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02",
+            "Audi A3 1.6/1.8 96-03"
+        ],
+        "Pivô da suspensão": [
+            "Golf GL/GLX/GTI 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02",
+            "Audi A3 1.6/1.8 96-03"
+        ],
+        "Terminal de direção": [
+            "Golf todas as versões 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02",
+            "Audi A3 1.6/1.8 96-03"
+        ],
+        "Barra estabilizadora": [
+            "Golf GL/GLX/GTI 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02",
+            "Audi A3 1.6/1.8 96-03"
+        ],
+        "Bucha estabilizadora": [
+            "Golf todas as versões 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02",
+            "Audi A3 1.6/1.8 96-03"
+        ],
+        "Coifa da homocinética": [
+            "Golf todas as versões 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02",
+            "Gol G2/G3 95-05 (externa)",
+            "Santana 97-03 (externa)"
+        ],
+        "Pastilha de freio dianteira": [
+            "Golf GL/GLX/GTI 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02",
+            "Audi A3 1.6/1.8 96-03",
+            "Gol 1.8 GTI 94-96"
+        ],
+        "Cilindro roda traseiro": [
+            "Golf GL com freio tambor 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02",
+            "Gol G2/G3/G4 95-05"
+        ],
+        "Cabo do freio de mão": [
+            "Golf todas as versões 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02"
+        ],
+        "Fluido de freio": [
+            "Golf todas as versões 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02",
+            "Gol G2/G3/G4",
+            "Santana 97-03",
+            "Parati G2/G3/G4"
+        ]
     },
     "Sistema de Arrefecimento": {
         "Bomba d'água": [
@@ -592,39 +783,213 @@
         ],
         "Ventilador do radiador": []
     },
+    "Sistema Elétrico e Eletrônico": {
+        "Alternador": [
+            "Bosch 90A - Gol 1.6/1.8 MI 97-05",
+            "Bosch 90A - Santana 2.0 MI 97-03",
+            "Bosch 90A - Polo Classic 1.8 96-02",
+            "Bosch 90A - Parati 1.6/1.8 97-05",
+            "Ford Escort 1.8 93-96 (com adaptação)"
+        ],
+        "Motor de partida": [
+            "Bosch 12V - Gol 1.6/1.8 AP todos",
+            "Bosch 12V - Santana 2.0 AP todos",
+            "Bosch 12V - Parati 1.6/1.8 AP todos",
+            "Ford Escort 1.8 AP 90-96",
+            "Fiat Tempra 1.8 94-99 (mesmo fabricante)"
+        ],
+        "Chicote motor": [
+            "Gol 1.8 MI 8V 97-05",
+            "Santana 2.0 MI 8V 97-03",
+            "Polo Classic 1.8 96-02",
+            "Parati 1.8 MI 8V 97-05"
+        ],
+        "Central da injeção": [
+            "Bosch Motronic M1.5.4 - Golf GL 1.8 96-98",
+            "Bosch Motronic MP9.0 - Golf GTI/GLX 2.0 93-98",
+            "Magneti Marelli - Gol 1.6/1.8 MI 97-05",
+            "Magneti Marelli - Santana 2.0 MI 97-03"
+        ],
+        "Rele da bomba combustível": [
+            "VW Gol/Golf/Santana/Polo todos MI",
+            "Ford Escort 1.8 93-96",
+            "Fiat Tempra 1.8 IE 94-99",
+            "Chevrolet Kadett 1.8 EFI 89-96"
+        ],
+        "Sensor MAP": [
+            "Golf GL 1.8 MI 96-98",
+            "Gol 1.6/1.8 MI 97-05",
+            "Santana 2.0 MI 97-03",
+            "Polo Classic 1.8 96-02"
+        ],
+        "Sensor TPS (Posição Borboleta)": [
+            "Golf GL 1.8 MI 96-98",
+            "Golf GTI/GLX 2.0 93-98",
+            "Gol 1.6/1.8 MI 97-05",
+            "Santana 2.0 MI 97-03",
+            "Polo Classic 1.8 96-02"
+        ],
+        "Sensor de rotação": [
+            "Golf todas as versões MI",
+            "Gol 1.6/1.8 MI 97-05",
+            "Santana 2.0 MI 97-03",
+            "Parati 1.6/1.8 MI 97-05"
+        ],
+        "Modulo de ignição": [
+            "Bosch - Golf GTI/GLX 2.0 93-98",
+            "Bosch - Gol 1.6/1.8 MI 97-05",
+            "Bosch - Santana 2.0 MI 97-03",
+            "Ford Escort 1.8 93-96"
+        ],
+        "Fusível maxi": [
+            "Golf todas as versões",
+            "Gol G2/G3/G4",
+            "Santana 97-03",
+            "Polo Classic 96-02",
+            "Parati G2/G3/G4"
+        ]
+    },
+    "Carroceria e Acessórios": {
+        "Maçaneta externa": [
+            "Golf GL/GLX/GTI 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 1.6/1.8 95-02",
+            "Ibiza 1.4/1.6 93-99"
+        ],
+        "Fechadura da porta": [
+            "Golf todas as versões 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02",
+            "Ibiza 93-99"
+        ],
+        "Vidro elétrico": [
+            "Golf GL/GLX/GTI 92-98",
+            "Polo Classic 96-02 (motor)",
+            "Cordoba 95-02 (motor)",
+            "Gol G2/G3 95-05 (motor)"
+        ],
+        "Retrovisores": [
+            "Golf GL 92-98 (manual)",
+            "Golf GLX/GTI 92-98 (elétrico)"
+        ],
+        "Parachoque": [
+            "Golf GL 92-98",
+            "Golf GLX/GTI 92-98 (com furo p/ farol milha)"
+        ],
+        "Lanterna traseira": [
+            "Golf GL/GLX/GTI 92-98"
+        ],
+        "Farol": [
+            "Golf GL 92-98 (H4 padrão)",
+            "Golf GLX/GTI 92-98 (foco duplo)"
+        ],
+        "Grade frontal": [
+            "Golf GL 92-98",
+            "Golf GLX 92-98",
+            "Golf GTI 92-98 (esportiva)"
+        ],
+        "Emblemas": [
+            "Golf GL/GLX/GTI 92-98"
+        ]
+    },
+    "Sistema de Ar Condicionado": {
+        "Compressor": [
+            "Golf GLX/GTI com A/C 92-98",
+            "Santana 2.0 com A/C 97-03",
+            "Polo Classic SLX com A/C 96-02",
+            "Cordoba GLX com A/C 95-02"
+        ],
+        "Condensador": [
+            "Golf com A/C 92-98",
+            "Santana com A/C 97-03",
+            "Polo Classic com A/C 96-02"
+        ],
+        "Evaporador": [
+            "Golf com A/C 92-98",
+            "Polo Classic com A/C 96-02",
+            "Cordoba com A/C 95-02"
+        ],
+        "Filtro secador": [
+            "Golf com A/C 92-98",
+            "Santana com A/C 97-03",
+            "Polo Classic com A/C 96-02",
+            "Cordoba com A/C 95-02"
+        ],
+        "Válvula de expansão": [
+            "Golf com A/C 92-98",
+            "Polo Classic com A/C 96-02",
+            "Cordoba com A/C 95-02"
+        ],
+        "Mangueiras A/C": [
+            "Golf com A/C 92-98",
+            "Santana com A/C 97-03",
+            "Polo Classic com A/C 96-02"
+        ],
+        "Sensor pressão A/C": [
+            "Golf com A/C 92-98",
+            "Santana com A/C 97-03",
+            "Polo Classic com A/C 96-02"
+        ]
+    },
     "Lataria, Acabamento e Outros": {
         "Haste do limpador traseiro Mk3": [
             "Parati G2/G3/G4"
         ],
         "Lâmpada do painel": [
-            "Corsa"
+            "Corsa",
+            "Gol G2/G3/G4",
+            "Santana 97-03"
         ],
         "Pestana interna do vidro": [
-            "Para Golf GTI - Fox 2 portas."
-        ],
-        "Protetor Carter": [
-            "Seat GP-426 Cordoba",
-            "VW"
-        ],
-        "Flange Cabeçote": [
-            "087092 Gol",
-            "087092 Golf",
-            "087092 Parati"
-        ],
-        "Esticador Da Correia Do Alternador": [
-            "034/903555/B Ibiza",
-            "034/903555/B Inca",
-            "VW"
-        ],
-        "Pistão 1.8 Golf Biela Longa": [
-            "Medida: 0.50mm",
-            "(Ford) (AP) Belina 1.8 Carburado 89> Gasolina",
-            "(Ford) (AP) Del Rey 1.8 Carburado 89> Gasolina"
+            "Para Golf GTI - Fox 2 portas.",
+            "Para GL e GLX - Gol 2 portas G2/G4"
         ],
         "Máquina de vidro": [
             "GTI - GLX E GL",
             "GLX - GL",
-            "GL - GLX"
+            "GL - GLX",
+            "Polo Classic 96-02 (dianteira)",
+            "Cordoba 95-02 (dianteira)"
+        ],
+        "Console central": [
+            "Golf GL/GLX/GTI 92-98",
+            "Polo Classic SLX 96-02",
+            "Cordoba GLX 95-02"
+        ],
+        "Tapete automotivo": [
+            "Golf todas as versões 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02"
+        ],
+        "Capa de banco": [
+            "Golf GL/GLX/GTI 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02"
+        ],
+        "Película insulfilm": [
+            "Golf todas as versões 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02",
+            "Gol G2/G3/G4"
+        ],
+        "Kit travas elétricas": [
+            "Golf GLX/GTI 92-98",
+            "Polo Classic SLX 96-02",
+            "Cordoba GLX 95-02",
+            "Gol G3/G4 (com adaptação)"
+        ],
+        "Alto falantes": [
+            "Golf todas as versões 92-98 (6 polegadas)",
+            "Polo Classic 96-02 (5 ou 6 polegadas)",
+            "Cordoba 95-02 (5 ou 6 polegadas)",
+            "Gol G2/G3/G4 (5 polegadas)"
+        ],
+        "Antena": [
+            "Golf todas as versões 92-98",
+            "Polo Classic 96-02",
+            "Cordoba 95-02",
+            "Gol G2/G3/G4",
+            "Santana 97-03"
         ]
     }
 }
