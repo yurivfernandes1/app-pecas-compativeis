@@ -225,7 +225,7 @@ const FiltersGrid = styled.div`
   gap: 1.5rem;
   
   ${media.tablet} {
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
   }
   
   ${media.mobile} {
@@ -670,7 +670,6 @@ const EmptyState = styled.div`
 const PecasCompativeis: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedVehicle, setSelectedVehicle] = useState('');
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
   const [expandedVehicles, setExpandedVehicles] = useState<Set<string>>(new Set());
   const [infoExpanded, setInfoExpanded] = useState(false);
@@ -693,14 +692,6 @@ const PecasCompativeis: React.FC = () => {
     logUserInteraction('filter_category', {
       category: category || 'all',
       previousCategory: selectedCategory || 'all'
-    });
-  };
-
-  const handleVehicleChange = (vehicle: string) => {
-    setSelectedVehicle(vehicle);
-    logUserInteraction('filter_vehicle', {
-      vehicle: vehicle || 'all',
-      previousVehicle: selectedVehicle || 'all'
     });
   };
 
@@ -762,11 +753,6 @@ const PecasCompativeis: React.FC = () => {
             return;
           }
 
-          // Filtrar por veículo
-          if (selectedVehicle && !(veiculos as string[]).some((v: string) => v.toLowerCase().includes(selectedVehicle.toLowerCase()))) {
-            return;
-          }
-
           pecasFiltered.push({
             peca: nomePeca,
             veiculos: veiculos as string[]
@@ -787,27 +773,21 @@ const PecasCompativeis: React.FC = () => {
         totalCategories: Object.keys(resultsMap).length,
         filters: {
           searchTerm: searchTerm || 'none',
-          category: selectedCategory || 'all',
-          vehicle: selectedVehicle || 'all'
+          category: selectedCategory || 'all'
         }
       });
 
       return resultsMap;
     } catch (error) {
-      logError('Erro ao calcular resultados da busca', { error, filters: { searchTerm, selectedCategory, selectedVehicle } });
+      logError('Erro ao calcular resultados da busca', { error, filters: { searchTerm, selectedCategory } });
       return {};
     }
-  }, [searchTerm, selectedCategory, selectedVehicle, logDebug, logError]);
+  }, [searchTerm, selectedCategory, logDebug, logError]);
 
   const totalPecas = Object.values(results).reduce((sum, pecas) => sum + pecas.length, 0);
   const totalCategorias = Object.keys(results).length;
 
   const categorias = Object.keys(pecasData);
-  const todosVeiculos = Array.from(new Set(
-    Object.values(pecasData).flatMap(categoria => 
-      Object.values(categoria).flat() as string[]
-    )
-  )).sort();
 
   const getCategoryIcon = (categoria: string) => {
     if (categoria.includes('Motor')) return 'fas fa-cog';
@@ -895,20 +875,6 @@ const PecasCompativeis: React.FC = () => {
                   <option value="">Todas as categorias</option>
                   {categorias.map(categoria => (
                     <option key={categoria} value={categoria}>{categoria}</option>
-                  ))}
-                </Select>
-              </FilterGroup>
-              
-              <FilterGroup>
-                <label>Veículo</label>
-                <Select
-                  data-testid="vehicle-select"
-                  value={selectedVehicle}
-                  onChange={(e) => handleVehicleChange(e.target.value)}
-                >
-                  <option value="">Todos os veículos</option>
-                  {todosVeiculos.slice(0, 20).map((veiculo: string) => (
-                    <option key={veiculo} value={veiculo}>{veiculo}</option>
                   ))}
                 </Select>
               </FilterGroup>
