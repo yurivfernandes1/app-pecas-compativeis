@@ -931,6 +931,86 @@
             "Polo Classic com A/C 96-02"
         ]
     },
+    "Fluídos e Lubrificantes": {
+        "Óleo do motor 1.8 8V (1 bico)": [
+            "Especificação: API SG/SH ou superior",
+            "Viscosidade: SAE 15W40 (clima temperado)",
+            "Viscosidade: SAE 20W50 (clima quente)",
+            "Capacidade: 3,5 litros com filtro",
+            "Marcas compatíveis: Mobil, Shell, Castrol, Ipiranga, Petrobras",
+            "Troca: a cada 5.000 km ou 6 meses"
+        ],
+        "Óleo do motor 1.8 MI (multiponto)": [
+            "Especificação: API SH/SJ ou superior",
+            "Viscosidade: SAE 15W40 (recomendado)",
+            "Viscosidade: SAE 10W40 (clima frio)",
+            "Capacidade: 3,5 litros com filtro",
+            "Marcas compatíveis: Mobil 1, Shell Helix, Castrol GTX",
+            "Troca: a cada 7.500 km ou 6 meses"
+        ],
+        "Óleo do motor 2.0 8V (fluxo cruzado)": [
+            "Especificação: API SG/SH ou superior",
+            "Viscosidade: SAE 15W40 (padrão)",
+            "Viscosidade: SAE 20W50 (clima muito quente)",
+            "Capacidade: 4,0 litros com filtro",
+            "Marcas compatíveis: Mobil Super, Shell Rimula, Castrol",
+            "Troca: a cada 5.000 km ou 6 meses"
+        ],
+        "Óleo da direção hidráulica": [
+            "Especificação: Fluído ATF Dexron II ou III",
+            "Alternativa: Óleo hidráulico específico VW (G002000)",
+            "Capacidade: 1,0 litro aproximadamente",
+            "Marcas compatíveis: Mobil ATF 320, Shell Donax, Castrol Transmax",
+            "Troca: a cada 40.000 km ou 2 anos",
+            "Verificação: mensal (nível no reservatório)"
+        ],
+        "Fluído de freio": [
+            "Especificação: DOT 3 ou DOT 4",
+            "Padrão VW: Fluído de freio DOT 4 (G000017M2)",
+            "Capacidade: 0,5 litros no sistema completo",
+            "Marcas compatíveis: Bosch, TRW, ATE, Mobil",
+            "Troca: a cada 24.000 km ou 2 anos",
+            "Verificação: mensal (nível no reservatório)"
+        ],
+        "Líquido de arrefecimento": [
+            "Especificação: Etilenoglicol com anticorrosivo",
+            "Concentração: 50% água desmineralizada + 50% aditivo",
+            "Padrão VW: G11 (azul/verde) para Golf MK3",
+            "Capacidade: 6,5 litros no sistema completo",
+            "Marcas compatíveis: Mobil Antifreeze, Shell, Castrol, Basf",
+            "Troca: a cada 30.000 km ou 2 anos",
+            "Temperatura de trabalho: -37°C a +108°C"
+        ],
+        "Óleo do câmbio manual": [
+            "Especificação: SAE 75W90 ou 80W90 GL-4/GL-5",
+            "Padrão VW: G050726A2 (75W90)",
+            "Capacidade: 2,0 litros (câmbio 020)",
+            "Marcas compatíveis: Mobil Mobilube, Shell Spirax, Castrol",
+            "Troca: a cada 60.000 km ou 4 anos",
+            "Verificação: a cada 20.000 km"
+        ],
+        "Óleo do diferencial": [
+            "Especificação: SAE 80W90 ou 85W140 GL-5",
+            "Capacidade: 0,8 litros aproximadamente",
+            "Marcas compatíveis: Mobil Mobilube, Shell Spirax S3",
+            "Troca: a cada 60.000 km junto com óleo do câmbio",
+            "Verificação: junto com manutenção do câmbio"
+        ],
+        "Fluído do ar condicionado": [
+            "Gás refrigerante: R134a (HFC-134a)",
+            "Capacidade: 650g a 750g dependendo do sistema",
+            "Óleo do compressor: PAG 46 ou POE",
+            "Recarga: apenas em oficinas especializadas",
+            "Verificação: anual ou quando perder eficiência"
+        ],
+        "Fluído do limpador de para-brisa": [
+            "Especificação: Água + detergente neutro + álcool",
+            "Proporção: 70% água + 20% álcool + 10% detergente",
+            "Capacidade: 2,5 litros no reservatório",
+            "Temperatura: resistente até -10°C",
+            "Marcas prontas: Visteon, STP, Turtle Wax"
+        ]
+    },
     "Lataria, Acabamento e Outros": {
         "Haste do limpador traseiro Mk3": [
             "Parati G2/G3/G4"
