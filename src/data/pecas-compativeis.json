@@ -130,7 +130,24 @@
         "Velas": [
             "Palio 1.6 16v"
         ],
-        "Cabos de vela": [
+        "Jogo vela alemão 1.8": [
+            "Gol/par/sav/g2/ Polo 1.8/2.0 Santana sp5--- gap 1mm = 1.8 alemão",
+            "(Fiat) [Fiasa] Elba 1.5 SPI 94> Alcool"
+        ],
+        "Jogo vela mexicano 1.8": [
+            "Referência: BUR5ETB-10",
+            "Referência: F000 KE0 P05",
+            "Referência: BUR6ET"
+        ],
+        "Jogo vela gti glx": [
+            "Referência: F000 KE0 P03",
+            "Referência: BKR6EZ",
+            "Referência: F000 KE0 P02"
+        ],
+        "Cabo de vela": [
+            "STVW - 052 STVW-052",
+            "Código da Peça: 9295080052",
+            "Dayco - DYVW21",
             "Gol AP",
             "Escort motor AP (usa também o da bobina, precisa tirar a capa metálica)"
         ],
@@ -139,6 +156,91 @@
             "VW 1.0/1.6/1.8/2.0 MI TDS 96>",
             "Ford Escort 1.6L",
             "Guia/XR3 TDS 1.8 93>"
+        ],
+        "Correia Direção Hidráulica": [
+            "10AV0765",
+            "Avx10x685",
+            "AV10X757"
+        ],
+        "Bomba de direção": [
+            "Gol G6",
+            "Fox (usar espaçador)"
+        ],
+        "Correia De Acessórios Alternador s/ar": [
+            "C6PK0894",
+            "6PK0895"
+        ],
+        "Correia do Alternador Direção A/C Bomba": [
+            "Golf 1.8 MI 8V GL 4P - 1990/1991/1992/1993/1994/1995/1996/1997/1998/1999",
+            "Golf 1.8 8V Cabriolet 2P - 1992"
+        ],
+        "Correia Dentada 1.8": [
+            "Ford Belina de 1989 a 1991",
+            "Ford Del Rey de 1989 a 1991",
+            "Ford Escort de 1983 a 2003"
+        ],
+        "Correia dentada GTI GLX": [
+            "correias AP 124x180"
+        ],
+        "Correia alternador e ar": [
+            "Perfil _PK",
+            "Número de nervuras 6",
+            "Altura (h) [mm] 5"
+        ],
+        "Correias dentadas (3)": [
+            "Golf mesmo"
+        ],
+        "Tensor correia dentada": [
+            "Gol AP (necessita troca do prisioneiro)"
+        ],
+        "Filtro de ar": [
+            "Logus",
+            "Polo",
+            "Gol",
+            "Gol Bola 96"
+        ],
+        "Filtro de óleo": [
+            "Gol/ Passat/ Saveiro/ Fox/ Santana/ Golf/ Kombi/ Bora/ Passat/ Voyage/ Logus/ Pointer Polo/ Quantum",
+            "Motor AP Gol/Santana/Passat/Golf /1.6/1.8/2.0"
+        ],
+        "Filtro de combustível": [
+            "Fiat Tempra de 1994 a 1999",
+            "Ford Escort de 1993 a 1996",
+            "Ford Royale de 1992 a 1993"
+        ],
+        "Filtro de cabine": [
+            "VW Crossfox Total Flex AP 1.6 MI Total Flex",
+            "VW Fox City 1.0 8V MI EA111",
+            "VW Fox City 1.0 8V Total Flex EA111"
+        ],
+        "Filtro bomba combustível": [
+            "ASF0002 Cordoba 1.8",
+            "ASF0002 Ibiza 1.8",
+            "VW"
+        ],
+        "Bomba de combustível": [
+            "Gol 1.6 8v Gasolina 97/04 velocidade máxima 190kmh",
+            "Corsa Astra Vectra Blazer S10",
+            "Fiorino Furgão/Pick-up 1.5 MPI 09.97 a 06.02"
+        ],
+        "Bomba Dagua": [
+            "Volkswagen motor 1.6, 1.8 e 2.0 AP Todos com polia V",
+            "Volkswagen Gol 1.6, 1.8 e 2.0 AP - 1983 até 1995",
+            "Volkswagen Parati 1.6, 1.8 e 2.0 AP - 1983 até 1995"
+        ],
+        "Pescoço Bomba Dagua": [
+            "VW"
+        ],
+        "Regulador de pressão": [
+            "Gol 1.6 MI"
+        ],
+        "Regulador de pressão do combustível": [
+            "Palio, Uno, Strada, Siena 1.0 ref DS 1152",
+            "Bosch: 0280160558"
+        ],
+        "Cânister": [
+            "Gol G5/G6",
+            "Fox"
         ],
         "Bobina": [
             "Gol",
@@ -152,83 +254,6 @@
             "Bosch final 350",
             "Bosch final 277"
         ],
-        "Filtro de ar": [
-            "Gol Bola 96",
-            "Logus",
-            "Polo",
-            "Gol"
-        ],
-        "Filtro de óleo": [
-            "Gol AP",
-            "Motor AP Gol/Santana/Passat/Golf 1.6/1.8/2.0",
-            "Gol/Passat/Saveiro/Fox/Santana/Golf/Kombi/Bora/Passat/Voyage/Logus/Pointer/Polo/Quantum"
-        ],
-        "Filtro de combustível": [
-            "Monza",
-            "Fiat Tempra (94-99)",
-            "Ford Escort (93-96)",
-            "Ford Royale (92-93)"
-        ],
-        "Filtro de cabine": [
-            "VW Crossfox Total Flex AP 1.6 MI",
-            "VW Fox City 1.0 8V MI EA111",
-            "VW Fox City 1.0 8V Total Flex EA111"
-        ],
-        "Filtro bomba combustível": [
-            "ASF0002 Cordoba 1.8",
-            "ASF0002 Ibiza 1.8",
-            "VW"
-        ],
-        "Bomba de combustível": [
-            "Refil Bosch",
-            "Gol 1.6 8v Gasolina 97/04",
-            "Corsa",
-            "Astra",
-            "Vectra",
-            "Blazer",
-            "S10",
-            "Fiorino Furgão/Pick-up 1.5 MPI 09.97 a 06.02"
-        ],
-        "Regulador de pressão": [
-            "Gol 1.6 MI"
-        ],
-        "Correia do hidráulico": [
-            "Hidráulico da Pampa"
-        ],
-        "Correias dentadas (3)": [
-            "Golf mesmo"
-        ],
-        "Correia dentada 1.8": [
-            "Ford Belina 89-91",
-            "Ford Del Rey 89-91",
-            "Ford Escort 83-03"
-        ],
-        "Correia dentada GTI GLX": [
-            "Largura 18.1mm",
-            "124 dentes",
-            "correias AP 124x180"
-        ],
-        "Correia alternador e ar": [
-            "Perfil PK",
-            "6 nervuras",
-            "altura 5mm"
-        ],
-        "Correia direção hidráulica": [
-            "10AV0765",
-            "Avx10x685",
-            "AV10X757"
-        ],
-        "Correia acessórios alternador s/ar": [
-            "C6PK0894",
-            "6PK0895"
-        ],
-        "Correia alternador direção A/C bomba": [
-            "Golf 1.8 MI 8V GL 4P (90-99)",
-            "Golf 1.8 8V Cabriolet 2P (92)"
-        ],
-        "Tensor correia dentada": [
-            "Gol AP (necessita troca do prisioneiro)"
-        ],
         "Bronzinas de biela": [
             "Motor AP"
         ],
@@ -239,62 +264,118 @@
             "Santana 2.0"
         ],
         "Anti chama": [
-            "Golf GLX",
-            "GTI 2.0",
-            "Golf 1.9 L Diesel",
-            "Cordoba",
-            "Audi 1.8/1.9 Diesel"
+            "Golf GLX, GTI 2.0, Golf 1.9 L Diesel, Cordoba, Audi 1.8/1.9 Diesel"
         ],
-        "Atuador marcha lenta": [
-            "Golf 2.0 92-02",
-            "Golf 1.8 96-98",
-            "Passat 1.6 94-95"
+        "Atuador marcha lenta Golf": [
+            "Golf 2.0 Ano 92 a 02",
+            "Golf 1.8 Ano 96 a 98",
+            "Passat 1.6 Ano 94 a 95"
         ],
-        "Sensor posição borboleta GTI GLX": [
-            "Golf 2.0 GTI 16V 92-99",
-            "Golf 2.0 GTI 8V 92-99",
-            "Passat 2.0 16V 94-96"
+        "Atuador de marcha lenta": [
+            "GM Ômega 2.0"
+        ],
+        "Sensor Posição Borboleta Gti Glx": [
+            "VW Golf 2.0 GTI 16V ano 1992 até 1999",
+            "VW Golf 2.0 GTI 8V ano 1992 até 1999",
+            "VW Passat 2.0 16V 1994 até 1996"
+        ],
+        "Sensor Borboleta Golf gl 1.8mi": [
+            "Golf 1.8Mi 94>98",
+            "Passat Alemão 2.0 95>98",
+            "Polo Classic 01>..."
+        ],
+        "Correia dentada GTI GLX detalhada": [
+            "Largura: 18.1mm",
+            "Nº de Dentes: 124",
+            "Correias AP 124x180"
         ],
         "Sensor borboleta Golf GL 1.8Mi": [
-            "Golf 1.8Mi 94-98",
-            "Passat Alemão 2.0 95-98",
-            "Polo Classic 01>",
-            "Sensor fase Hall: Parati II 1.0Mi 16V 08.1997 a 04.1999",
-            "Kombi 1.6Mi 11.1997 a 2005",
             "Kombi 1.6Mi 02.1998 a 2005"
         ],
         "Sensor luz freio": [
             "VW Gol/Golf/Passat/Santana",
-            "Santana",
-            "Quantum",
-            "Parati",
-            "Gol",
-            "Polo Classic",
-            "Golf"
+            "Santana, Quantum, Parati",
+            "Gol, Polo Classic, Golf"
         ],
         "Sensor temperatura água": [
-            "Gol 98+",
-            "Parati 98+",
             "Santana MI"
         ],
         "Sonda lambda": [
-            "Gol 97-04",
-            "Parati 97-04",
             "Polo 97-02"
         ],
         "Interruptor de luz de ré": [
-            "Chery Celer",
+            "Chery: Celer",
             "Apollo",
             "Logus"
         ],
         "Interruptor do óleo": [
             "Polo"
         ],
-        "Módulo de ignição": [
-            "Escort",
-            "Polo",
-            "Golf",
-            "Verona"
+        "Comutador Partida": [
+            "Parati - de 1996 a 2006"
+        ],
+        "Cubo Volante": [
+            "Serve no Golf antigo quadrado e no Gol bola"
+        ],
+        "Pinhão Velocímetro": [
+            "02A/409197A3 1.8 99/06",
+            "Seat",
+            "02A/409197 Cordoba 1.9 00/02"
+        ],
+        "Coxim Motor Golf Tras.Esq.": [
+            "SK1815 Golf 2.0 94/98 GLM / GLX / GTI",
+            "SK1815 Passat 2.0 94/97 Câmbio Automático",
+            "SK1815 Polo Classic 1.8 96/......"
+        ],
+        "Coxim Amortecedor Dianteiro": [
+            "Com Rolamento",
+            "Audi",
+            "SK426R A3 99/......"
+        ],
+        "Porca E Guarnição Tanque Combustível": [
+            "VW",
+            "Gol / Logus / Saveiro / Polo Classic / Golf",
+            "Audi"
+        ],
+        "Tampa Do Óleo Do Motor": [
+            "Motor AP Todos"
+        ],
+        "Automático Motor de Partida": [
+            "Audi A3 1.6",
+            "Audi A3 1.8 T"
+        ],
+        "Bobina De Ignição": [
+            "Escort Europeu CHT 1.6 93 / 96",
+            "Escort Europeu AP 1.8, 2.0 93 / 96",
+            "Verona Europeu AP 1.8, 2.0 93 / 96"
+        ],
+        "Rotor Distribuidor": [
+            "Gol GII",
+            "1.0Mi 16V 1996 → 1999 Gas",
+            "1.6/1.8/2.0Mi 1996 → 2005 Álc/Gas"
+        ],
+        "Distribuidor Motor": [
+            "Ap Mi 3 Vias",
+            "Gol Saveiro Parati Santana",
+            "Gol - 94/02 - 03/06 - 06/10"
+        ],
+        "Sensor Fase Hall": [
+            "Parati II 1.0MI 16V Ano 08.1997 a 04.1999",
+            "Kombi 1.6MI Ano 11.1997 a 2005",
+            "Kombi 1.6MI Ano 02.1998 a 2005"
+        ],
+        "Tampa De Distribuidor": [
+            "VW 1.0/1.6/1.8/2.0 MI TDS 96>, Ford Escort 1.6L, Guia/ XR3 TDS 1.8 93>"
+        ],
+        "Comutador De Ignição": [
+            "Comutador de Ignição",
+            "Golf 89/98 Gol 95/... Saveiro 97/...",
+            "5 Pinos c/ Saída p/ Relé"
+        ],
+        "Amortecedor Dianteiro e Traseiro": [
+            "=DIANTEIRO=",
+            "VW Golf / Seat Ibiza / Cordoba",
+            "Seat Cordoba (Todos) 95/02"
         ]
     },
     "Transmissão, Embreagem e Trambulador": {
@@ -302,8 +383,8 @@
             "Escort c/ motor AP até 92"
         ],
         "Cabo de embreagem": [
-            "Golf 1.8 MI 8V GL 4P (90-99)",
-            "Golf 1.8 8V Cabriolet 2P (92)"
+            "Golf 1.8 MI 8V GL 4P - 1990/1991/1992/1993/1994/1995/1996/1997/1998/1999",
+            "Golf 1.8 8V Cabriolet 2P - 1992"
         ],
         "Trava cabo embreagem": [
             "Golf/Polo Classic/Cordoba/Ibiza"
@@ -317,13 +398,23 @@
     },
     "Suspensão, Direção e Freios": {
         "Bieletas Golf GL, GLX, GTI 94-98": [
-            "Original VW",
             "KIT&CIA"
         ],
+        "Bucha Da Bieleta": [
+            "Polo até 2002",
+            "Golf 92/02"
+        ],
+        "Bucha traseira da bandeja dianteira": [
+            "Golf GL / GLX 95 / 98",
+            "Golf GTI 94 / 98",
+            "Passat Variant 94 / 97"
+        ],
+        "Bucha Dianteira Da Bandeja Dianteira": [
+            "Seat Cordoba 95 / ...",
+            "Seat Cordoba Vario 99 / ...",
+            "Seat Inca 98 / ......"
+        ],
         "Coxins amortecedor dianteiro": [
-            "Golf GL, GLX, GTI 94-98",
-            "Audi",
-            "SK426R A3 99/...",
             "com rolamento"
         ],
         "Coxim dianteiro motor": [
@@ -332,57 +423,71 @@
             "Logus 96-96"
         ],
         "Coxim motor golf tras. esq.": [
-            "SK1815 Golf 2.0 94/98 GLM/GLX/GTI",
-            "Passat 2.0 94/97 câmbio automático",
             "Polo Classic 1.8 96/..."
         ],
         "Rolamento do coxim do amortecedor": [
-            "Bora (após 2000)",
-            "Passat Alemão (94-97)",
             "Golf GL GLX GTI (95-98)"
         ],
         "Batente coxim superior amortecedor traseiro": [
-            "Golf 94-98",
             "Polo Classic 96-02"
         ],
+        "Batente Amortecedor Dianteiro": [
+            "Audi 9.445 A3 99/...",
+            "VW"
+        ],
         "Amortecedor tampa traseira": [
-            "Audi A3",
-            "VW Golf",
-            "Polo Todos"
+            "Audi A3/ Vw Golf / Polo Todos"
         ],
         "Amortecedor dianteiro e traseiro": [
-            "VW Golf/Seat Ibiza/Cordoba",
+            "VW Golf / Seat Ibiza / Cordoba",
             "Seat Cordoba (todos) 95/02"
         ],
         "Suporte superior do amortecedor suspensão dianteira": [
-            "Golf GLX 95/95",
-            "Golf GTI 94/95",
-            "Golf 95/01"
+            "Golf GLX 95 / 95",
+            "Golf GTI 94 / 95",
+            "Gol 95 / 01"
         ],
         "Kit do amortecedor suspensão dianteira": [
-            "Bora 94/97",
-            "Golf GL 95/98",
-            "Golf GLX 96/98"
+            "Bora 94 / 97",
+            "Golf GL 95 / 98",
+            "Golf GLX 96 / 98"
+        ],
+        "Válvula equalizadora freio detalhada": [
+            "Uno Vivace – precisa troca haste",
+            "Fox Cross Fox Voyage G5 –adaptar fixação de 1 parafuso",
+            "Cordoba, Ibiza, Polo Classic – plug play"
+        ],
+        "Sonda lambda": [
+            "Gol 1997 A 2004",
+            "Parati 1997 A 2004",
+            "Polo 1997 A 2002"
         ],
         "Rolamento tensor correia dentada": [
-            "Del Rey",
-            "Pampa",
-            "Scala 1.8 8V AP 90/97",
+            "Del Rey Pampa Scala 1.8 8V AP 90/97",
             "Escort 1.6 8V AP 90/96",
+            "Escort 1.8 8V 90/96",
             "Escort XR3 2.0 8V AP 90/96",
             "Verona 1.8 8V AP 90/96",
-            "Versailles",
+            "Versailles Royale 1.8 8V AP 91/96",
             "Royale 1.8 8V AP 91/96"
         ],
         "Rolamento dianteiro": [
-            "Gol GIII (tem que usinar o cubo)",
-            "39x72x37",
-            "40x72x37",
             "Santana todos 95/..."
         ],
         "Rolamento traseiro": [
-            "Santana",
-            "VW Gol/Parati/Saveiro todos (exceto geração 5)"
+            "VW Gol Todos (Exceto Geração 5)",
+            "VW Parati Todos (Exceto Geração 5)",
+            "VW Saveiro todos (Exceto Geração 5)"
+        ],
+        "Rolamento De Roda Traseira": [
+            "VW Gol Todos (Exceto Geração 5)",
+            "VW Parati Todos (Exceto Geração 5)",
+            "VW Saveiro todos (Exceto Geração 5)"
+        ],
+        "Rolamento Roda Dianteira": [
+            "39x72x37",
+            "40x72x37",
+            "Santana Todos 95/..."
         ],
         "Homocinética": [
             "Santana"
@@ -391,14 +496,19 @@
             "Kombi ~1986"
         ],
         "Ponteiras/terminais de direção": [
-            "Original VW",
-            "Nakata",
             "VilaFranca"
         ],
         "Calço do banco": [
-            "Santana",
-            "Gol",
-            "Voyage"
+            "Santana Gol Voyage"
+        ],
+        "Chave De Seta": [
+            "Golf modelo 1991 1998",
+            "VW Gol 1995 até 2000",
+            "VW Parati 1995 até 2000",
+            "VW G2 G3 G4"
+        ],
+        "Chave Do Limpador": [
+            "VW G2 G3 G4"
         ],
         "Mola dianteira": [
             "Golf",
@@ -406,8 +516,6 @@
             "Bora"
         ],
         "Mola traseira": [
-            "Ford Royale 2/4 portas 91-96",
-            "Versailles 4 portas 91-96",
             "Quantum 85-02"
         ],
         "Disco de freio": [
@@ -416,86 +524,98 @@
             "Golf GLX/GTI até 98",
             "Gol 1.8"
         ],
+        "Pastilha Freio": [
+            "Passat 2.0 1986 a 1996",
+            "Polo 1.0 16V 2002 em diante",
+            "Polo Classic 1996 em diante"
+        ],
         "Sapata de freio": [
-            "Golf 1.8/2.0 93-98",
-            "Polo Classic até 02",
             "Polo após 02"
         ],
         "Tambor freio traseiro": [
-            "Gol 1.6 8V C 2P 74-87",
-            "Gol 1.3 8V C 2P 80",
             "Gol 1.6 8V CL 2P 80-96"
         ],
         "Válvula equalizadora freio": [
             "Polo Classic",
-            "Gol",
-            "Parati",
-            "Saveiro",
-            "G2/G3",
-            "Uno Vivace",
-            "Fox Cross Fox Voyage G5",
-            "Cordoba",
+            "Gol, Parati, Saveiro, G2/G3",
             "Ibiza"
         ],
         "Flexível escapamento": [
             "Verona/Apollo 1.8 92",
-            "Bora 2000-2011",
+            "Bora 2000 até 2011",
+            "Escort 2000 até 2002",
             "Apollo 92"
         ],
-        "Bucha traseira da bandeja dianteira": [
-            "Golf GL/GLX 95/98",
-            "Golf GTI 94/98",
-            "Passat Variant 94/97"
+        "Junta Carter": [
+            "Gol/Golf/Polo Classic Mi 1.6/1.8/2.0 97",
+            "Golf Gl Glx GTI 95 A 97 Motor Ap",
+            "Gol"
         ],
-        "Bucha dianteira da bandeja dianteira": [
-            "Seat Cordoba 95/...",
-            "Cordoba Vario 99/...",
-            "Inca 98/..."
+        "Bulão Carter": [
+            "Golf 94/98 Passat/Gol",
+            "Golf/Jetta/Tiguan/Passat",
+            "Gol/polo/golf/saveiro/fox"
         ],
-        "Bucha da bieleta": [
-            "Polo até 2002",
-            "Golf 92/02"
+        "Módulo De Ignição": [
+            "Escort/ Polo/ Golf/ Verona"
         ],
-        "Bieleta dianteira": [
+        "Puxador Do Encosto Do Banco Traseiro": [
+            "Gol G2, G3, G4 1996",
+            "Gol G2, G3, G4 1997",
+            "Gol G2, G3, G4 1998"
+        ],
+        "Tambor Freio Traseiro": [
+            "Gol 1.6 8V C 2P de 1974 até 1987",
+            "Gol 1.3 8V C 2P 1980",
+            "Gol 1.6 8V CL 2P de 1980 até 1996"
+        ],
+        "Válvula Termostática": [
+            "Volkswagen Gol 1.6 1.8 2.0 AP de 1986 até 2009",
+            "Chevrolet Omega / Suprema CD 3.0 MPFI de 1992 até 1994",
+            "Ford Escort motor AP todos"
+        ],
+        "Retentor dianteiro do virabrequim": [
+            "Lado Polia",
+            "32x47x10MM",
+            "(Ford) [AP] Belina 1.8 Todos"
+        ],
+        "Bieleta Dianteira": [
             "Golf 92/95...07/98"
-        ]
+        ],
+        "Bieleta dianteira": []
     },
     "Sistema de Arrefecimento": {
         "Bomba d'água": [
-            "Gol AP",
-            "VW motor 1.6/1.8/2.0 AP (todos com polia V)",
             "VW Gol/Parati 1.6/1.8/2.0 AP 83-95"
         ],
         "Pescoço bomba d'água": [
             "VW"
         ],
         "Reservatório de expansão (com sensor)": [
-            "SEAT Cordoba/Ibiza",
-            "VW Golf/Passat 96/..."
+            "Seat: Cordoba, Ibiza",
+            "VW: Golf, Passat, 96"
         ],
         "Tampa do reservatório de expansão": [
-            "Cordoba",
-            "Ibiza",
-            "Toledo",
-            "Inca",
-            "Gol",
-            "Parati",
-            "Saveiro até 2009",
+            "Cordoba, Ibiza, Toledo, Inca",
+            "Gol, Parati, Saveiro até 2009",
             "Golf 91-97"
         ],
+        "Tampa Do Reservatório De Expansão": [
+            "Cordoba, Ibiza, Toledo, Inca",
+            "Gol, Parati, Saveiro até 2009",
+            "Golf 91 97"
+        ],
         "Cebolão radiador": [
-            "Golf A3 1.8L/2.0L c/ ar-cond. gasol. 93=>99",
-            "Golf A3 2.8L c/ ar-cond. gasol. 96=>99",
-            "Jetta A3 1.8L/2.0L c/ ar-cond. gasol. 93=>99"
+            "Golf A3 1.8L/ 2.0L C/ AR-COND. GASOL. 1993=>1999",
+            "Golf A3 2.8L C/ AR-COND. GASOL. 1996=>1999",
+            "Jetta A3 1.8L/ 2.0L C/ AR-COND. GASOL. 1993=>1999"
         ],
         "Sensor de temperatura água": [
-            "Gol 98+",
+            "Gol 98 +",
             "Parati 98+",
             "Santana MI"
         ],
-        "Ventilador do radiador": [
-            "Vectra"
-        ]
+        "Ventilador do radiador": []
     },
     "Lataria, Acabamento e Outros": {
         "Haste do limpador traseiro Mk3": [
@@ -505,13 +625,27 @@
             "Corsa"
         ],
         "Pestana interna do vidro": [
-            "Para Golf GLX/GL - Gol G2 e G4 2 portas.",
             "Para Golf GTI - Fox 2 portas."
         ],
-        "Máquina de vidro": [
-            "GTI 2.0 (pode usar do GLX e GL)",
-            "GLX (pode usar do GL)",
-            "GL (pode usar do GLX)"
-        ]
+        "Protetor Carter": [
+            "Seat GP-426 Cordoba",
+            "VW"
+        ],
+        "Flange Cabeçote": [
+            "087092 Gol",
+            "087092 Golf",
+            "087092 Parati"
+        ],
+        "Esticador Da Correia Do Alternador": [
+            "034/903555/B Ibiza",
+            "034/903555/B Inca",
+            "VW"
+        ],
+        "Pistão 1.8 Golf Biela Longa": [
+            "Medida: 0.50mm",
+            "(Ford) (AP) Belina 1.8 Carburado 89> Gasolina",
+            "(Ford) (AP) Del Rey 1.8 Carburado 89> Gasolina"
+        ],
+        "Máquina de vidro": []
     }
 }
