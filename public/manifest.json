@@ -4,17 +4,17 @@
     "description": "Consulte peças compatíveis para seu Golf MK3 com nossa base de dados completa. Por Falando de GTI.",
     "icons": [
         {
-            "src": "https://raw.githubusercontent.com/yurivfernandes/app-pecas-compativeis/refs/heads/main/perfil.png",
+            "src": "https://raw.githubusercontent.com/yurivfernandes/app-pecas-compativeis/refs/heads/main/Perfil1.png",
             "sizes": "64x64 32x32 24x24 16x16",
             "type": "image/png"
         },
         {
-            "src": "https://raw.githubusercontent.com/yurivfernandes/app-pecas-compativeis/refs/heads/main/perfil.png",
+            "src": "https://raw.githubusercontent.com/yurivfernandes/app-pecas-compativeis/refs/heads/main/Perfil1.png",
             "type": "image/png",
             "sizes": "192x192"
         },
         {
-            "src": "https://raw.githubusercontent.com/yurivfernandes/app-pecas-compativeis/refs/heads/main/perfil.png",
+            "src": "https://raw.githubusercontent.com/yurivfernandes/app-pecas-compativeis/refs/heads/main/Perfil1.png",
             "type": "image/png",
             "sizes": "512x512"
         }
