@@ -11,7 +11,7 @@ Desenvolvimento de aplicativo mobile/web para consulta de peças compatíveis co
 Resolver a dor latente dos proprietários de Golf MK3 que precisam encontrar peças compatíveis de outros veículos, oferecendo uma base de dados completa e acessível através de uma interface moderna e intuitiva.
 
 ## Especificações Técnicas
-Logo: https://raw.githubusercontent.com/yurivfernandes/falando-de-gti-frontend/refs/heads/main/src/public/galeria/logo.png
+Logo: https://raw.githubusercontent.com/yurivfernandes1/falando-de-gti-frontend/refs/heads/main/src/public/galeria/logo.png
 ### Arquitetura
 - **Frontend Only:** React typescript
 - **Sem Backend:** Aplicação 100% client-side

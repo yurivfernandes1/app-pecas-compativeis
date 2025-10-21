@@ -49,7 +49,7 @@ O **Golf MK3 Peças Compatíveis** é uma aplicação web moderna e responsiva d
 
 1. **Clone o repositório**
 ```bash
-git clone https://github.com/yurivfernandes/app-pecas-compativeis.git
+git clone https://github.com/yurivfernandes1/app-pecas-compativeis.git
 cd app-pecas-compativeis
 ```
 

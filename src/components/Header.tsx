@@ -301,7 +301,7 @@ const Header: React.FC = () => {
         <LogoSection>
           <Logo to="/" onClick={handleLinkClick}>
             <img 
-              src="https://raw.githubusercontent.com/yurivfernandes/falando-de-gti-frontend/refs/heads/main/src/public/galeria/logo.png" 
+              src="https://raw.githubusercontent.com/yurivfernandes1/falando-de-gti-frontend/refs/heads/main/src/public/galeria/logo.png" 
               alt="Falando de GTI" 
             />
           </Logo>
