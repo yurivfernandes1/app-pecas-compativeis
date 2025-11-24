@@ -170,6 +170,58 @@ const CTASection = styled.section`
   }
 `;
 
+const DocsSection = styled.section`
+  background: ${colors.surface};
+  padding: 3rem 0;
+  border-top: 1px solid ${colors.gray[800]};
+  display: flex;
+  justify-content: center;
+
+  .docs {
+    text-align: center;
+    max-width: 760px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 1rem;
+  }
+
+  .docIcon {
+    font-size: 2.4rem;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+    display: block;
+  }
+
+  h3 {
+    font-size: 1.6rem;
+    color: ${colors.primary};
+    margin: 0;
+    font-weight: 700;
+  }
+
+  p {
+    color: ${colors.gray[400]};
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  a[role="button"] {
+    margin-top: 0.75rem;
+  }
+
+  ${media.mobile} {
+    padding: 1.5rem 0;
+    .docIcon {
+      font-size: 2rem;
+    }
+    h3 {
+      font-size: 1.25rem;
+    }
+  }
+`;
+
 const Home: React.FC = () => {
   const { logUserInteraction } = useAppMonitoring('Home');
   const stats = useAppStats();
@@ -331,6 +383,27 @@ const Home: React.FC = () => {
           </Button>
         </Container>
       </CTASection>
+      <DocsSection>
+        <Container>
+          <div className="docs">
+            <span className="docIcon" aria-hidden>📄</span>
+            <h3>Documentos Golf MK3</h3>
+            <p>Acesse documentos úteis, manuais e referências do Golf MK3.</p>
+            <Button
+              as="a"
+              href="https://drive.google.com/drive/u/0/folders/1b-gDeYOAiJFC42XdfN5CcnloT9QkgTfV"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="primary"
+              onClick={() => handleFeatureClick('Documentos Golf MK3', 'https://drive.google.com/drive/u/0/folders/1b-gDeYOAiJFC42XdfN5CcnloT9QkgTfV')}
+              data-testid="docs-golf-link"
+              role="button"
+            >
+              Abrir Documentos
+            </Button>
+          </div>
+        </Container>
+      </DocsSection>
     </PageWrapper>
   );
 };
