@@ -71,6 +71,9 @@
             "Golf GTI 2.0 alemão 92-98",
             "Golf GLX 2.0 alemão 92-98"
         ],
+        "Lanterna luz de placa": [
+            "Gol G1 (quadrado)"
+        ],
         "Lâmpada lanterna lateral W5W": [
             "Golf GL 1.8 mexicano 96-98",
             "Golf GL 1.8 alemão 95-98",
@@ -200,8 +203,8 @@
             "AV10X757"
         ],
         "Bomba de direção": [
-            "Gol G6",
-            "Fox (usar espaçador)"
+            "Fox (usar espaçador)",
+            "Gol G6 (mesmos encaixes mas mais forte, direção fica mais leve)"
         ],
         "Correia De Acessórios Alternador s/ar": [
             "C6PK0894",
@@ -558,7 +561,9 @@
             "Golf modelo 1991 1998",
             "VW Gol 1995 até 2000",
             "VW Parati 1995 até 2000",
-            "VW G2 G3 G4"
+            "VW Gol G2 G3 G4",
+            "Polo Classic até 2001",
+            "Passat B4 (com ou sem pc de bordo)"
         ],
         "Chave Do Limpador": [
             "VW G2 G3 G4"
@@ -1070,6 +1075,9 @@
             "Cordoba 95-02",
             "Gol G2/G3/G4",
             "Santana 97-03"
+        ],
+        "Painel de instrumentos": [
+            "Polo Classic"
         ]
     }
 }
