@@ -129,8 +129,8 @@ const ProdutosShopee: React.FC = () => {
     <PageWrapper>
       <Container>
         <PageHeader>
-          <h1>🛒 Produtos para Golf MK3</h1>
-          <p>Encontre peças e acessórios de qualidade para o seu Golf MK3</p>
+          <h1>🛒 Produtos Recomendados para Você e Seu Carro</h1>
+          <p>Encontre peças e acessórios de qualidade</p>
         </PageHeader>
         
         <ProductsGrid>
