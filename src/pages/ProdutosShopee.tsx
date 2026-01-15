@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Container, Title, colors, media } from '../styles/GlobalStyles';
+import { Container, colors, media } from '../styles/GlobalStyles';
 import produtosData from '../data/produtos-shopee.json';
 
 const PageWrapper = styled.div`
