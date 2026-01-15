@@ -5,6 +5,7 @@ import { Container, Title, Button, Card, Grid, colors, media } from '../styles/G
 import { logger } from '../utils';
 import { useAppMonitoring } from '../hooks';
 import { useAppStats } from '../utils/appStats';
+import produtosData from '../data/produtos-shopee.json';
 
 const PageWrapper = styled.div`
   background: ${colors.background};
@@ -222,9 +223,144 @@ const DocsSection = styled.section`
   }
 `;
 
+const ProductsSection = styled.section`
+  background: ${colors.gray[900]};
+  padding: 3rem 0;
+  border-top: 1px solid ${colors.gray[800]};
+
+  ${media.mobile} {
+    padding: 2rem 0;
+  }
+`;
+
+const SectionTitle = styled.h2`
+  text-align: center;
+  font-size: 2rem;
+  color: ${colors.white};
+  margin-bottom: 1rem;
+  
+  ${media.mobile} {
+    font-size: 1.5rem;
+  }
+`;
+
+const SectionSubtitle = styled.p`
+  text-align: center;
+  color: ${colors.gray[300]};
+  margin-bottom: 2.5rem;
+  font-size: 1.1rem;
+  
+  ${media.mobile} {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+`;
+
+const ProductsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+  
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  ${media.mobile} {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+`;
+
+const ProductCard = styled.a`
+  background: ${colors.surface};
+  border: 1px solid ${colors.gray[800]};
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
+    border-color: ${colors.primary};
+  }
+`;
+
+const ProductImage = styled.div`
+  width: 100%;
+  height: 200px;
+  background: ${colors.gray[900]};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
+const ProductInfo = styled.div`
+  padding: 1.25rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  
+  h3 {
+    color: ${colors.white};
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  
+  p {
+    color: ${colors.gray[400]};
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+    flex: 1;
+  }
+`;
+
+const ProductButton = styled.div`
+  background: ${colors.primary};
+  color: ${colors.white};
+  padding: 0.65rem 1.25rem;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: ${colors.red[600]};
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+  }
+`;
+
+const ViewMoreButton = styled(Button)`
+  display: block;
+  margin: 0 auto;
+  max-width: 300px;
+  text-align: center;
+`;
+
 const Home: React.FC = () => {
   const { logUserInteraction } = useAppMonitoring('Home');
   const stats = useAppStats();
+  const [randomProducts, setRandomProducts] = React.useState<typeof produtosData>([]);
+
+  React.useEffect(() => {
+    // Seleciona 3 produtos aleatórios
+    const shuffled = [...produtosData].sort(() => 0.5 - Math.random());
+    setRandomProducts(shuffled.slice(0, 3));
+  }, []);
 
   React.useEffect(() => {
     // Log da visualização da página
@@ -367,6 +503,46 @@ const Home: React.FC = () => {
           </Grid>
         </Container>
       </StatsSection>
+
+      <ProductsSection>
+        <Container>
+          <SectionTitle>🛒 Produtos em Destaque</SectionTitle>
+          <SectionSubtitle>
+            Confira alguns produtos para o seu Golf MK3
+          </SectionSubtitle>
+          <ProductsGrid>
+            {randomProducts.map((produto) => (
+              <ProductCard
+                key={produto.id}
+                href={produto.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => logUserInteraction('product_click', { 
+                  productId: produto.id,
+                  productName: produto.nome 
+                })}
+              >
+                <ProductImage>
+                  <img src={produto.imagem} alt={produto.nome} />
+                </ProductImage>
+                <ProductInfo>
+                  <h3>{produto.nome}</h3>
+                  <p>{produto.descricao}</p>
+                  <ProductButton>Ver na Shopee</ProductButton>
+                </ProductInfo>
+              </ProductCard>
+            ))}
+          </ProductsGrid>
+          <ViewMoreButton 
+            as={Link} 
+            to="/produtos" 
+            variant="primary"
+            onClick={() => logUserInteraction('view_more_products_click', {})}
+          >
+            Ver Todos os Produtos →
+          </ViewMoreButton>
+        </Container>
+      </ProductsSection>
 
       <CTASection>
         <Container>
