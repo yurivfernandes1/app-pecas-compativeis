@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import SocialModal from './components/SocialModal';
 import InstallPWA from './components/InstallPWA';
+import ScrollToTop from './components/ScrollToTop';
 import { useAppProtection } from './hooks/useAppProtection';
 import Home from './pages/Home';
 import PecasCompativeis from './pages/PecasCompativeis';
@@ -19,6 +20,7 @@ const AppContent: React.FC = () => {
 
   return (
     <>
+      <ScrollToTop />
       <Header />
       <main>
         <Routes>
