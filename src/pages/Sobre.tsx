@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Container, Card, colors, media } from '../styles/GlobalStyles';
+import { useAppStats } from '../utils/appStats';
 
 const AboutSection = styled.section`
   padding: 2rem 0;
@@ -121,16 +122,23 @@ const TeamCard = styled(Card)`
   text-align: center;
 
   .avatar {
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     background: ${colors.primary};
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
-    color: ${colors.white};
     margin: 0 auto 1rem;
+    overflow: hidden;
+    border: 3px solid ${colors.primary};
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 
   h3 {
@@ -152,34 +160,87 @@ const TeamCard = styled(Card)`
 `;
 
 const TechStack = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
   margin: 1.5rem 0;
+  flex-wrap: wrap;
 
   ${media.mobile} {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 0.75rem;
+    gap: 1.5rem;
   }
 
   .tech {
-    background: ${colors.gray[800]};
-    padding: 0.75rem;
-    border-radius: 8px;
-    text-align: center;
-    font-weight: 600;
-    color: ${colors.white};
-    border-left: 4px solid ${colors.primary};
-    border: 1px solid ${colors.gray[700]};
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
     
-    ${media.mobile} {
-      padding: 0.5rem;
-      font-size: 0.8rem;
+    &:hover {
+      transform: translateY(-4px);
+    }
+    
+    i {
+      font-size: 3rem;
+      color: ${colors.primary};
+      transition: all 0.3s ease;
+      
+      ${media.mobile} {
+        font-size: 2.5rem;
+      }
+    }
+    
+    span {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: ${colors.gray[300]};
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    &:hover i {
+      color: ${colors.red[500]};
+      transform: scale(1.1);
     }
   }
 `;
 
+const ContactLinks = styled.div`
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+`;
+
+const ContactLink = styled.a`
+  color: ${colors.white};
+  font-size: 2rem;
+  transition: all 0.3s ease;
+  padding: 0.75rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  min-height: 60px;
+  background: ${colors.gray[800]};
+  border: 2px solid ${colors.gray[700]};
+  text-decoration: none;
+  
+  &:hover {
+    color: ${colors.primary};
+    background: rgba(220, 38, 38, 0.1);
+    transform: translateY(-4px);
+    border-color: ${colors.primary};
+    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.3);
+  }
+`;
+
 const Sobre: React.FC = () => {
+  const stats = useAppStats();
+  
   React.useEffect(() => {
     // Track page view
     if (window.gtag) {
@@ -246,14 +307,26 @@ const Sobre: React.FC = () => {
               </p>
               
               <TechStack>
-                <div className="tech">React</div>
-                <div className="tech">TypeScript</div>
-                <div className="tech">Styled Components</div>
-                <div className="tech">React Router</div>
-                <div className="tech">JSON Database</div>
-                <div className="tech">Google Analytics</div>
-                <div className="tech">Meta Pixel</div>
-                <div className="tech">Responsive Design</div>
+                <div className="tech">
+                  <i className="fab fa-react"></i>
+                  <span>React</span>
+                </div>
+                <div className="tech">
+                  <i className="fab fa-js"></i>
+                  <span>JavaScript</span>
+                </div>
+                <div className="tech">
+                  <i className="fas fa-code"></i>
+                  <span>TypeScript</span>
+                </div>
+                <div className="tech">
+                  <i className="fab fa-cloudflare"></i>
+                  <span>Cloudflare</span>
+                </div>
+                <div className="tech">
+                  <i className="fas fa-database"></i>
+                  <span>JSON</span>
+                </div>
               </TechStack>
 
               <h3>Arquitetura</h3>
@@ -268,43 +341,64 @@ const Sobre: React.FC = () => {
 
           <SidebarContent>
             <StatCard>
-              <span className="number">91</span>
+              <span className="number">{stats.totalPecas}</span>
               <span className="label">Peças Catalogadas</span>
             </StatCard>
 
             <StatCard>
-              <span className="number">22</span>
+              <span className="number">{stats.totalFusiveis}</span>
               <span className="label">Fusíveis Mapeados</span>
             </StatCard>
 
             <StatCard>
-              <span className="number">24</span>
+              <span className="number">{stats.totalCores}</span>
               <span className="label">Códigos de Cores</span>
             </StatCard>
 
             <TeamCard>
-              <div className="avatar">🚗</div>
-              <h3>Falando de GTI</h3>
-              <div className="role">Desenvolvimento</div>
+              <div className="avatar">
+                <img src="/galeria/hero.jpeg" alt="Yuri Viana Fernandes" />
+              </div>
+              <h3>Yuri Viana Fernandes</h3>
+              <div className="role">Desenvolvedor & Criador</div>
               <p>
-                Empresa especializada em soluções automotivas do Grupo iFernandes, 
-                focada em criar ferramentas úteis para a comunidade automobilística.
+                Dono do canal Falando de GTI, analista de dados e desenvolvedor web. 
+                Apaixonado por tecnologia e automóveis, criando soluções úteis para 
+                a comunidade automobilística.
               </p>
             </TeamCard>
 
             <InfoCard>
               <h2>Contato e Suporte</h2>
               <p>
-                <strong>URL Oficial:</strong><br />
-                https://app.falandodegti.com.br
+                <strong>Desenvolvedor:</strong><br />
+                Yuri Viana Fernandes
               </p>
               
               <p>
-                <strong>Empresa:</strong><br />
-                Grupo iFernandes
+                <strong>Canal:</strong><br />
+                Falando de GTI
               </p>
               
-              <p>
+              <ContactLinks>
+                <ContactLink href="https://linkedin.com/in/yurianalistabi" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                  <i className="fab fa-linkedin"></i>
+                </ContactLink>
+                
+                <ContactLink href="https://wa.me/5531987798823" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                  <i className="fab fa-whatsapp"></i>
+                </ContactLink>
+                
+                <ContactLink href="https://yurivf.com.br" target="_blank" rel="noopener noreferrer" aria-label="Website">
+                  <i className="fas fa-globe"></i>
+                </ContactLink>
+                
+                <ContactLink href="https://github.com/yurivfernandes1" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                  <i className="fab fa-github"></i>
+                </ContactLink>
+              </ContactLinks>
+              
+              <p style={{ marginTop: '1.5rem' }}>
                 Este projeto é mantido pela comunidade e está em constante evolução. 
                 Sugestões e melhorias são sempre bem-vindas!
               </p>
