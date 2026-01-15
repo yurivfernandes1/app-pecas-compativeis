@@ -138,6 +138,7 @@ const TeamCard = styled(Card)`
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transform: scale(1.2);
     }
   }
 
