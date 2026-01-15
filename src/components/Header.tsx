@@ -83,13 +83,13 @@ const Nav = styled.nav`
 const NavMenu = styled.ul`
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
 
   ${media.desktop} {
-    gap: 1.5rem;
+    gap: 0.75rem;
   }
 `;
 
@@ -97,18 +97,18 @@ const NavLink = styled(Link)<{ $isActive: boolean }>`
   color: ${props => props.$isActive ? colors.primary : colors.white};
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 0.4rem 0.8rem;
+  letter-spacing: 0.3px;
+  padding: 0.4rem 0.6rem;
   border-radius: 25px;
   transition: all 0.3s ease;
   position: relative;
   white-space: nowrap;
 
   ${media.desktop} {
-    font-size: 0.85rem;
-    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
   }
   
   &::before {
@@ -141,6 +141,47 @@ const NavLink = styled(Link)<{ $isActive: boolean }>`
       width: 80%;
     }
   `}
+`;
+
+const ExternalNavLink = styled.a`
+  color: ${colors.white};
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 0.4rem 0.6rem;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  position: relative;
+  white-space: nowrap;
+
+  ${media.desktop} {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: ${colors.primary};
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+
+  &:hover {
+    color: ${colors.primary};
+    background: rgba(220, 38, 38, 0.1);
+    text-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
+    
+    &::before {
+      width: 80%;
+    }
+  }
 `;
 
 const SocialLinks = styled.div`
@@ -273,6 +314,24 @@ const MobileNavLink = styled(Link)<{ $isActive: boolean }>`
   `}
 `;
 
+const MobileExternalLink = styled.a`
+  display: block;
+  color: ${colors.white};
+  text-decoration: none;
+  padding: 1rem 2rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: ${colors.primary};
+    background: rgba(220, 38, 38, 0.1);
+    padding-left: 2.5rem;
+  }
+`;
+
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
@@ -293,6 +352,10 @@ const Header: React.FC = () => {
     { path: '/fusiveis', label: 'Mapa de Fusíveis' },
     { path: '/cores', label: 'Tabela de Cores' },
     { path: '/sobre', label: 'Sobre' },
+  ];
+
+  const externalLinks = [
+    { url: 'https://falandodegti.com.br/links/shopee', label: 'Vendas Peças' },
   ];
 
   return (
@@ -318,6 +381,15 @@ const Header: React.FC = () => {
                 >
                   {item.label}
                 </NavLink>
+              </li>
+            ))}
+            {externalLinks.map((item) => (
+              <li key={item.url}>
+                <ExternalNavLink 
+                  href={item.url}
+                >
+                  {item.label}
+                </ExternalNavLink>
               </li>
             ))}
           </NavMenu>
@@ -357,6 +429,16 @@ const Header: React.FC = () => {
                 >
                   {item.label}
                 </MobileNavLink>
+              </li>
+            ))}
+            {externalLinks.map((item) => (
+              <li key={item.url}>
+                <MobileExternalLink 
+                  href={item.url}
+                  onClick={handleLinkClick}
+                >
+                  {item.label}
+                </MobileExternalLink>
               </li>
             ))}
           </MobileNavList>
