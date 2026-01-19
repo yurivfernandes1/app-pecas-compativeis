@@ -206,6 +206,9 @@
             "Fox (usar espaçador)",
             "Gol G6 (mesmos encaixes mas mais forte, direção fica mais leve)"
         ],
+        "Bomba de óleo": [
+            "Volkswagen Gol 1.6 1.8 2.0 AP de 1986 até 2009",
+        ],
         "Correia De Acessórios Alternador s/ar": [
             "C6PK0894",
             "6PK0895"
@@ -276,16 +279,6 @@
             "Fiat Tipo 1.6/1.8 93-97",
             "Chevrolet Kadett 1.8 EFI 89-96",
             "Chevrolet Monza 1.8 EFI 86-96"
-        ],
-        "Bomba Dagua": [
-            "Volkswagen motor 1.6, 1.8 e 2.0 AP Todos com polia V",
-            "Volkswagen Gol 1.6, 1.8 e 2.0 AP - 1983 até 1995",
-            "Volkswagen Parati 1.6, 1.8 e 2.0 AP - 1983 até 1995",
-            "Ford Escort 1.8 AP 90-96",
-            "Ford Verona 1.8 AP 90-96"
-        ],
-        "Pescoço Bomba Dagua": [
-            "VW"
         ],
         "Regulador de pressão": [
             "Gol 1.6 MI"
@@ -757,7 +750,11 @@
     },
     "Sistema de Arrefecimento": {
         "Bomba d'água": [
-            "VW Gol/Parati 1.6/1.8/2.0 AP 83-95"
+            "Volkswagen motor 1.6, 1.8 e 2.0 AP Todos com polia V",
+            "Volkswagen Gol 1.6, 1.8 e 2.0 AP - 1983 até 1995",
+            "Volkswagen Parati 1.6, 1.8 e 2.0 AP - 1983 até 1995",
+            "Ford Escort 1.8 AP 90-96",
+            "Ford Verona 1.8 AP 90-96"
         ],
         "Pescoço bomba d'água": [
             "VW"
@@ -869,11 +866,11 @@
             "Cordoba 95-02",
             "Ibiza 93-99"
         ],
-        "Vidro elétrico": [
+        "Máquina de vidro elétrica": [
             "Golf GL/GLX/GTI 92-98",
-            "Polo Classic 96-02 (motor)",
-            "Cordoba 95-02 (motor)",
-            "Gol G2/G3 95-05 (motor)"
+            "Polo Classic 96-02 (motor/dianteira)",
+            "Cordoba 95-02 (motor/dianteira)",
+            "Gol G2/G3 95-05 (motor)""Kombi (apenas vidros traseiros GLX/GL"
         ],
         "Retrovisores": [
             "Golf GL 92-98 (manual)",
@@ -1030,13 +1027,6 @@
         "Pestana interna do vidro": [
             "Para Golf GTI - Fox 2 portas.",
             "Para GL e GLX - Gol 2 portas G2/G4"
-        ],
-        "Máquina de vidro": [
-            "GTI - GLX E GL",
-            "GLX - GL",
-            "GL - GLX",
-            "Polo Classic 96-02 (dianteira)",
-            "Cordoba 95-02 (dianteira)"
         ],
         "Console central": [
             "Golf GL/GLX/GTI 92-98",
