@@ -47,6 +47,21 @@ const HeroSubtitle = styled.p`
   }
 `;
 
+const ProfileImage = styled.img`
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid ${colors.primary};
+  object-fit: cover;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
+
+  ${media.tablet} {
+    width: 150px;
+    height: 150px;
+  }
+`;
+
 const FeaturesSection = styled.section`
   padding: 4rem 0;
   background: ${colors.gray[900]};
@@ -167,6 +182,53 @@ const CTASection = styled.section`
     
     p {
       font-size: 1rem;
+    }
+  }
+`;
+
+const BlacklistSection = styled.section`
+  background: #0f0000;
+  border-top: 1px solid rgba(220, 38, 38, 0.3);
+  border-bottom: 1px solid rgba(220, 38, 38, 0.3);
+  padding: 3rem 0;
+
+  ${media.mobile} {
+    padding: 2rem 0;
+  }
+
+  .blacklist-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .icon {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  h3 {
+    color: ${colors.white};
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0;
+
+    ${media.mobile} {
+      font-size: 1.3rem;
+    }
+  }
+
+  p {
+    color: ${colors.gray[300]};
+    font-size: 1rem;
+    max-width: 560px;
+    line-height: 1.6;
+    margin: 0;
+
+    ${media.mobile} {
+      font-size: 0.95rem;
     }
   }
 `;
@@ -415,6 +477,10 @@ const Home: React.FC = () => {
     <PageWrapper data-testid="home-page">
       <HeroSection>
         <Container>
+          <ProfileImage
+            src="https://raw.githubusercontent.com/yurivfernandes1/app-pecas-compativeis/refs/heads/main/Perfil1.png"
+            alt="Falando de GTI"
+          />
           <HeroTitle data-testid="hero-title">Peças Compatíveis para Golf MK3</HeroTitle>
           <HeroSubtitle>
             Encontre facilmente peças compatíveis com seu Volkswagen Golf MK3. 
@@ -559,6 +625,22 @@ const Home: React.FC = () => {
           </Button>
         </Container>
       </CTASection>
+      <BlacklistSection>
+        <Container>
+          <div className="blacklist-content">
+            <span className="icon" aria-hidden>⚠️</span>
+            <h3>Lista Negra — Fraudadores</h3>
+            <p>
+              Identificamos contatos que aplicaram golpes com falsas vendas nos grupos de WhatsApp.
+              Consulte a lista antes de fechar qualquer negócio.
+            </p>
+            <Button as={Link} to="/lista-negra" variant="primary">
+              Ver Lista Negra
+            </Button>
+          </div>
+        </Container>
+      </BlacklistSection>
+
       <DocsSection>
         <Container>
           <div className="docs">

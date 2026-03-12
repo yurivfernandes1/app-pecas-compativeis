@@ -166,6 +166,7 @@ const Footer: React.FC = () => {
               <li><a href="/pecas"><i className="fas fa-cogs"></i>Peças Compatíveis</a></li>
               <li><a href="/fusiveis"><i className="fas fa-bolt"></i>Mapa de Fusíveis</a></li>
               <li><a href="/cores"><i className="fas fa-palette"></i>Tabela de Cores</a></li>
+              <li><a href="/lista-negra"><i className="fas fa-exclamation-triangle"></i>Lista Negra</a></li>
               <li><a href="/sobre"><i className="fas fa-info-circle"></i>Sobre o Projeto</a></li>
             </ul>
           </FooterSection>

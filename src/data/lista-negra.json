@@ -1,0 +1,40 @@
+{
+    "contatos": [
+        {
+            "numero": "+55 48 99635-3049",
+            "descricao": "Golpe com falsa venda em grupo de WhatsApp"
+        },
+        {
+            "numero": "+55 31 97130-5763",
+            "descricao": "Golpe com falsa venda em grupo de WhatsApp"
+        },
+        {
+            "numero": "+55 31 97225-2386",
+            "descricao": "Golpe com falsa venda em grupo de WhatsApp"
+        },
+        {
+            "numero": "+55 11 98607-4702",
+            "descricao": "Golpe com falsa venda em grupo de WhatsApp"
+        },
+        {
+            "numero": "+55 31 99631-4306",
+            "descricao": "Golpe com falsa venda em grupo de WhatsApp"
+        },
+        {
+            "numero": "+55 12 99728-6761",
+            "descricao": "Golpe com falsa venda em grupo de WhatsApp"
+        },
+        {
+            "numero": "+55 31 99076-1675",
+            "descricao": "Golpe com falsa venda em grupo de WhatsApp"
+        },
+        {
+            "numero": "+55 31 97196-5303",
+            "descricao": "Golpe com falsa venda em grupo de WhatsApp"
+        }
+    ],
+    "canaisDenuncia": {
+        "instagram": "https://www.instagram.com/falandodegti",
+        "facebook": "https://www.facebook.com/falandodegti"
+    }
+}

@@ -70,26 +70,24 @@ const Nav = styled.nav`
     display: flex;
     flex: 1;
     justify-content: center;
-    margin: 0 1rem;
-    max-width: 600px;
+    margin: 0 0.5rem;
   }
 
   ${media.desktop} {
-    margin: 0 2rem;
-    max-width: 700px;
+    margin: 0 1rem;
   }
 `;
 
 const NavMenu = styled.ul`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.1rem;
   list-style: none;
   margin: 0;
   padding: 0;
 
   ${media.desktop} {
-    gap: 0.75rem;
+    gap: 0.25rem;
   }
 `;
 
@@ -97,18 +95,18 @@ const NavLink = styled(Link)<{ $isActive: boolean }>`
   color: ${props => props.$isActive ? colors.primary : colors.white};
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.3px;
-  padding: 0.4rem 0.6rem;
+  padding: 0.4rem 0.45rem;
   border-radius: 25px;
   transition: all 0.3s ease;
   position: relative;
   white-space: nowrap;
 
   ${media.desktop} {
-    font-size: 0.75rem;
-    padding: 0.5rem 0.75rem;
+    font-size: 0.72rem;
+    padding: 0.5rem 0.6rem;
   }
   
   &::before {
@@ -293,6 +291,7 @@ const Header: React.FC = () => {
     { path: '/fusiveis', label: 'Mapa de Fusíveis' },
     { path: '/cores', label: 'Tabela de Cores' },
     { path: '/produtos', label: 'Vendas Peças' },
+    { path: '/lista-negra', label: 'Lista Negra' },
     { path: '/sobre', label: 'Sobre' },
   ];
 
