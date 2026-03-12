@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Container, colors, media } from '../styles/GlobalStyles';
 import listaNegra from '../data/lista-negra.json';
+
+const ITEMS_PER_PAGE = 10;
 
 const fadeIn = keyframes`
   from {
@@ -288,8 +290,134 @@ const ReportSection = styled.div`
   }
 `;
 
+const SearchWrapper = styled.div`
+  margin-bottom: 1.5rem;
+`;
+
+const SearchInput = styled.input`
+  width: 100%;
+  padding: 0.85rem 1.25rem;
+  border: 2px solid ${colors.gray[700]};
+  border-radius: 10px;
+  font-size: 1rem;
+  background: ${colors.gray[800]};
+  color: ${colors.white};
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  -webkit-appearance: none;
+  appearance: none;
+
+  &:focus {
+    outline: none;
+    border-color: ${colors.primary};
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+  }
+
+  &::placeholder {
+    color: ${colors.gray[500]};
+  }
+`;
+
+const TableInfo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+
+  span {
+    color: ${colors.gray[400]};
+    font-size: 0.9rem;
+  }
+
+  strong {
+    color: ${colors.primary};
+  }
+`;
+
+const NoResults = styled.div`
+  padding: 2.5rem;
+  text-align: center;
+  color: ${colors.gray[500]};
+  font-size: 0.95rem;
+`;
+
+const PaginationWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+`;
+
+const PageButton = styled.button<{ $active?: boolean }>`
+  min-width: 2.2rem;
+  height: 2.2rem;
+  padding: 0 0.6rem;
+  border-radius: 8px;
+  border: 2px solid ${props => props.$active ? colors.primary : colors.gray[700]};
+  background: ${props => props.$active ? colors.primary : 'transparent'};
+  color: ${props => props.$active ? colors.white : colors.gray[300]};
+  font-size: 0.9rem;
+  font-weight: ${props => props.$active ? '700' : '400'};
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    border-color: ${colors.primary};
+    color: ${colors.white};
+    background: ${props => props.$active ? colors.primary : 'rgba(220,38,38,0.15)'};
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+`;
+
 const ListaNegra: React.FC = () => {
   const { contatos, canaisDenuncia } = listaNegra;
+  const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const filtered = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return contatos;
+    return contatos.filter(c =>
+      c.numero.toLowerCase().includes(q) ||
+      c.descricao.toLowerCase().includes(q)
+    );
+  }, [searchQuery, contatos]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
+
+  const paginated = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filtered.slice(start, start + ITEMS_PER_PAGE);
+  }, [filtered, currentPage]);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const pageNumbers = useMemo(() => {
+    const pages: (number | '...')[] = [];
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      if (currentPage > 3) pages.push('...');
+      for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+        pages.push(i);
+      }
+      if (currentPage < totalPages - 2) pages.push('...');
+      pages.push(totalPages);
+    }
+    return pages;
+  }, [totalPages, currentPage]);
 
   return (
     <PageContainer>
@@ -341,18 +469,74 @@ const ListaNegra: React.FC = () => {
 
         <ContactsSection>
           <h2>📋 Contatos Registrados ({contatos.length})</h2>
+
+          <SearchWrapper>
+            <SearchInput
+              type="search"
+              placeholder="🔍 Pesquisar por número ou descrição..."
+              value={searchQuery}
+              onChange={handleSearch}
+            />
+          </SearchWrapper>
+
+          <TableInfo>
+            <span>
+              {searchQuery
+                ? <><strong>{filtered.length}</strong> resultado{filtered.length !== 1 ? 's' : ''} encontrado{filtered.length !== 1 ? 's' : ''} de <strong>{contatos.length}</strong> registros</>
+                : <><strong>{contatos.length}</strong> registro{contatos.length !== 1 ? 's' : ''} no total</>
+              }
+            </span>
+            {totalPages > 1 && (
+              <span>Página <strong>{currentPage}</strong> de <strong>{totalPages}</strong></span>
+            )}
+          </TableInfo>
+
           <ContactsTable>
             <TableHeader>
               <span>Número</span>
               <span>Descrição</span>
             </TableHeader>
-            {contatos.map((contato, index) => (
-              <TableRow key={index}>
-                <PhoneNumber>{contato.numero}</PhoneNumber>
-                <Description>{contato.descricao}</Description>
-              </TableRow>
-            ))}
+            {paginated.length === 0 ? (
+              <NoResults>Nenhum resultado encontrado para "{searchQuery}"</NoResults>
+            ) : (
+              paginated.map((contato, index) => (
+                <TableRow key={index}>
+                  <PhoneNumber>{contato.numero}</PhoneNumber>
+                  <Description>{contato.descricao}</Description>
+                </TableRow>
+              ))
+            )}
           </ContactsTable>
+
+          {totalPages > 1 && (
+            <PaginationWrapper>
+              <PageButton
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+              >
+                ‹
+              </PageButton>
+              {pageNumbers.map((page, i) =>
+                page === '...' ? (
+                  <span key={`ellipsis-${i}`} style={{ color: colors.gray[500], padding: '0 0.25rem' }}>…</span>
+                ) : (
+                  <PageButton
+                    key={page}
+                    $active={page === currentPage}
+                    onClick={() => setCurrentPage(page as number)}
+                  >
+                    {page}
+                  </PageButton>
+                )
+              )}
+              <PageButton
+                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages}
+              >
+                ›
+              </PageButton>
+            </PaginationWrapper>
+          )}
         </ContactsSection>
 
         <ReportSection>
