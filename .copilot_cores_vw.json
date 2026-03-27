@@ -1,0 +1,1397 @@
+[
+    {
+        "codigo": "L041",
+        "nome": "Black",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "#000000",
+        "observacao": "---",
+        "codigoVW": "A1"
+    },
+    {
+        "codigo": "L09B",
+        "nome": "not available - 3 stage",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "L0B9",
+        "nome": "not available - 3 stage",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "L0B9/D4",
+        "nome": "not available - 3 stage",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "L132",
+        "nome": "Ginster Yellow",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "L90E",
+        "nome": "Alpine White",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN",
+        "cor": "#F8F8FF",
+        "observacao": "---",
+        "codigoVW": "P1"
+    },
+    {
+        "codigo": "LA041",
+        "nome": "Black",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LA041/A1",
+        "nome": "Black",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LA1U",
+        "nome": "Futura Yellow Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LA1U/Q9",
+        "nome": "Futura Yellow Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LA1Z",
+        "nome": "Light Sahara Sand",
+        "ano": "1995",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LA27",
+        "nome": "Tropic Orange Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LA27/S7",
+        "nome": "Tropic Orange Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LA6U",
+        "nome": "Dark Teal Pearl",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LA7U",
+        "nome": "Pearl Grey Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LA7Y",
+        "nome": "Pewter Gray",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LA9B",
+        "nome": "Cool White",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LA9B/B7",
+        "nome": "Cool White",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LA9V",
+        "nome": "Brilliant Black",
+        "ano": "1995",
+        "marca": "VOLKSWAGEN",
+        "cor": "#000000",
+        "observacao": "metalico",
+        "codigoVW": "R8"
+    },
+    {
+        "codigo": "LB3Y",
+        "nome": "Colorado Red Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LB3Y/Q7",
+        "nome": "Colorado Red Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LB5T",
+        "nome": "Steel Blue",
+        "ano": "1995",
+        "marca": "VOLKSWAGEN",
+        "cor": "#6495ED",
+        "observacao": "metalico",
+        "codigoVW": "J4"
+    },
+    {
+        "codigo": "LB6N",
+        "nome": "Jazz Blue Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LB6N/N7",
+        "nome": "Jazz Blue Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LB6T",
+        "nome": "Turquoise",
+        "ano": "1995",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LB7U",
+        "nome": "Titanium Grey",
+        "ano": "1995",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LB7Z",
+        "nome": "Satin Silver Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "#C0C0C0",
+        "observacao": "metalico",
+        "codigoVW": "X1"
+    },
+    {
+        "codigo": "LB7Z/B4",
+        "nome": "Satin Silver Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "#C0C0C0",
+        "observacao": "metalico",
+        "codigoVW": "X1"
+    },
+    {
+        "codigo": "LB9A",
+        "nome": "Candy White",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "#FFFFFF",
+        "observacao": "---",
+        "codigoVW": "B4"
+    },
+    {
+        "codigo": "LB9A/B4",
+        "nome": "Candy White",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "#FFFFFF",
+        "observacao": "---",
+        "codigoVW": "B4"
+    },
+    {
+        "codigo": "LC2U",
+        "nome": "Sherry",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LC3L",
+        "nome": "Hot Chili Red Metallic",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "#B12C33",
+        "observacao": "perolado",
+        "codigoVW": "E1"
+    },
+    {
+        "codigo": "LC3M",
+        "nome": "Memory Red Metallic",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LC3T",
+        "nome": "Pearl Red",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN",
+        "cor": "#B22222",
+        "observacao": "perolado",
+        "codigoVW": "Y8"
+    },
+    {
+        "codigo": "LC3X",
+        "nome": "not available - 3 stage",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LC3X/9W",
+        "nome": "not available - 3 stage",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LC3Y",
+        "nome": "Bordeaud Red",
+        "ano": "1995",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LC4T",
+        "nome": "Twilight Violet",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN",
+        "cor": "#7D2181",
+        "observacao": "perolado",
+        "codigoVW": "W2"
+    },
+    {
+        "codigo": "LC5C",
+        "nome": "Aqua Blue",
+        "ano": "1995",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LC5K",
+        "nome": "SOUND BLUE",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LC5L",
+        "nome": "Mystic Blue Pearlescent",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "#000080",
+        "observacao": "perolado",
+        "codigoVW": "E6"
+    },
+    {
+        "codigo": "LC5M",
+        "nome": "Moonlight Blue Pearl",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LC5P",
+        "nome": "Dusty Mauve Pearl",
+        "ano": "1995",
+        "marca": "VOLKSWAGEN",
+        "cor": "#0F52BA",
+        "observacao": "perolado",
+        "codigoVW": "T1"
+    },
+    {
+        "codigo": "LC5U",
+        "nome": "Aqua Blue",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LC6M",
+        "nome": "Bright Green Mica",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LC6M/T3",
+        "nome": "Bright Green Mica",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LC6N",
+        "nome": "Royal Green Mica",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LC6P",
+        "nome": "Emerald Green Mica",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "#00FF00",
+        "observacao": "perolado",
+        "codigoVW": "W7"
+    },
+    {
+        "codigo": "LC6U",
+        "nome": "Classic Green Metallic",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LC6V",
+        "nome": "Jaspis Green Metallic",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "#8FBC8F",
+        "observacao": "perolado",
+        "codigoVW": "R6"
+    },
+    {
+        "codigo": "LC9Z",
+        "nome": "Black Magic Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "#000000",
+        "observacao": "perolado",
+        "codigoVW": "Z4"
+    },
+    {
+        "codigo": "LC9Z/Z4",
+        "nome": "Black Magic Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "#000000",
+        "observacao": "perolado",
+        "codigoVW": "Z4"
+    },
+    {
+        "codigo": "LD1B",
+        "nome": "Yellow",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LD1B/J5",
+        "nome": "Yellow",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LD5DCHAGALL",
+        "nome": "Blue",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LD6P",
+        "nome": "Fashion Green",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LD6T",
+        "nome": "Electronic Green",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "#00A550",
+        "observacao": "metalico",
+        "codigoVW": "X9"
+    },
+    {
+        "codigo": "LD7V",
+        "nome": "Silver Gray",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LD7V/C1",
+        "nome": "Silver Gray",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LG3E",
+        "nome": "Red Solid",
+        "ano": "1995",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LG3L",
+        "nome": "Red",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LG3L/P2",
+        "nome": "Red",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LG4R",
+        "nome": "Soft Violet",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LG5A",
+        "nome": "Fjord Blue Mica",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LG5P",
+        "nome": "Silk Blue",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LG5Q",
+        "nome": "Catalina Blue",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LG5R",
+        "nome": "Windsor Blue Metallic",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LG5T",
+        "nome": "Batik Blue Mica",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LG5T/G3",
+        "nome": "Batik Blue Mica",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LG5U",
+        "nome": "Porcelain Blue Metallic",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LG6R",
+        "nome": "Mullberry",
+        "ano": "1995",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LG6S",
+        "nome": "Sequoia Green Metallic",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LG6V",
+        "nome": "Cyber Green Metallic",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LG7N",
+        "nome": "Bright Surf",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LG7V",
+        "nome": "Desert Wind Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LG7V/X4",
+        "nome": "Desert Wind Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LG7X",
+        "nome": "Suede Silver Metallic",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LG9R",
+        "nome": "Silver Arrow Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LG9R/P4",
+        "nome": "Silver Arrow Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LGV",
+        "nome": "Cyber Green Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LGV/L9",
+        "nome": "Cyber Green Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LH3D",
+        "nome": "Marsala Red",
+        "ano": "1995",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LH5Y",
+        "nome": "Smoke Silver Blue",
+        "ano": "1995",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LH5Z",
+        "nome": "Deep Atlantis Blue",
+        "ano": "1995",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LK2Y",
+        "nome": "Cinnabar",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LK3A",
+        "nome": "Paprika Red",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LK4U",
+        "nome": "Ice Grey Violet",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LK4Y",
+        "nome": "Violet",
+        "ano": "1995",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LK4Z",
+        "nome": "Bromberry",
+        "ano": "1995",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LK7Y",
+        "nome": "Storm Grey Metallic",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN",
+        "cor": "#4B4B4B",
+        "observacao": "metalico",
+        "codigoVW": "M9"
+    },
+    {
+        "codigo": "LL5V",
+        "nome": "Jamaica Aqua Blue",
+        "ano": "1995",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LL5Y",
+        "nome": "Nebio Blue Metallic",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LL5Z",
+        "nome": "Island Blue Metallic",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LN5Y",
+        "nome": "Windsor Blue Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "#696969",
+        "observacao": "metalico",
+        "codigoVW": "J8"
+    },
+    {
+        "codigo": "LO41",
+        "nome": "Black",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LO9B",
+        "nome": "not available - 3 stage",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LOA9",
+        "nome": "not available - 3 stage",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LP3D",
+        "nome": "Flash Red",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LP3G",
+        "nome": "Flash Red",
+        "ano": "1996",
+        "marca": "VOLKSWAGEN",
+        "cor": "#FF2400",
+        "observacao": "---",
+        "codigoVW": "D8"
+    },
+    {
+        "codigo": "LP6M",
+        "nome": "Caribbean Teal",
+        "ano": "1995",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LR5V",
+        "nome": "Fjord Blue Mica",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "#0056A7",
+        "observacao": "perolado",
+        "codigoVW": "C3"
+    },
+    {
+        "codigo": "LW5Y",
+        "nome": "Techno Blue Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LW5Y/K9",
+        "nome": "Techno Blue Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LW5Z",
+        "nome": "Jazz Blue Metallic",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LY1B",
+        "nome": "Elegant Green Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LY1B/F2",
+        "nome": "Elegant Green Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LY1C",
+        "nome": "Hot Chili Red Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LY1C/1T",
+        "nome": "Hot Chili Red Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LY1T",
+        "nome": "Melange Beige Metallic",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LY1Z",
+        "nome": "Bamboo Metallic",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LY3D",
+        "nome": "Tornado Red",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "#DA2001",
+        "observacao": "---",
+        "codigoVW": "G2"
+    },
+    {
+        "codigo": "LY3D/G2",
+        "nome": "Tornado Red",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "#DA2001",
+        "observacao": "---",
+        "codigoVW": "G2"
+    },
+    {
+        "codigo": "LY3H",
+        "nome": "Laser Red",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LY3Y",
+        "nome": "Cerise Red",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LY3Z",
+        "nome": "Autumn Red Metallic",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LY4N",
+        "nome": "Byzanz Mica",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LY5T",
+        "nome": "Pelican Blue Metallic",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LY6L",
+        "nome": "Tropic Green Metallic",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LY6M",
+        "nome": "Aqua Green Metallic",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LY6P",
+        "nome": "Ragusa Green",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LY7M",
+        "nome": "Aluminum Silver Metallic",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LY7P",
+        "nome": "Titanium Gray",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LY7T",
+        "nome": "Crystal Silver",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LY9B",
+        "nome": "Brilliantschwarz",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LY9B/A2",
+        "nome": "Brilliantschwarz",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LY9G",
+        "nome": "Casablanca White",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ1T",
+        "nome": "Nebio Blue Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ1T/Z9",
+        "nome": "Nebio Blue Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ3L",
+        "nome": "Hibiscus Red Mica Metallic",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ3N",
+        "nome": "Rubin Red Metallic",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ4V",
+        "nome": "Amethyst Mica Metallic",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ5K",
+        "nome": "Santorin Blue Mica Metallic",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ5L",
+        "nome": "Europa Blue Mica",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ5N",
+        "nome": "Minerva Blue",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ5T",
+        "nome": "Europa Blue Mica",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ6H",
+        "nome": "Racing Green Mica Metallic",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ6L",
+        "nome": "Artic White",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ6L/E7",
+        "nome": "Artic White",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ6P",
+        "nome": "Gomera",
+        "ano": "1994",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ6U",
+        "nome": "Emerald Mica",
+        "ano": "1997",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ6W",
+        "nome": "Cosmic Green Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ6W/8L",
+        "nome": "Cosmic Green Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ7W",
+        "nome": "Island Blue Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ7W/1X",
+        "nome": "Indigo Blue Metallic",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ7X",
+        "nome": "Canyon Red Mica",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ7X/8X",
+        "nome": "Canyon Red Mica",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ8N",
+        "nome": "Atlantic Blue Mica",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ8N/2H",
+        "nome": "Atlantic Blue Mica",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ8P",
+        "nome": "Sable Brown Mica Metallic",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ9U",
+        "nome": "Volcano Black Mica Metallic",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ9V",
+        "nome": "Paprika Red",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ9V/3A",
+        "nome": "Paprika Red",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ9W",
+        "nome": "not available - 3 stage",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "LZ9W/4Z",
+        "nome": "not available - 3 stage",
+        "ano": "1999",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    },
+    {
+        "codigo": "R902",
+        "nome": "Artic White",
+        "ano": "1998",
+        "marca": "VOLKSWAGEN",
+        "cor": "",
+        "observacao": "",
+        "codigoVW": ""
+    }
+]
