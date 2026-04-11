@@ -349,6 +349,75 @@
         "Sensor temperatura água": [
             "Santana MI"
         ],
+        "Flexível escapamento": [
+            "Verona/Apollo 1.8 92",
+            "Bora 2000 até 2011",
+            "Escort 2000 até 2002",
+            "Apollo 92"
+        ],
+        "Junta Carter": [
+            "Gol/Golf/Polo Classic Mi 1.6/1.8/2.0 97",
+            "Golf Gl Glx GTI 95 A 97 Motor Ap",
+            "Gol"
+        ],
+        "Bulão Carter": [
+            "Golf 94/98 Passat/Gol",
+            "Golf/Jetta/Tiguan/Passat",
+            "Gol/polo/golf/saveiro/fox"
+        ],
+        "Módulo De Ignição": [
+            "Escort/ Polo/ Golf/ Verona"
+        ],
+        "Válvula Termostática": [
+            "Volkswagen Gol 1.6 1.8 2.0 AP de 1986 até 2009",
+            "Chevrolet Omega / Suprema CD 3.0 MPFI de 1992 até 1994",
+            "Ford Escort motor AP todos"
+        ],
+        "Retentor dianteiro do virabrequim": [
+            "Lado Polia",
+            "32x47x10MM",
+            "(Ford) [AP] Belina 1.8 Todos",
+            "Ford Escort 1.8 AP 90-96",
+            "Ford Verona 1.8 AP 90-96",
+            "Gol 1.6/1.8 AP todos",
+            "Santana 2.0 AP todos"
+        ],
+        "Retentor traseiro do virabrequim": [
+            "Lado Volante",
+            "90x110x12MM",
+            "Gol 1.6/1.8/2.0 AP todos",
+            "Santana 2.0 AP todos",
+            "Golf 1.8/2.0 AP todos",
+            "Ford Escort 1.8 AP 90-96"
+        ],
+        "Junta do cabeçote": [
+            "GLX e GTI: Golf ou Bora MK4 2.0 8v"
+        ],
+        "Junta do coletor admissão": [
+            "Golf 1.8 MI 96-98",
+            "Golf 2.0 MI 93-98",
+            "Gol 1.6/1.8 MI 97-05",
+            "Santana 2.0 MI 97-03"
+        ],
+        "Junta do coletor escapamento": [
+            "Golf todas as versões AP",
+            "Gol 1.6/1.8/2.0 AP todos",
+            "Santana 2.0 AP todos",
+            "Ford Escort 1.8 AP 90-96"
+        ],
+        "Válvula termostática água": [
+            "Golf todas as versões AP",
+            "Gol 1.6/1.8/2.0 AP todos",
+            "Santana 2.0 AP todos",
+            "Ford Escort 1.8 AP 90-96",
+            "Polo Classic 1.8 96-02"
+        ],
+        "Sensor detonação": [
+            "Golf GTI/GLX 2.0 93-98",
+            "Gol 1.8 MI 97-05",
+            "Santana 2.0 MI 97-03",
+            "Polo Classic 1.8 96-02"
+        ],
         "Sonda lambda": [
             "Polo 97-02"
         ],
@@ -453,9 +522,6 @@
         ]
     },
     "Suspensão, Direção e Freios": {
-        "Bieletas Golf GL, GLX, GTI 94-98": [
-            "KIT&CIA"
-        ],
         "Bucha Da Bieleta": [
             "Polo até 2002",
             "Golf 92/02"
@@ -503,11 +569,6 @@
             "Golf GTI 94 / 95",
             "Gol 95 / 01"
         ],
-        "Kit do amortecedor suspensão dianteira": [
-            "Bora 94 / 97",
-            "Golf GL 95 / 98",
-            "Golf GLX 96 / 98"
-        ],
         "Válvula equalizadora freio detalhada": [
             "Uno Vivace – precisa troca haste",
             "Fox Cross Fox Voyage G5 –adaptar fixação de 1 parafuso",
@@ -554,26 +615,12 @@
         "Ponteiras/terminais de direção": [
             "VilaFranca"
         ],
-        "Calço do banco": [
-            "Santana Gol Voyage"
-        ],
-        "Chave De Seta": [
-            "Golf modelo 1991 1998",
-            "VW Gol 1995 até 2000",
-            "VW Parati 1995 até 2000",
-            "VW Gol G2 G3 G4",
-            "Polo Classic até 2001",
-            "Passat B4 (com ou sem pc de bordo)"
-        ],
-        "Chave Do Limpador": [
-            "VW G2 G3 G4"
-        ],
-        "Mola dianteira": [
+        "Molas dianteira": [
             "Golf",
             "Beetle",
             "Bora"
         ],
-        "Mola traseira": [
+        "Molas traseira": [
             "Quantum 85-02"
         ],
         "Disco de freio": [
@@ -598,25 +645,6 @@
             "Gol, Parati, Saveiro, G2/G3",
             "Ibiza"
         ],
-        "Flexível escapamento": [
-            "Verona/Apollo 1.8 92",
-            "Bora 2000 até 2011",
-            "Escort 2000 até 2002",
-            "Apollo 92"
-        ],
-        "Junta Carter": [
-            "Gol/Golf/Polo Classic Mi 1.6/1.8/2.0 97",
-            "Golf Gl Glx GTI 95 A 97 Motor Ap",
-            "Gol"
-        ],
-        "Bulão Carter": [
-            "Golf 94/98 Passat/Gol",
-            "Golf/Jetta/Tiguan/Passat",
-            "Gol/polo/golf/saveiro/fox"
-        ],
-        "Módulo De Ignição": [
-            "Escort/ Polo/ Golf/ Verona"
-        ],
         "Puxador Do Encosto Do Banco Traseiro": [
             "Gol G2, G3, G4 1996",
             "Gol G2, G3, G4 1997",
@@ -626,66 +654,6 @@
             "Gol 1.6 8V C 2P de 1974 até 1987",
             "Gol 1.3 8V C 2P 1980",
             "Gol 1.6 8V CL 2P de 1980 até 1996"
-        ],
-        "Válvula Termostática": [
-            "Volkswagen Gol 1.6 1.8 2.0 AP de 1986 até 2009",
-            "Chevrolet Omega / Suprema CD 3.0 MPFI de 1992 até 1994",
-            "Ford Escort motor AP todos"
-        ],
-        "Retentor dianteiro do virabrequim": [
-            "Lado Polia",
-            "32x47x10MM",
-            "(Ford) [AP] Belina 1.8 Todos",
-            "Ford Escort 1.8 AP 90-96",
-            "Ford Verona 1.8 AP 90-96",
-            "Gol 1.6/1.8 AP todos",
-            "Santana 2.0 AP todos"
-        ],
-        "Retentor traseiro do virabrequim": [
-            "Lado Volante",
-            "90x110x12MM",
-            "Gol 1.6/1.8/2.0 AP todos",
-            "Santana 2.0 AP todos",
-            "Golf 1.8/2.0 AP todos",
-            "Ford Escort 1.8 AP 90-96"
-        ],
-        "Junta do cabeçote": [
-            "GLX e GTI: Golf ou Bora MK4 2.0 8v"
-        ],
-        "Junta do coletor admissão": [
-            "Golf 1.8 MI 96-98",
-            "Golf 2.0 MI 93-98",
-            "Gol 1.6/1.8 MI 97-05",
-            "Santana 2.0 MI 97-03"
-        ],
-        "Junta do coletor escapamento": [
-            "Golf todas as versões AP",
-            "Gol 1.6/1.8/2.0 AP todos",
-            "Santana 2.0 AP todos",
-            "Ford Escort 1.8 AP 90-96"
-        ],
-        "Óleo do motor": [
-            "Golf todas as versões (15W40 ou 20W50)",
-            "Gol 1.6/1.8/2.0 AP (15W40 ou 20W50)",
-            "Santana 2.0 AP (15W40 ou 20W50)",
-            "Polo Classic 1.8 (15W40)",
-            "Ford Escort 1.8 AP (15W40)"
-        ],
-        "Válvula termostática água": [
-            "Golf todas as versões AP",
-            "Gol 1.6/1.8/2.0 AP todos",
-            "Santana 2.0 AP todos",
-            "Ford Escort 1.8 AP 90-96",
-            "Polo Classic 1.8 96-02"
-        ],
-        "Sensor detonação": [
-            "Golf GTI/GLX 2.0 93-98",
-            "Gol 1.8 MI 97-05",
-            "Santana 2.0 MI 97-03",
-            "Polo Classic 1.8 96-02"
-        ],
-        "Bieleta Dianteira": [
-            "Golf 92/95...07/98"
         ],
         "Bieleta dianteira": [
             "Golf 92/95...07/98",
@@ -1030,6 +998,17 @@
         "Haste do limpador traseiro Mk3": [
             "Parati G2/G3/G4"
         ],
+        "Calço do banco": [
+            "Santana Gol Voyage"
+        ],
+        "Chave De Seta e Limpador": [
+            "Golf modelo 1991 1998",
+            "VW Gol 1995 até 2000",
+            "VW Parati 1995 até 2000",
+            "VW Gol G2 G3 G4",
+            "Polo Classic até 2001",
+            "Passat B4 (com ou sem pc de bordo)"
+        ],
         "Lâmpada do painel": [
             "Corsa",
             "Gol G2/G3/G4",
@@ -1053,12 +1032,6 @@
             "Golf GL/GLX/GTI 92-98",
             "Polo Classic 96-02",
             "Cordoba 95-02"
-        ],
-        "Película insulfilm": [
-            "Golf todas as versões 92-98",
-            "Polo Classic 96-02",
-            "Cordoba 95-02",
-            "Gol G2/G3/G4"
         ],
         "Kit travas elétricas": [
             "Golf GLX/GTI 92-98",

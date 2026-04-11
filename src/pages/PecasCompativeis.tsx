@@ -524,9 +524,9 @@ const PecasGrid = styled.div`
 `;
 
 const CollapsibleContent = styled.div<{ $expanded?: boolean }>`
-  max-height: ${props => props.$expanded ? '5000px' : '0'};
-  overflow: hidden;
-  transition: all 0.5s ease;
+  max-height: ${props => props.$expanded ? 'none' : '0'};
+  overflow: ${props => props.$expanded ? 'visible' : 'hidden'};
+  transition: opacity 0.5s ease, transform 0.5s ease, margin-top 0.5s ease;
   opacity: ${props => props.$expanded ? 1 : 0};
   transform: ${props => props.$expanded ? 'translateY(0)' : 'translateY(-10px)'};
   margin-top: ${props => props.$expanded ? '1.5rem' : '0'};
