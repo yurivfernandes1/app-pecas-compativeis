@@ -606,7 +606,7 @@ const Home: React.FC = () => {
               />
             </VideoWrapper>
             <SalesInfo>
-              <h3>Faróis TYC Twin — Disponível para Venda</h3>
+              <h3>Faróis TYC Twin — Disponíveis para Venda</h3>
               <p>Temos um par de faróis TYC Twin para venda. Todos os detalhes neste vídeo. Entre em contato pelo WhatsApp para mais informações. Envio para todo o Brasil, pode retirar em mãos na zona sul de São Paulo. Pronta entrega!</p>
               <Button
                 as="a"
