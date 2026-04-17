@@ -413,6 +413,107 @@ const ViewMoreButton = styled(Button)`
   text-align: center;
 `;
 
+
+const SalesVideoGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 2rem;
+  align-items: center;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const VideoWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 8px;
+  }
+`;
+
+const SalesInfo = styled.div`
+  text-align: left;
+
+  h3 {
+    color: ${colors.primary};
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    color: ${colors.gray[300]};
+    margin-bottom: 1.25rem;
+  }
+
+  a[role="button"] {
+    display: inline-block;
+  }
+
+  ${media.mobile} {
+    text-align: center;
+  }
+`;
+
+const WhatsappIcon = styled.span`
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.6rem;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+  }
+`;
+
+const SalesVideoSection = styled.section`
+  background: ${colors.gray[800]};
+  color: ${colors.white};
+  padding: 3rem 0;
+  border-top: 1px solid ${colors.gray[700]};
+
+  ${SectionTitle} {
+    color: ${colors.white};
+  }
+
+  ${SectionSubtitle} {
+    color: ${colors.gray[300]};
+  }
+
+  ${media.mobile} {
+    padding: 2rem 0;
+  }
+`;
+
+const LatestVideoSection = styled.section`
+  background: ${colors.gray[800]};
+  color: ${colors.white};
+  padding: 3rem 0;
+  border-top: 1px solid ${colors.gray[700]};
+
+  ${SectionTitle} {
+    color: ${colors.white};
+  }
+
+  ${SectionSubtitle} {
+    color: ${colors.gray[300]};
+  }
+
+  ${media.mobile} {
+    padding: 2rem 0;
+  }
+`;
+
 const Home: React.FC = () => {
   const { logUserInteraction } = useAppMonitoring('Home');
   const stats = useAppStats();
@@ -491,6 +592,42 @@ const Home: React.FC = () => {
           </Button>
         </Container>
       </HeroSection>
+
+      <SalesVideoSection>
+        <Container>
+          <SalesVideoGrid>
+            <VideoWrapper>
+              <iframe
+                src="https://www.youtube.com/embed/jr0MgX5ahHc"
+                title="Faróis TYC Twin - Vídeo"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </VideoWrapper>
+            <SalesInfo>
+              <h3>Faróis TYC Twin — Disponível para Venda</h3>
+              <p>Temos um par de faróis TYC Twin para venda. Todos os detalhes neste vídeo. Entre em contato pelo WhatsApp para mais informações. Envio para todo o Brasil, pode retirar em mãos na zona sul de São Paulo. Pronta entrega!</p>
+              <Button
+                as="a"
+                href={"https://wa.me/5531987798823?text=Ol%C3%A1%2C%20estou%20interessado%20nos%20far%C3%B3is%20twin"}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="primary"
+                onClick={() => logUserInteraction('whatsapp_contact_click', { product: 'Faróis TYC Twin', source: 'home_sale_section' })}
+              >
+                <WhatsappIcon aria-hidden>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path fill="#25D366" d="M20.52 3.48A11.94 11.94 0 0012 0C5.37 0 .001 5.37 0 12c0 2.12.56 4.19 1.61 6.03L0 24l6.3-1.6A11.98 11.98 0 0012 24c6.63 0 12-5.37 12-12 0-3.21-1.26-6.18-3.48-8.52z" />
+                    <path fill="#FFFFFF" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.272-.099-.47-.148-.669.15-.198.297-.767.967-.94 1.165-.173.198-.347.223-.644.075-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.173.198-.298.297-.497.099-.198.05-.372-.025-.521-.075-.149-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51-.173-.008-.37-.01-.569-.01-.198 0-.52.075-.793.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.064 2.877 1.213 3.074.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.695.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.414-.074-.124-.272-.198-.569-.347z" />
+                  </svg>
+                </WhatsappIcon>
+                Comprar via WhatsApp
+              </Button>
+            </SalesInfo>
+          </SalesVideoGrid>
+        </Container>
+      </SalesVideoSection>
 
       <FeaturesSection>
         <Container>
@@ -609,6 +746,22 @@ const Home: React.FC = () => {
           </ViewMoreButton>
         </Container>
       </ProductsSection>
+
+      <LatestVideoSection>
+        <Container>
+          <SectionTitle>Último Vídeo do Canal</SectionTitle>
+          <SectionSubtitle>Assista ao nosso vídeo mais recente</SectionSubtitle>
+          <VideoWrapper>
+            <iframe
+              src="https://www.youtube.com/embed/a06hbVv9jWA"
+              title="Último vídeo do canal"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </VideoWrapper>
+        </Container>
+      </LatestVideoSection>
 
       <CTASection>
         <Container>

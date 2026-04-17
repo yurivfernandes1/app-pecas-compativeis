@@ -64,20 +64,41 @@
     },
     {
         "id": 10,
+        "nome": "Emblema GTI Grade Mexicano",
+        "descricao": "Emblema GTI estilo grade mexicano para acabamento dianteiro",
+        "imagem": "/links shopee/Emblema GTI grade mexicano.png",
+        "url": "https://s.shopee.com.br/1BIQWf6jv0"
+    },
+    {
+        "id": 11,
+        "nome": "Kit Suspensão a Ar Castor",
+        "descricao": "Kit de suspensão a ar Castor para ajuste de altura e conforto",
+        "imagem": "/links shopee/Kit Suspensao ar Castor.png",
+        "url": "https://s.shopee.com.br/9ztmkoKqTU"
+    },
+    {
+        "id": 12,
+        "nome": "Máquina de Vidro Elétrico - Golf MK3",
+        "descricao": "Máquina/motor de vidro elétrico compatível com Golf MK3",
+        "imagem": "/links shopee/Maquina vidro eletrico golf mk3.png",
+        "url": "https://s.shopee.com.br/2B8iCxYwnT"
+    },
+    {
+        "id": 13,
         "nome": "Miniatura Red Bull GP Japão 2025",
         "descricao": "Bburago 1:43 Red Bull RB21 F1 GP Japão 2025",
         "imagem": "/links shopee/redbuul gp japao.png",
         "url": "https://shopee.com.br/Bburago-1-43-2025-Redbull-RB21-F1-F%C3%B3rmula-Carro-Ve%C3%ADculos-Fundidos-Modelo-Colecion%C3%A1vel-Brinquedos-De-Corrida-Caixa-Acr%C3%AD-i.341586600.55301146508"
     },
     {
-        "id": 11,
+        "id": 14,
         "nome": "Miniatura McLaren GP Mônaco 2025 Senna",
         "descricao": "Miniatura McLaren GP Mônaco 2025 Senna",
         "imagem": "/links shopee/mclaren gp monaco.png",
         "url": "https://s.shopee.com.br/3Vdscf8kKs"
     },
     {
-        "id": 12,
+        "id": 15,
         "nome": "Lego McLaren Senna",
         "descricao": "Kit Lego McLaren Senna para colecionadores",
         "imagem": "/links shopee/Lego Mclaren senna.png",
