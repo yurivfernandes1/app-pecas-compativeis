@@ -753,7 +753,7 @@ const Home: React.FC = () => {
           <SectionSubtitle>Assista ao nosso vídeo mais recente</SectionSubtitle>
           <VideoWrapper>
             <iframe
-              src="https://www.youtube.com/embed/a06hbVv9jWA"
+              src="https://www.youtube.com/embed/5w_w2Medj5k"
               title="Último vídeo do canal"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
