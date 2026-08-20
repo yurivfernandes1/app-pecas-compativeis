@@ -386,10 +386,10 @@ const ListaNegra: React.FC = () => {
     const q = searchQuery.trim().toLowerCase();
     if (!q) return contatos;
     
-    const normalizedQuery = q.replace(/[\\s\\-()+]/g, '');
+    const normalizedQuery = q.replace(/[\s()+-]/g, '');
 
     return contatos.filter(c => {
-      const normalizedNumero = c.numero.toLowerCase().replace(/[\\s\\-()+]/g, '');
+      const normalizedNumero = c.numero.toLowerCase().replace(/[\s()+-]/g, '');
       
       return c.numero.toLowerCase().includes(q) ||
              normalizedNumero.includes(normalizedQuery) ||
