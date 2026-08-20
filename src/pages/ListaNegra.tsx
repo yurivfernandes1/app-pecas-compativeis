@@ -385,10 +385,16 @@ const ListaNegra: React.FC = () => {
   const filtered = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
     if (!q) return contatos;
-    return contatos.filter(c =>
-      c.numero.toLowerCase().includes(q) ||
-      c.descricao.toLowerCase().includes(q)
-    );
+    
+    const normalizedQuery = q.replace(/[\\s\\-()+]/g, '');
+
+    return contatos.filter(c => {
+      const normalizedNumero = c.numero.toLowerCase().replace(/[\\s\\-()+]/g, '');
+      
+      return c.numero.toLowerCase().includes(q) ||
+             normalizedNumero.includes(normalizedQuery) ||
+             c.descricao.toLowerCase().includes(q);
+    });
   }, [searchQuery, contatos]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
