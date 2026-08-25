@@ -124,7 +124,7 @@ const Links = styled.div`
 `;
 
 export default function LoginPublico() {
-  const [email, setEmail] = useState('');
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -135,13 +135,28 @@ export default function LoginPublico() {
     setLoading(true);
     setError('');
 
+    let loginEmail = identifier;
+
+    if (!identifier.includes('@')) {
+      const { data, error: rpcError } = await supabase.rpc('get_login_email', {
+        p_username: identifier.toLowerCase().replace(/[^a-z0-9_]/g, '')
+      });
+
+      if (rpcError || !data) {
+        setError('Credenciais inválidas.');
+        setLoading(false);
+        return;
+      }
+      loginEmail = data;
+    }
+
     const { error } = await supabase.auth.signInWithPassword({
-      email,
+      email: loginEmail,
       password,
     });
 
     if (error) {
-      setError(error.message);
+      setError(error.message === 'Invalid login credentials' ? 'Credenciais inválidas.' : error.message);
       setLoading(false);
     } else {
       // Login bem-sucedido
@@ -161,13 +176,13 @@ export default function LoginPublico() {
         
         <form onSubmit={handleLogin} style={{ width: '100%' }}>
           <FormGroup>
-            <label>E-mail</label>
+            <label>E-mail ou Usuário</label>
             <input 
-              type="email" 
+              type="text" 
               required 
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              placeholder="seu@email.com"
+              value={identifier}
+              onChange={e => setIdentifier(e.target.value)}
+              placeholder="seu@email.com ou seunome"
             />
           </FormGroup>
 
