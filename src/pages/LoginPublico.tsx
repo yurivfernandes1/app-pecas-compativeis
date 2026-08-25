@@ -21,6 +21,19 @@ const FormContainer = styled.div`
   width: 100%;
   max-width: 500px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ProfileImage = styled.img`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid ${colors.primary};
+  object-fit: cover;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 15px rgba(220, 38, 38, 0.4);
 `;
 
 const Title = styled.h1`
@@ -133,10 +146,14 @@ export default function LoginPublico() {
   return (
     <PageWrapper>
       <FormContainer>
+        <ProfileImage
+          src="https://raw.githubusercontent.com/yurivfernandes1/app-pecas-compativeis/refs/heads/main/Perfil1.png"
+          alt="Falando de GTI"
+        />
         <Title>Entrar na Garagem</Title>
         <Subtitle>Bem-vindo de volta à comunidade MK3</Subtitle>
         
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleLogin} style={{ width: '100%' }}>
           <FormGroup>
             <label>E-mail</label>
             <input 
