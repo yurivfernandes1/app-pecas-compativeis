@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
+import { colors } from '../../styles/GlobalStyles';
+
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
 
 const LoginContainer = styled.div`
   display: flex;
@@ -10,54 +16,79 @@ const LoginContainer = styled.div`
   justify-content: center;
   min-height: 80vh;
   padding: 20px;
+  background: #000;
 `;
 
 const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
   max-width: 400px;
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  background: #111;
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  border: 1px solid #333;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   gap: 15px;
+  animation: ${fadeIn} 0.6s ease-out forwards;
 `;
 
-const Input = styled.input`
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-`;
-
-const Button = styled.button`
-  padding: 12px;
-  background: #333;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-  font-weight: bold;
-  
-  &:hover {
-    background: #444;
-  }
-  
-  &:disabled {
-    background: #999;
-  }
+const ProfileImage = styled.img`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid ${colors.primary};
+  object-fit: cover;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 15px rgba(220, 38, 38, 0.4);
 `;
 
 const Title = styled.h2`
   text-align: center;
   margin-bottom: 20px;
-  color: #333;
+  color: ${colors.white};
+`;
+
+const Input = styled.input`
+  width: 100%;
+  padding: 12px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: white;
+  border-radius: 6px;
+  font-size: 16px;
+  
+  &:focus {
+    outline: none;
+    border-color: ${colors.primary};
+  }
+`;
+
+const Button = styled.button`
+  width: 100%;
+  padding: 12px;
+  background: ${colors.primary};
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+  
+  &:hover:not(:disabled) {
+    background: #b91c1c;
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 `;
 
 const ErrorMsg = styled.div`
-  color: red;
+  color: #f87171;
   text-align: center;
   font-size: 14px;
 `;
@@ -105,6 +136,10 @@ const Login: React.FC = () => {
   return (
     <LoginContainer>
       <LoginForm onSubmit={handleLogin}>
+        <ProfileImage
+          src="https://raw.githubusercontent.com/yurivfernandes1/app-pecas-compativeis/refs/heads/main/Perfil1.png"
+          alt="Falando de GTI"
+        />
         <Title>Admin Login</Title>
         {error && <ErrorMsg>{error}</ErrorMsg>}
         <Input 

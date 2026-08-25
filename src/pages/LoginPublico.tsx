@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { supabase } from '../lib/supabase';
 import { useNavigate, Link } from 'react-router-dom';
 import { colors } from '../styles/GlobalStyles';
@@ -13,6 +13,11 @@ const PageWrapper = styled.div`
   background: #000;
 `;
 
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
+
 const FormContainer = styled.div`
   background: #111;
   padding: 3rem;
@@ -24,6 +29,7 @@ const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  animation: ${fadeIn} 0.6s ease-out forwards;
 `;
 
 const ProfileImage = styled.img`

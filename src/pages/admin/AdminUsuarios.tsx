@@ -96,7 +96,9 @@ export default function AdminUsuarios() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     checkAdmin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     fetchUsers();
   }, []);
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { supabase } from '../lib/supabase';
 import { useNavigate, Link } from 'react-router-dom';
 import { colors } from '../styles/GlobalStyles';
@@ -13,6 +13,11 @@ const PageWrapper = styled.div`
   background: #000;
 `;
 
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
+
 const FormContainer = styled.div`
   background: #111;
   padding: 3rem;
@@ -24,6 +29,7 @@ const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  animation: ${fadeIn} 0.6s ease-out forwards;
 `;
 
 const ProfileImage = styled.img`
@@ -121,6 +127,11 @@ export default function Cadastro() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const [nome, setNome] = useState('');
+  const [telefone, setTelefone] = useState('');
+  const [cep, setCep] = useState('');
+  const [cidade, setCidade] = useState('');
+  const [estado, setEstado] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -161,7 +172,12 @@ export default function Cadastro() {
         .from('mk3_users')
         .insert({
           id: authData.user.id,
-          username: username.toLowerCase().replace(/[^a-z0-9_]/g, '')
+          username: username.toLowerCase().replace(/[^a-z0-9_]/g, ''),
+          nome_completo: nome,
+          telefone: telefone,
+          cep: cep,
+          cidade: cidade,
+          estado: estado
         });
 
       if (profileError) {
@@ -187,6 +203,62 @@ export default function Cadastro() {
         
         <form onSubmit={handleCadastro} style={{ width: '100%' }}>
           <FormGroup>
+            <label>Nome Completo</label>
+            <input 
+              type="text" 
+              required 
+              value={nome}
+              onChange={e => setNome(e.target.value)}
+              placeholder="João da Silva"
+            />
+          </FormGroup>
+
+          <FormGroup>
+            <label>Telefone / WhatsApp</label>
+            <input 
+              type="text" 
+              required 
+              value={telefone}
+              onChange={e => setTelefone(e.target.value)}
+              placeholder="(11) 99999-9999"
+            />
+          </FormGroup>
+
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <FormGroup style={{ flex: 1 }}>
+              <label>CEP</label>
+              <input 
+                type="text" 
+                required 
+                value={cep}
+                onChange={e => setCep(e.target.value)}
+                placeholder="00000-000"
+              />
+            </FormGroup>
+            <FormGroup style={{ flex: 1 }}>
+              <label>Cidade</label>
+              <input 
+                type="text" 
+                required 
+                value={cidade}
+                onChange={e => setCidade(e.target.value)}
+                placeholder="São Paulo"
+              />
+            </FormGroup>
+            <FormGroup style={{ flex: 0.5 }}>
+              <label>Estado</label>
+              <input 
+                type="text" 
+                required 
+                value={estado}
+                onChange={e => setEstado(e.target.value)}
+                placeholder="SP"
+                maxLength={2}
+              />
+            </FormGroup>
+          </div>
+
+          <FormGroup>
             <label>E-mail</label>
             <input 
               type="email" 
@@ -198,7 +270,7 @@ export default function Cadastro() {
           </FormGroup>
 
           <FormGroup>
-            <label>Nome de Usuário</label>
+            <label>Nome de Usuário (@)</label>
             <input 
               type="text" 
               required 

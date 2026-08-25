@@ -346,6 +346,24 @@ const DropdownItemButton = styled.button`
   }
 `;
 
+const AuthButton = styled(Link)<{ $primary?: boolean }>`
+  color: ${props => props.$primary ? colors.white : colors.gray[300]};
+  background: ${props => props.$primary ? colors.primary : 'transparent'};
+  border: ${props => props.$primary ? 'none' : `1px solid ${colors.gray[600]}`};
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background: ${props => props.$primary ? '#b91c1c' : 'rgba(255,255,255,0.1)'};
+    color: ${colors.white};
+  }
+`;
+
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -440,6 +458,9 @@ const Header: React.FC = () => {
                   {user.email?.split('@')[0]} <span>▼</span>
                 </UserButton>
                 <DropdownMenu $isOpen={isUserMenuOpen}>
+                  <DropdownItem to="/feed" onClick={() => setIsUserMenuOpen(false)}>
+                    <i className="fas fa-car"></i> Minha Garagem
+                  </DropdownItem>
                   <DropdownItem to="/admin/produtos" onClick={() => setIsUserMenuOpen(false)}>
                     <i className="fas fa-cog"></i> Configurações
                   </DropdownItem>
@@ -449,7 +470,10 @@ const Header: React.FC = () => {
                 </DropdownMenu>
               </>
             ) : (
-              <NavLink to="/admin/login" $isActive={isActive('/admin/login')}>Login</NavLink>
+              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <AuthButton to="/login">Entrar</AuthButton>
+                <AuthButton to="/cadastro" $primary>Criar conta</AuthButton>
+              </div>
             )}
           </UserMenuContainer>
 
