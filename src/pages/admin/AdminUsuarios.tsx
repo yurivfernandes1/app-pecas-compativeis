@@ -99,6 +99,7 @@ export default function AdminUsuarios() {
   useEffect(() => {
     checkAdmin();
     fetchUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const checkAdmin = async () => {
