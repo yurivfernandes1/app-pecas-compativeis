@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
+import { supabase } from '../lib/supabase';
+import { useNavigate } from 'react-router-dom';
 import { colors } from '../styles/GlobalStyles';
 
 const slideIn = keyframes`
@@ -176,9 +178,23 @@ const SocialModal: React.FC<SocialModalProps> = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [countdown, setCountdown] = useState(5);
   const [canClose, setCanClose] = useState(false);
+  const [session, setSession] = useState<any>(null);
+  const [sessionChecked, setSessionChecked] = useState(false);
   const [message] = useState(() => FunMessages[Math.floor(Math.random() * FunMessages.length)]);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    async function checkAuth() {
+      const { data } = await supabase.auth.getSession();
+      setSession(data.session);
+      setSessionChecked(true);
+    }
+    checkAuth();
+  }, []);
+
+  useEffect(() => {
+    if (!sessionChecked) return;
+
     setIsVisible(true);
     
     const timer = setInterval(() => {
@@ -193,7 +209,7 @@ const SocialModal: React.FC<SocialModalProps> = ({ onClose }) => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [sessionChecked]);
 
   const handleClose = () => {
     if (!canClose) return;
@@ -222,37 +238,61 @@ const SocialModal: React.FC<SocialModalProps> = ({ onClose }) => {
         <GTIIcon>
           <i className="fas fa-car car-icon"></i>
         </GTIIcon>
-        
-        <ModalTitle>{message.title}</ModalTitle>
-        <ModalText>{message.text}</ModalText>
-        
-        <SocialButtons>
-          <SocialButton 
-            href="https://www.youtube.com/falandodegti?sub_confirmation=1" 
-            target="_blank"
-            onClick={() => handleSocialClick('youtube')}
-          >
-            <i className="fab fa-youtube"></i>
-            YouTube
-          </SocialButton>
-          <SocialButton 
-            href="https://www.instagram.com/falandodegti" 
-            target="_blank"
-            onClick={() => handleSocialClick('instagram')}
-          >
-            <i className="fab fa-instagram"></i>
-            Instagram
-          </SocialButton>
-          <SocialButton 
-            href="https://www.facebook.com/falandodegti" 
-            target="_blank"
-            onClick={() => handleSocialClick('facebook')}
-          >
-            <i className="fab fa-facebook"></i>
-            Facebook
-          </SocialButton>
-        </SocialButtons>
-        
+
+        {!sessionChecked ? (
+          <ModalText>Verificando credenciais...</ModalText>
+        ) : !session ? (
+          <>
+            <ModalTitle>Crie sua Garagem Virtual!</ModalTitle>
+            <ModalText>Cadastre-se na maior comunidade de Golf MK3 para registrar seu projeto, compartilhar atualizações e seguir outras garagens!</ModalText>
+            
+            <SocialButtons>
+              <SocialButton 
+                as="button"
+                onClick={() => {
+                  handleClose();
+                  navigate('/cadastro');
+                }}
+                style={{ width: '100%', background: '#dc2626', color: 'white', justifyContent: 'center' }}
+              >
+                Cadastrar e Criar Garagem
+              </SocialButton>
+            </SocialButtons>
+          </>
+        ) : (
+          <>
+            <ModalTitle>{message.title}</ModalTitle>
+            <ModalText>{message.text}</ModalText>
+            
+            <SocialButtons>
+              <SocialButton 
+                href="https://www.youtube.com/falandodegti?sub_confirmation=1" 
+                target="_blank"
+                onClick={() => handleSocialClick('youtube')}
+              >
+                <i className="fab fa-youtube"></i>
+                YouTube
+              </SocialButton>
+              <SocialButton 
+                href="https://www.instagram.com/falandodegti" 
+                target="_blank"
+                onClick={() => handleSocialClick('instagram')}
+              >
+                <i className="fab fa-instagram"></i>
+                Instagram
+              </SocialButton>
+              <SocialButton 
+                href="https://www.facebook.com/falandodegti" 
+                target="_blank"
+                onClick={() => handleSocialClick('facebook')}
+              >
+                <i className="fab fa-facebook"></i>
+                Facebook
+              </SocialButton>
+            </SocialButtons>
+          </>
+        )}
+
         <CloseButton 
           $disabled={!canClose} 
           onClick={handleClose}

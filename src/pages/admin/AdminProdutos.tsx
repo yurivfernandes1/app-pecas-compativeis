@@ -194,6 +194,8 @@ export default function AdminProdutos() {
 
       <NavLinks>
         <NavLink $active>Produtos (Shopee)</NavLink>
+        <NavLink onClick={() => navigate('/admin/categorias')}>Categorias</NavLink>
+        <NavLink onClick={() => navigate('/admin/usuarios')}>Usuários</NavLink>
         <NavLink onClick={() => navigate('/admin/lista-negra')}>Lista Negra</NavLink>
       </NavLinks>
 
