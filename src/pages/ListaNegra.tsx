@@ -1,7 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Container, colors, media } from '../styles/GlobalStyles';
-import listaNegra from '../data/lista-negra.json';
+import { supabase } from '../lib/supabase';
+import listaNegraData from '../data/lista-negra.json';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -377,10 +378,34 @@ const PageButton = styled.button<{ $active?: boolean }>`
   }
 `;
 
+const LoadingText = styled.div`
+  color: white;
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 2rem 0;
+`;
+
 const ListaNegra: React.FC = () => {
-  const { contatos, canaisDenuncia } = listaNegra;
+  const { canaisDenuncia } = listaNegraData;
+  const [contatos, setContatos] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    async function fetchContatos() {
+      const { data, error } = await supabase
+        .from('pecas_lista_negra')
+        .select('*')
+        .order('created_at', { ascending: true }); // Manter ordem histórica
+
+      if (!error && data) {
+        setContatos(data);
+      }
+      setLoading(false);
+    }
+    fetchContatos();
+  }, []);
 
   const filtered = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
@@ -502,7 +527,9 @@ const ListaNegra: React.FC = () => {
               <span>Número</span>
               <span>Descrição</span>
             </TableHeader>
-            {paginated.length === 0 ? (
+            {loading ? (
+              <NoResults>Carregando registros...</NoResults>
+            ) : paginated.length === 0 ? (
               <NoResults>Nenhum resultado encontrado para "{searchQuery}"</NoResults>
             ) : (
               paginated.map((contato, index) => (

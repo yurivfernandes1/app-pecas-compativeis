@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors, media } from '../styles/GlobalStyles';
+import { supabase } from '../lib/supabase';
 
 const HeaderContainer = styled.header`
   background: #0a0a0a;
@@ -271,9 +272,102 @@ const MobileNavLink = styled(Link)<{ $isActive: boolean }>`
   `}
 `;
 
+const UserMenuContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+`;
+
+const UserButton = styled.button`
+  background: transparent;
+  color: ${colors.white};
+  border: 1px solid ${colors.primary};
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(220, 38, 38, 0.1);
+  }
+`;
+
+const DropdownMenu = styled.div<{ $isOpen: boolean }>`
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 8px;
+  min-width: 150px;
+  display: ${props => props.$isOpen ? 'flex' : 'none'};
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  z-index: 1001;
+`;
+
+const DropdownItem = styled(Link)`
+  padding: 0.8rem 1rem;
+  color: ${colors.white};
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+`;
+
+const DropdownItemButton = styled.button`
+  padding: 0.8rem 1rem;
+  color: ${colors.white};
+  background: transparent;
+  border: none;
+  text-align: left;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+`;
+
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
   const location = useLocation();
+
+  React.useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setIsUserMenuOpen(false);
+  };
 
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -338,6 +432,26 @@ const Header: React.FC = () => {
               <i className="fab fa-facebook"></i>
             </SocialLink>
           </SocialLinks>
+
+          <UserMenuContainer>
+            {user ? (
+              <>
+                <UserButton onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
+                  {user.email?.split('@')[0]} <span>▼</span>
+                </UserButton>
+                <DropdownMenu $isOpen={isUserMenuOpen}>
+                  <DropdownItem to="/admin/produtos" onClick={() => setIsUserMenuOpen(false)}>
+                    <i className="fas fa-cog"></i> Configurações
+                  </DropdownItem>
+                  <DropdownItemButton onClick={handleLogout}>
+                    <i className="fas fa-sign-out-alt"></i> Sair
+                  </DropdownItemButton>
+                </DropdownMenu>
+              </>
+            ) : (
+              <NavLink to="/admin/login" $isActive={isActive('/admin/login')}>Login</NavLink>
+            )}
+          </UserMenuContainer>
 
           <MenuToggle onClick={handleMenuToggle}>
             <span></span>

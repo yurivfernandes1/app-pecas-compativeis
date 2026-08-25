@@ -15,6 +15,11 @@ import Sobre from './pages/Sobre';
 import Diagnosticos from './pages/Diagnosticos';
 import ProdutosShopee from './pages/ProdutosShopee';
 import ListaNegra from './pages/ListaNegra';
+import Login from './pages/admin/Login';
+import AdminProdutos from './pages/admin/AdminProdutos';
+import AdminProdutoForm from './pages/admin/AdminProdutoForm';
+import AdminListaNegra from './pages/admin/AdminListaNegra';
+import AdminCategorias from './pages/admin/AdminCategorias';
 
 const AppContent: React.FC = () => {
   const { showModal, closeModal } = useAppProtection();
@@ -33,6 +38,12 @@ const AppContent: React.FC = () => {
           <Route path="/produtos" element={<ProdutosShopee />} />
           <Route path="/diag-sys-internal-2025" element={<Diagnosticos />} />
           <Route path="/lista-negra" element={<ListaNegra />} />
+          <Route path="/admin/login" element={<Login />} />
+          <Route path="/admin/produtos" element={<AdminProdutos />} />
+          <Route path="/admin/produtos/novo" element={<AdminProdutoForm />} />
+          <Route path="/admin/produtos/:id" element={<AdminProdutoForm />} />
+          <Route path="/admin/categorias" element={<AdminCategorias />} />
+          <Route path="/admin/lista-negra" element={<AdminListaNegra />} />
         </Routes>
       </main>
       <Footer />
