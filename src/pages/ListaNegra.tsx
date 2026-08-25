@@ -378,12 +378,6 @@ const PageButton = styled.button<{ $active?: boolean }>`
   }
 `;
 
-const LoadingText = styled.div`
-  color: white;
-  text-align: center;
-  font-size: 1.2rem;
-  margin: 2rem 0;
-`;
 
 const ListaNegra: React.FC = () => {
   const { canaisDenuncia } = listaNegraData;
