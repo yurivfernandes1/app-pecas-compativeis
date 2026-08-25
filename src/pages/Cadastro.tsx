@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { supabase } from '../lib/supabase';
 import { useNavigate, Link } from 'react-router-dom';
@@ -136,6 +136,17 @@ export default function Cadastro() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  const [session, setSession] = useState<any>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      if (data.session) {
+        setEmail(data.session.user.email || '');
+      }
+    });
+  }, []);
+
   const handleCadastro = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -155,6 +166,35 @@ export default function Cadastro() {
     }
 
     // 2. Sign up
+    if (session) {
+      // User is already logged in (like an admin). Just create the mk3_users record.
+      const { error: profileError } = await supabase
+        .from('mk3_users')
+        .insert({
+          id: session.user.id,
+          username: username.toLowerCase().replace(/[^a-z0-9_]/g, ''),
+          nome_completo: nome,
+          telefone: telefone,
+          cep: cep,
+          cidade: cidade,
+          estado: estado,
+          is_premium: true, // Se já estava logado, provável que seja admin, damos premium
+        });
+
+      if (profileError) {
+        if (profileError.code === '23505') {
+          setError('Este nome de usuário já está em uso.');
+        } else {
+          setError(profileError.message);
+        }
+        setLoading(false);
+      } else {
+        navigate('/onboarding');
+      }
+      return;
+    }
+
+    // Normal signup flow
     const { data: authData, error: authError } = await supabase.auth.signUp({
       email,
       password,
@@ -282,28 +322,32 @@ export default function Cadastro() {
             />
           </FormGroup>
 
-          <FormGroup>
-            <label>Senha</label>
-            <input 
-              type="password" 
-              required 
-              minLength={6}
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              placeholder="Min. 6 caracteres"
-            />
-          </FormGroup>
+          {!session && (
+            <FormGroup>
+              <label>Senha</label>
+              <input 
+                type="password" 
+                required 
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                placeholder="Mínimo 6 caracteres"
+                minLength={6}
+              />
+            </FormGroup>
+          )}
 
           {error && <ErrorText>{error}</ErrorText>}
 
           <Button type="submit" disabled={loading}>
-            {loading ? 'Criando Conta...' : 'Cadastrar e Criar Garagem'}
+            {loading ? 'Criando garagem...' : session ? 'Completar Meu Perfil' : 'Criar Garagem'}
           </Button>
         </form>
 
-        <Links>
-          Já tem uma garagem? <Link to="/login">Fazer Login</Link>
-        </Links>
+        {!session && (
+          <Links>
+            Já tem uma garagem? <Link to="/login">Fazer login</Link>
+          </Links>
+        )}
       </FormContainer>
     </PageWrapper>
   );
