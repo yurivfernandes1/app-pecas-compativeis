@@ -19,6 +19,7 @@ import Login from './pages/admin/Login';
 import LoginPublico from './pages/LoginPublico';
 import Cadastro from './pages/Cadastro';
 import Onboarding from './pages/Onboarding';
+import Feed from './pages/Feed';
 import AdminProdutos from './pages/admin/AdminProdutos';
 import AdminProdutoForm from './pages/admin/AdminProdutoForm';
 import AdminListaNegra from './pages/admin/AdminListaNegra';
@@ -46,6 +47,7 @@ const AppContent: React.FC = () => {
           <Route path="/login" element={<LoginPublico />} />
           <Route path="/cadastro" element={<Cadastro />} />
           <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/feed" element={<Feed />} />
           <Route path="/admin/produtos" element={<AdminProdutos />} />
           <Route path="/admin/produtos/novo" element={<AdminProdutoForm />} />
           <Route path="/admin/produtos/:id" element={<AdminProdutoForm />} />
