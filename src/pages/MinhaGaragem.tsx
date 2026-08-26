@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import { colors, media } from '../styles/GlobalStyles';
+import { getObjectPosition } from '../utils/imagePos';
 
 const PageWrapper = styled.div`
   min-height: 100vh;
@@ -361,7 +362,11 @@ export default function MinhaGaragem() {
               <CarGallery>
                 {carro.fotos && carro.fotos.length > 0 ? (
                   <>
-                    <img src={carro.fotos[activePhotoIndexes[carro.id]]} alt={carro.modelo} />
+                    <img 
+                      src={carro.fotos[activePhotoIndexes[carro.id]]} 
+                      alt={carro.modelo} 
+                      style={{ objectPosition: getObjectPosition(carro.fotos[activePhotoIndexes[carro.id]]) }}
+                    />
                     {carro.fotos.length > 1 && (
                       <>
                         <button className="nav-btn prev" onClick={() => prevPhoto(carro.id, carro.fotos.length)}>

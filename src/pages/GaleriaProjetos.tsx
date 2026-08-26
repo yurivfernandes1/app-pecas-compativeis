@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { supabase } from '../lib/supabase';
 import { colors } from '../styles/GlobalStyles';
 import { Link, useNavigate } from 'react-router-dom';
+import { getObjectPosition } from '../utils/imagePos';
 import CustomSelect from '../components/CustomSelect';
 import CommunityLayout from '../components/CommunityLayout';
 
@@ -476,8 +477,8 @@ export default function GaleriaProjetos() {
               <Card key={carro.id} onClick={() => navigate(`/carro/${carro.id}`)}>
                 <CardImage>
                   {carro.fotos && carro.fotos.length > 0
-                    ? <img src={carro.fotos[0]} alt={`Golf ${carro.modelo}`} />
-                    : <NoPhoto><i className="fas fa-camera" /><span>Sem foto</span></NoPhoto>
+                    ? <img src={carro.fotos[0]} alt={`Golf ${carro.modelo}`} style={{ objectPosition: getObjectPosition(carro.fotos[0]) }} />
+                    : <img src="https://raw.githubusercontent.com/yurivfernandes1/app-pecas-compativeis/refs/heads/main/logoMK3.png" alt="Sem foto" />
                   }
                   <LikesBadge>
                     <i className="fas fa-heart" />

@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { supabase } from '../lib/supabase';
 import { colors, media } from '../styles/GlobalStyles';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import { getObjectPosition } from '../utils/imagePos';
 
 const PageWrapper = styled.div`
   min-height: 100vh;
@@ -380,6 +383,7 @@ export default function CarroDetails() {
   const [comments, setComments] = useState<any[]>([]);
   const [newComment, setNewComment] = useState('');
   const [postingComment, setPostingComment] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(-1);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -528,12 +532,12 @@ export default function CarroDetails() {
         </CarHeader>
 
         <GalleryGrid $count={fotos.length}>
-          <MainPhoto>
-            <img src={mainPhoto} alt="Foto principal" />
+          <MainPhoto onClick={() => setLightboxIndex(0)} style={{ cursor: 'pointer' }}>
+            <img src={mainPhoto} alt="Foto principal" style={{ objectPosition: getObjectPosition(mainPhoto) }} />
           </MainPhoto>
           {subPhotos.map((url: string, idx: number) => (
-            <SubPhoto key={idx}>
-              <img src={url} alt={`Foto secundária ${idx+1}`} />
+            <SubPhoto key={idx} onClick={() => setLightboxIndex(idx + 1)} style={{ cursor: 'pointer' }}>
+              <img src={url} alt={`Foto secundária ${idx+1}`} style={{ objectPosition: getObjectPosition(url) }} />
             </SubPhoto>
           ))}
         </GalleryGrid>
@@ -667,6 +671,12 @@ export default function CarroDetails() {
           ))}
         </CommentsSection>
 
+        <Lightbox
+          open={lightboxIndex >= 0}
+          close={() => setLightboxIndex(-1)}
+          index={lightboxIndex}
+          slides={fotos.map((url: string) => ({ src: url }))}
+        />
       </Container>
     </PageWrapper>
   );

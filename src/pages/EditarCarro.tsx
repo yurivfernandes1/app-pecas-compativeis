@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ImagePositionModal from '../components/ImagePositionModal';
+import { getObjectPosition } from '../utils/imagePos';
 import styled from 'styled-components';
 import { supabase } from '../lib/supabase';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -311,7 +313,8 @@ export default function EditarCarro() {
   const [vendaPreco, setVendaPreco] = useState('');
 
   const [fotosAtuais, setFotosAtuais] = useState<string[]>([]);
-  const [novasFotos, setNovasFotos] = useState<File[]>([]);
+  const [novasFotos, setNovasFotos] = useState<{file: File, pos: string}[]>([]);
+  const [cropModalData, setCropModalData] = useState<{isAtuais: boolean, index: number, url: string} | null>(null);
   const [isDragActive, setIsDragActive] = useState(false);
   const [error, setError] = useState('');
 
@@ -398,7 +401,7 @@ export default function EditarCarro() {
     const limit = isPremium ? 12 : 3;
     const totalCurrentPhotos = fotosAtuais.length + novasFotos.length;
     
-    const validFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
+    const validFiles = Array.from(files).filter(file => file.type.startsWith('image/')).map(f => ({ file: f, pos: '50,50' }));
     
     if (totalCurrentPhotos >= limit) {
       setError(`Seu plano ${isPremium ? 'Premium' : 'Free'} permite até ${limit} fotos por carro. Você já tem/selecionou ${totalCurrentPhotos}.`);
@@ -434,16 +437,16 @@ export default function EditarCarro() {
     let finalPhotoUrls = [...fotosAtuais];
 
     if (novasFotos.length > 0) {
-      for (const file of novasFotos) {
-        const fileExt = file.name.split('.').pop();
+      for (const photo of novasFotos) {
+        const fileExt = photo.file.name.split('.').pop();
         const fileName = `${session.user.id}-${Math.random()}.${fileExt}`;
         const { error: uploadError, data } = await supabase.storage
           .from('garagem_fotos')
-          .upload(fileName, file);
+          .upload(fileName, photo.file);
 
         if (!uploadError && data) {
           const { data: publicUrlData } = supabase.storage.from('garagem_fotos').getPublicUrl(fileName);
-          finalPhotoUrls.push(publicUrlData.publicUrl);
+          finalPhotoUrls.push(`${publicUrlData.publicUrl}?pos=${photo.pos}`);
         }
       }
     }
@@ -464,10 +467,17 @@ export default function EditarCarro() {
         fotos: finalPhotoUrls
     };
 
-    await supabase
+    const { error: updateError } = await supabase
       .from('mk3_garagem')
       .update(carroUpdate)
       .eq('id', id);
+
+    if (updateError) {
+      console.error('Erro ao atualizar carro:', updateError);
+      alert(`Não foi possível salvar o carro: ${updateError.message}`);
+      setSaving(false);
+      return;
+    }
 
     navigate('/minha-garagem');
   };
@@ -511,20 +521,32 @@ export default function EditarCarro() {
               <PhotoGrid>
                 {fotosAtuais.map((url, i) => (
                   <PhotoThumbnail key={url}>
-                    <img src={url} alt={`Foto atual ${i}`} />
+                    <img src={url} alt={`Foto atual ${i}`} style={{ objectPosition: getObjectPosition(url) }} />
+                    <div style={{ position: 'absolute', top: 5, left: 5, display: 'flex', gap: '5px' }}>
+                      <button type="button" onClick={() => setCropModalData({ isAtuais: true, index: i, url })} style={{ background: 'rgba(0,0,0,0.7)', border: 'none', color: 'white', padding: '5px', borderRadius: '4px', cursor: 'pointer', zIndex: 10 }}>
+                        <i className="fas fa-crop-alt"></i> Ajustar
+                      </button>
+                    </div>
                     <button type="button" className="remove-btn" onClick={() => setFotosAtuais(prev => prev.filter((_, idx) => idx !== i))}>
                       <i className="fas fa-times"></i>
                     </button>
                   </PhotoThumbnail>
                 ))}
-                {novasFotos.map((file, i) => (
-                  <PhotoThumbnail key={file.name}>
-                    <img src={URL.createObjectURL(file)} alt={`Nova foto ${i}`} />
+                {novasFotos.map((photo, i) => {
+                  const url = URL.createObjectURL(photo.file);
+                  return (
+                  <PhotoThumbnail key={photo.file.name + i}>
+                    <img src={url} alt={`Nova foto ${i}`} style={{ objectPosition: photo.pos.replace(',', '% ') + '%' }} />
+                    <div style={{ position: 'absolute', top: 5, left: 5, display: 'flex', gap: '5px' }}>
+                      <button type="button" onClick={() => setCropModalData({ isAtuais: false, index: i, url })} style={{ background: 'rgba(0,0,0,0.7)', border: 'none', color: 'white', padding: '5px', borderRadius: '4px', cursor: 'pointer', zIndex: 10 }}>
+                        <i className="fas fa-crop-alt"></i> Ajustar
+                      </button>
+                    </div>
                     <button type="button" className="remove-btn" onClick={() => setNovasFotos(prev => prev.filter((_, idx) => idx !== i))}>
                       <i className="fas fa-times"></i>
                     </button>
                   </PhotoThumbnail>
-                ))}
+                )})}
               </PhotoGrid>
             )}
 
@@ -715,6 +737,25 @@ export default function EditarCarro() {
           </DeleteButton>
         </form>
       </FormContainer>
+      {cropModalData && (
+        <ImagePositionModal
+          imageUrl={cropModalData.url}
+          onCancel={() => setCropModalData(null)}
+          onConfirm={(pos) => {
+            if (cropModalData.isAtuais) {
+              const newAtuais = [...fotosAtuais];
+              const baseUrl = newAtuais[cropModalData.index].split('?')[0];
+              newAtuais[cropModalData.index] = baseUrl + '?pos=' + pos;
+              setFotosAtuais(newAtuais);
+            } else {
+              const newPhotos = [...novasFotos];
+              newPhotos[cropModalData.index].pos = pos;
+              setNovasFotos(newPhotos);
+            }
+            setCropModalData(null);
+          }}
+        />
+      )}
     </PageWrapper>
   );
 }

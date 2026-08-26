@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { supabase } from '../lib/supabase';
 import { colors } from '../styles/GlobalStyles';
 import { Link, useNavigate } from 'react-router-dom';
+import { getObjectPosition } from '../utils/imagePos';
 import CommunityLayout from '../components/CommunityLayout';
 
 interface FeedItem {
@@ -649,7 +650,11 @@ export default function Feed() {
                   <CarClickableArea onClick={() => navigate(`/carro/${item.carro?.id}`)}>
                     {item.carro?.fotos && item.carro.fotos.length > 0 ? (
                       <CarGallery>
-                        <img src={item.carro.fotos[0]} alt={`Golf ${item.carro.modelo}`} />
+                        <img 
+                          src={item.carro.fotos[0]} 
+                          alt={`Golf ${item.carro.modelo}`} 
+                          style={{ objectPosition: getObjectPosition(item.carro.fotos[0]) }} 
+                        />
                       </CarGallery>
                     ) : (
                       <CarGallery>
