@@ -338,13 +338,11 @@ export default function EditarCarro() {
   ];
 
   const origens = [
-    'Brasil',
-    'Alemanha (Wolfsburg/Zwickau)',
-    'México (Puebla)',
-    'África do Sul (Uitenhage)',
-    'Bélgica (Bruxelas)',
-    'Eslováquia (Bratislava)',
-    'Outra'
+    { value: 'Alemanha (Wolfsburg/Zwickau)', label: '🇩🇪 Alemanha (Wolfsburg/Zwickau)' },
+    { value: 'México (Puebla)', label: '🇲🇽 México (Puebla)' },
+    { value: 'África do Sul (Uitenhage)', label: '🇿🇦 África do Sul (Uitenhage)' },
+    { value: 'Bélgica (Bruxelas)', label: '🇧🇪 Bélgica (Bruxelas)' },
+    { value: 'Eslováquia (Bratislava)', label: '🇸🇰 Eslováquia (Bratislava)' }
   ];
 
   useEffect(() => {
@@ -566,7 +564,7 @@ export default function EditarCarro() {
             <FormGroup style={{ flex: '1 1 200px' }}>
               <label>Origem de Fabricação</label>
               <CustomSelect 
-                options={[{value: '', label: 'Desconhecida'}, ...origens.map(o => ({value: o, label: o}))]}
+                options={origens}
                 value={origem}
                 onChange={(val) => setOrigem(val)}
                 placeholder="Selecione a origem"
