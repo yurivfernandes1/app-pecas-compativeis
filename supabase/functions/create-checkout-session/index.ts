@@ -52,8 +52,8 @@ serve(async (req) => {
       .eq('id', user.id)
       .single();
 
-    // The user's email is username + @mk3.com as per the login logic
-    const email = userData?.username ? `${userData.username}@mk3.com` : undefined;
+    // Use the real email from Supabase Auth
+    const email = user?.email;
 
     // Create Stripe Checkout session
     const session = await stripe.checkout.sessions.create({
@@ -69,11 +69,12 @@ serve(async (req) => {
               description: 'Carros e fotos ilimitadas na garagem, e selo VIP.',
             },
             unit_amount: priceInCents,
+            recurring: { interval: 'month' },
           },
           quantity: 1,
         },
       ],
-      mode: 'payment', // One-time payment for sandbox
+      mode: 'subscription', // Assinatura recorrente mensal
       success_url: `${req.headers.get('origin')}/minha-garagem?session_id={CHECKOUT_SESSION_ID}&success=true`,
       cancel_url: `${req.headers.get('origin')}/onboarding?canceled=true`,
     });

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import AdminTabs from '../../components/AdminTabs';
 import { supabase } from '../../lib/supabase';
-import { useNavigate, NavLink as RouterNavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { colors } from '../../styles/GlobalStyles';
 
 const Container = styled.div`
@@ -22,31 +23,6 @@ const Header = styled.div`
 const Title = styled.h1`
   font-size: 2rem;
   color: ${colors.primary};
-`;
-
-const NavLinks = styled.div`
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid #333;
-  padding-bottom: 1rem;
-`;
-
-const NavLink = styled(RouterNavLink)`
-  color: #999;
-  text-decoration: none;
-  font-weight: 500;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  
-  &.active {
-    color: white;
-    background: #333;
-  }
-  
-  &:hover:not(.active) {
-    color: white;
-  }
 `;
 
 const Table = styled.table`
@@ -200,7 +176,11 @@ export default function AdminUsuarios() {
     if (action === 'premium') {
       await supabase
         .from('mk3_users')
-        .update({ premium_manual: !status })
+        .update({ 
+          premium_manual: !status,
+          is_premium: false, // Reset the stripe premium status when toggling
+          stripe_customer_id: null
+        })
         .eq('id', id);
     } else if (action === 'active') {
       await supabase
@@ -220,13 +200,7 @@ export default function AdminUsuarios() {
         <Title>Painel Administrativo - Usuários</Title>
       </Header>
 
-      <NavLinks>
-        <NavLink to="/admin/produtos">Produtos</NavLink>
-        <NavLink to="/admin/categorias">Categorias</NavLink>
-        <NavLink to="/admin/usuarios">Usuários</NavLink>
-        <NavLink to="/admin/lista-negra">Lista Negra</NavLink>
-        <NavLink to="/admin/configuracoes">Configurações Gerais</NavLink>
-      </NavLinks>
+      <AdminTabs />
 
       {loading ? (
         <p>Carregando usuários...</p>
@@ -257,11 +231,11 @@ export default function AdminUsuarios() {
                 <Td>
                   <ButtonGroup>
                     <ActionButton 
-                      $success={!u.premium_manual} 
-                      $danger={u.premium_manual}
+                      $success={!u.premium_manual && !u.is_premium} 
+                      $danger={u.premium_manual || u.is_premium}
                       onClick={() => handleActionClick(u.id, 'premium', u.premium_manual)}
                     >
-                      {u.premium_manual ? 'Remover Premium' : 'Dar Premium'}
+                      {u.premium_manual || u.is_premium ? 'Remover Todos Premiums' : 'Dar Premium Manual'}
                     </ActionButton>
                     <ActionButton 
                       $danger={u.is_active}

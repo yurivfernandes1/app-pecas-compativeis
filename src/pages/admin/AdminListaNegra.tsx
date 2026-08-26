@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import AdminTabs from '../../components/AdminTabs';
 import { supabase } from '../../lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import { colors } from '../../styles/GlobalStyles';
@@ -32,25 +33,6 @@ const Button = styled.button`
   
   &:hover {
     background: #b91c1c;
-  }
-`;
-
-const NavLinks = styled.div`
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-`;
-
-const NavLink = styled.button<{ $active?: boolean }>`
-  background: ${props => props.$active ? colors.primary : 'transparent'};
-  color: ${colors.white};
-  border: 1px solid ${colors.primary};
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  
-  &:hover {
-    background: rgba(220, 38, 38, 0.2);
   }
 `;
 
@@ -182,12 +164,7 @@ export default function AdminListaNegra() {
         <Title>Painel Administrativo - Lista Negra</Title>
       </Header>
 
-      <NavLinks>
-        <NavLink onClick={() => navigate('/admin/produtos')}>Produtos (Shopee)</NavLink>
-        <NavLink onClick={() => navigate('/admin/categorias')}>Categorias</NavLink>
-        <NavLink onClick={() => navigate('/admin/usuarios')}>Usuários</NavLink>
-        <NavLink $active>Lista Negra</NavLink>
-      </NavLinks>
+      <AdminTabs />
 
       <Button style={{ marginBottom: '1.5rem' }} onClick={() => openModal()}>+ Novo Número</Button>
 

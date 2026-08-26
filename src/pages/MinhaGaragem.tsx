@@ -247,20 +247,22 @@ export default function MinhaGaragem() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchGaragem();
-    
+    let isSuccess = false;
     // Check for Stripe success redirect
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('success') === 'true') {
+      isSuccess = true;
       setShowSuccessToast(true);
       setTimeout(() => setShowSuccessToast(false), 6000);
       // Clean up the URL
       window.history.replaceState({}, document.title, window.location.pathname);
     }
+    
+    fetchGaragem(isSuccess);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const fetchGaragem = async () => {
+  const fetchGaragem = async (isSuccessFromUrl = false) => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) {
       navigate('/login');
@@ -280,8 +282,7 @@ export default function MinhaGaragem() {
       .order('created_at', { ascending: false });
 
     // If we just returned from a successful payment, optimistically show premium
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('success') === 'true' && userProfile) {
+    if (isSuccessFromUrl && userProfile) {
       userProfile.is_premium = true;
     }
 
