@@ -354,6 +354,7 @@ export default function Onboarding() {
       }
     };
     fetchInitData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [form, setForm] = useState({
