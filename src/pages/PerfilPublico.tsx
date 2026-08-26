@@ -245,6 +245,7 @@ export default function PerfilPublico() {
 
   useEffect(() => {
     fetchProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username]);
 
   const fetchProfile = async () => {

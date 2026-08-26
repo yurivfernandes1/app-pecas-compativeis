@@ -356,7 +356,7 @@ export default function Feed() {
       .from('mk3_posts')
       .select('*, user:mk3_users(username, nome_completo, avatar_url)');
 
-    const { data: carsData, error: carsError } = await supabase
+    const { data: carsData } = await supabase
       .from('mk3_garagem')
       .select('*');
 
