@@ -359,6 +359,7 @@ export default function Onboarding() {
   const [form, setForm] = useState({
     modelo: 'GTI',
     ano: '1995',
+    ano_modelo: '1995',
     cor: 'Vermelho Tornado',
     descricao: ''
   });
@@ -433,14 +434,22 @@ export default function Onboarding() {
         }
       }
 
-      await supabase.from('mk3_garagem').insert({
+      const { error: insertError } = await supabase.from('mk3_garagem').insert({
         user_id: session.user.id,
         modelo: form.modelo,
-        ano: form.ano,
+        ano_fabricacao: form.ano,
+        ano_modelo: form.ano_modelo,
         cor: form.cor,
         descricao: form.descricao,
         fotos: uploadedUrls
       });
+
+      if (insertError) {
+        console.error('Erro ao salvar carro:', insertError);
+        alert(`Não foi possível salvar o carro: ${insertError.message}`);
+        setLoading(false);
+        return;
+      }
       
       if (isPremium) {
         navigate('/minha-garagem');
@@ -516,10 +525,14 @@ export default function Onboarding() {
                 </CustomSelectWrapper>
               </FormGroup>
 
-              <div style={{ display: 'flex', gap: '1rem' }}>
+              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                 <FormGroup style={{ flex: 1 }}>
-                  <label>Ano</label>
-                  <input type="text" value={form.ano} onChange={e => setForm({...form, ano: e.target.value})} placeholder="Ex: 1995" />
+                  <label>Ano de Fabricação</label>
+                  <input type="number" value={form.ano} onChange={e => setForm({...form, ano: e.target.value})} placeholder="Ex: 1995" />
+                </FormGroup>
+                <FormGroup style={{ flex: 1 }}>
+                  <label>Ano Modelo</label>
+                  <input type="number" value={form.ano_modelo} onChange={e => setForm({...form, ano_modelo: e.target.value})} placeholder="Ex: 1996" />
                 </FormGroup>
                 <FormGroup style={{ flex: 1 }}>
                   <label>Cor</label>
