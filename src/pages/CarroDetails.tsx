@@ -76,8 +76,22 @@ const GalleryGrid = styled.div<{ $count: number }>`
 
   ${media.mobile} {
     display: flex;
-    flex-direction: column;
-    height: auto;
+    flex-direction: row;
+    height: 250px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 1rem;
+    
+    & > div {
+      flex: 0 0 85%;
+      scroll-snap-align: center;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 `;
 
@@ -95,7 +109,7 @@ const MainPhoto = styled.div`
   }
   
   ${media.mobile} {
-    height: 300px;
+    height: 100%;
   }
 `;
 
@@ -112,7 +126,7 @@ const SubPhoto = styled.div`
   }
 
   ${media.mobile} {
-    height: 200px;
+    height: 100%;
   }
 `;
 
@@ -121,7 +135,7 @@ const ContentGrid = styled.div`
   grid-template-columns: 2fr 1fr;
   gap: 2rem;
 
-  ${media.tablet} {
+  ${media.mobile} {
     grid-template-columns: 1fr;
   }
 `;
@@ -287,6 +301,7 @@ const CommentsSection = styled.div`
 
 const CommentInputBox = styled.div`
   display: flex;
+  align-items: flex-end;
   gap: 1rem;
   margin-bottom: 2rem;
   
@@ -294,42 +309,62 @@ const CommentInputBox = styled.div`
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    margin-bottom: 4px;
   }
 
   .input-area {
     flex: 1;
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
     align-items: flex-end;
+    gap: 0.5rem;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 24px;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
+    transition: all 0.2s;
+    
+    &:focus-within {
+      border-color: ${colors.primary};
+      background: #222;
+    }
     
     textarea {
-      width: 100%;
-      background: #1a1a1a;
-      border: 1px solid #333;
+      flex: 1;
+      background: transparent;
+      border: none;
       color: white;
-      padding: 1rem;
-      border-radius: 8px;
+      padding: 0.3rem 0;
       resize: none;
-      
-      &:focus {
-        outline: none;
-        border-color: ${colors.primary};
-      }
+      outline: none;
+      line-height: 1.5;
+      font-family: inherit;
+      font-size: 1rem;
+      min-height: 24px;
+      max-height: 100px;
     }
 
     button {
       background: ${colors.primary};
       color: white;
       border: none;
-      padding: 0.5rem 1.5rem;
-      border-radius: 6px;
-      font-weight: bold;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.2s;
 
       &:disabled {
-        opacity: 0.5;
+        background: #333;
+        color: #666;
         cursor: not-allowed;
+      }
+      
+      &:hover:not(:disabled) {
+        background: #b91c1c;
       }
     }
   }
@@ -547,8 +582,12 @@ export default function CarroDetails() {
             <SectionTitle>Especificações do Projeto</SectionTitle>
             <SpecsGrid>
               <SpecItem>
-                <div className="label">Ano Fab/Mod</div>
-                <div className="value">{carro.ano_fabricacao || '-'}{carro.ano_modelo ? `/${carro.ano_modelo}` : ''}</div>
+                <div className="label">Ano Fabricação</div>
+                <div className="value">{carro.ano_fabricacao || '-'}</div>
+              </SpecItem>
+              <SpecItem>
+                <div className="label">Ano Modelo</div>
+                <div className="value">{carro.ano_modelo || '-'}</div>
               </SpecItem>
               <SpecItem>
                 <div className="label">Cor</div>
@@ -669,13 +708,17 @@ export default function CarroDetails() {
             <img src={currentUserProfile?.avatar_url || `https://ui-avatars.com/api/?name=${session?.user?.email || 'User'}&background=222222&color=dc2626`} alt="Você" />
             <div className="input-area">
               <textarea 
-                rows={3} 
+                rows={1} 
                 placeholder="Deixe um comentário sobre este projeto..."
                 value={newComment}
-                onChange={e => setNewComment(e.target.value)}
+                onChange={e => {
+                  setNewComment(e.target.value);
+                  e.target.style.height = 'auto';
+                  e.target.style.height = (e.target.scrollHeight) + 'px';
+                }}
               />
-              <button onClick={handleComment} disabled={!newComment.trim() || postingComment}>
-                {postingComment ? 'Enviando...' : 'Comentar'}
+              <button onClick={handleComment} disabled={!newComment.trim() || postingComment} title="Enviar">
+                {postingComment ? <i className="fas fa-spinner fa-spin"></i> : <i className="fas fa-paper-plane"></i>}
               </button>
             </div>
           </CommentInputBox>
