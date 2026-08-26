@@ -300,6 +300,7 @@ export default function EditarCarro() {
   
   const [modelo, setModelo] = useState('');
   const [ano, setAno] = useState('');
+  const [anoModelo, setAnoModelo] = useState('');
   const [cor, setCor] = useState('');
   const [origem, setOrigem] = useState('');
   const [descricao, setDescricao] = useState('');
@@ -372,7 +373,8 @@ export default function EditarCarro() {
     const { data: carro } = await supabase.from('mk3_garagem').select('*').eq('id', id).single();
     if (carro) {
       setModelo(carro.modelo || 'GTI');
-      setAno(carro.ano || '');
+      setAno(carro.ano_fabricacao || carro.ano || '');
+      setAnoModelo(carro.ano_modelo || '');
       setCor(carro.cor || '');
       setOrigem(carro.origem || '');
       setDescricao(carro.descricao || '');
@@ -393,19 +395,16 @@ export default function EditarCarro() {
     if (!files) return;
     setError('');
     
-    const limit = isPremium ? 10 : 2;
+    const limit = isPremium ? 12 : 3;
     const totalCurrentPhotos = fotosAtuais.length + novasFotos.length;
     
     const validFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
     
-    if (totalCurrentPhotos + validFiles.length > limit) {
+    if (totalCurrentPhotos >= limit) {
       setError(`Seu plano ${isPremium ? 'Premium' : 'Free'} permite até ${limit} fotos por carro. Você já tem/selecionou ${totalCurrentPhotos}.`);
-      const allowedCount = limit - totalCurrentPhotos;
-      if (allowedCount > 0) {
-        setNovasFotos(prev => [...prev, ...validFiles.slice(0, allowedCount)]);
-      }
     } else {
-      setNovasFotos(prev => [...prev, ...validFiles]);
+      const allowedCount = limit - totalCurrentPhotos;
+      setNovasFotos(prev => [...prev, ...validFiles.slice(0, allowedCount)]);
     }
   };
 
@@ -449,11 +448,10 @@ export default function EditarCarro() {
       }
     }
 
-    await supabase
-      .from('mk3_garagem')
-      .update({
+    const carroUpdate = {
         modelo,
-        ano,
+        ano_fabricacao: ano,
+        ano_modelo: anoModelo,
         cor,
         origem,
         descricao,
@@ -464,7 +462,11 @@ export default function EditarCarro() {
         venda_ativo: vendaAtivo,
         venda_preco: vendaPreco ? parseCurrency(vendaPreco) : null,
         fotos: finalPhotoUrls
-      })
+    };
+
+    await supabase
+      .from('mk3_garagem')
+      .update(carroUpdate)
       .eq('id', id);
 
     navigate('/minha-garagem');
@@ -503,7 +505,7 @@ export default function EditarCarro() {
           
           {/* FOTOS */}
           <FormGroup>
-            <label>Fotos ({fotosAtuais.length + novasFotos.length}/{isPremium ? 10 : 2})</label>
+            <label>Fotos ({fotosAtuais.length + novasFotos.length}/{isPremium ? 12 : 3})</label>
             
             {(fotosAtuais.length > 0 || novasFotos.length > 0) && (
               <PhotoGrid>
@@ -526,7 +528,7 @@ export default function EditarCarro() {
               </PhotoGrid>
             )}
 
-            {(fotosAtuais.length + novasFotos.length) < (isPremium ? 10 : 2) && (
+            {(fotosAtuais.length + novasFotos.length) < (isPremium ? 12 : 3) && (
               <DropZone 
                 $isDragActive={isDragActive}
                 onDragOver={(e) => { e.preventDefault(); setIsDragActive(true); }}
@@ -572,14 +574,20 @@ export default function EditarCarro() {
             </FormGroup>
           </div>
 
-          <div style={{ display: 'flex', gap: '1rem' }}>
-            <FormGroup style={{ flex: 1 }}>
-              <label>Ano</label>
-              <input type="text" value={ano} onChange={e => setAno(e.target.value)} />
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <FormGroup style={{ flex: '1 1 100px' }}>
+              <label>Ano de Fabricação</label>
+              <input type="number" required value={ano} onChange={e => setAno(e.target.value)} placeholder="Ex: 1995" />
             </FormGroup>
-            <FormGroup style={{ flex: 1 }}>
-              <label>Cor</label>
-              <input type="text" value={cor} onChange={e => setCor(e.target.value)} />
+
+            <FormGroup style={{ flex: '1 1 100px' }}>
+              <label>Ano Modelo</label>
+              <input type="number" value={anoModelo} onChange={e => setAnoModelo(e.target.value)} placeholder="Ex: 1996" />
+            </FormGroup>
+
+            <FormGroup style={{ flex: '1 1 150px' }}>
+              <label>Cor Predominante</label>
+              <input type="text" required value={cor} onChange={e => setCor(e.target.value)} placeholder="Ex: Vermelho Tornado" />
             </FormGroup>
           </div>
 

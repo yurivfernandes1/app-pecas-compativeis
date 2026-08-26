@@ -378,7 +378,7 @@ export default function Onboarding() {
   ];
 
   const handleFiles = (newFiles: File[]) => {
-    const limit = isPremium ? 10 : 2;
+    const limit = isPremium ? 12 : 3;
     if (photos.length + newFiles.length > limit) {
       if (!isPremium) {
         setShowPremiumOffer(true);
@@ -538,7 +538,8 @@ export default function Onboarding() {
               </FormGroup>
 
               <FormGroup>
-                <label>Fotos do Projeto ({photos.length} de {isPremium ? 10 : 2})</label>
+                <label>Fotos do Projeto ({photos.length} de {isPremium ? 12 : 3})</label>
+                <div style={{ color: '#888', fontSize: '0.9rem', marginBottom: '1rem' }}>A primeira foto será a capa. Formatos: JPG, PNG. Max 5MB cada.</div>
                 <DropZone 
                   $isDragActive={isDragActive}
                   onDragOver={handleDragOver}
@@ -575,9 +576,10 @@ export default function Onboarding() {
 
                 {showPremiumOffer && !isPremium && (
                   <PremiumBanner>
-                    <div>
-                      <h4>Destrave mais fotos! 🚀</h4>
-                      <p>O plano Grátis permite apenas 2 fotos. Assine o Premium para exibir até 10 fotos da sua máquina.</p>
+                    <div className="icon"><i className="fas fa-crown"></i></div>
+                    <div className="content">
+                      <h4>Limite de Fotos Atingido</h4>
+                      <p>O plano Grátis permite apenas 3 fotos. Assine o Premium para exibir até 12 fotos da sua máquina.</p>
                     </div>
                     <button type="button" onClick={() => setStep(2)}>
                       Ver Planos

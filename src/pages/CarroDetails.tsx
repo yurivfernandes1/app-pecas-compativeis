@@ -522,8 +522,8 @@ export default function CarroDetails() {
             <SectionTitle>Especificações do Projeto</SectionTitle>
             <SpecsGrid>
               <SpecItem>
-                <div className="label">Ano</div>
-                <div className="value">{carro.ano || '-'}</div>
+                <div className="label">Ano Fab/Mod</div>
+                <div className="value">{carro.ano_fabricacao || carro.ano || '-'}{carro.ano_modelo ? `/${carro.ano_modelo}` : ''}</div>
               </SpecItem>
               <SpecItem>
                 <div className="label">Cor</div>
