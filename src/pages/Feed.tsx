@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { supabase } from '../lib/supabase';
 import { colors, media } from '../styles/GlobalStyles';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface FeedItem {
   id: string;
@@ -30,6 +30,9 @@ interface FeedItem {
     venda_ativo?: boolean;
     venda_preco?: number;
   };
+  likesCount?: number;
+  hasLiked?: boolean;
+  commentsCount?: number;
 }
 
 const FeedContainer = styled.div`
@@ -341,6 +344,7 @@ export default function Feed() {
   const [posting, setPosting] = useState(false);
   const [session, setSession] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -404,10 +408,55 @@ export default function Feed() {
       combinedFeed = [...combinedFeed, ...formattedCars];
     }
 
+    // Fetch all likes and comments to map them
+    const { data: allLikes } = await supabase.from('mk3_likes').select('*');
+    const { data: allComments } = await supabase.from('mk3_comments').select('id, item_type, item_id');
+
+    const currentUser = (await supabase.auth.getSession()).data.session?.user;
+
+    combinedFeed = combinedFeed.map(item => {
+      const itemLikes = allLikes?.filter(l => l.item_type === item.type && l.item_id === (item.type === 'car' ? item.carro?.id : item.id.replace('post-', ''))) || [];
+      const itemComments = allComments?.filter(c => c.item_type === item.type && c.item_id === (item.type === 'car' ? item.carro?.id : item.id.replace('post-', ''))) || [];
+      return {
+        ...item,
+        likesCount: itemLikes.length,
+        hasLiked: currentUser ? itemLikes.some(l => l.user_id === currentUser.id) : false,
+        commentsCount: itemComments.length
+      };
+    });
+
     combinedFeed.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
     
     setFeed(combinedFeed);
     setLoading(false);
+  };
+
+  const toggleLike = async (item: FeedItem) => {
+    if (!session) {
+      alert('Faça login para curtir!');
+      return;
+    }
+    
+    const realItemId = item.type === 'car' ? item.carro?.id : item.id.replace('post-', '');
+    if (!realItemId) return;
+
+    if (item.hasLiked) {
+      // Optimistic update
+      setFeed(feed.map(f => f.id === item.id ? { ...f, hasLiked: false, likesCount: (f.likesCount || 1) - 1 } : f));
+      await supabase.from('mk3_likes').delete().eq('user_id', session.user.id).eq('item_type', item.type).eq('item_id', realItemId);
+    } else {
+      setFeed(feed.map(f => f.id === item.id ? { ...f, hasLiked: true, likesCount: (f.likesCount || 0) + 1 } : f));
+      await supabase.from('mk3_likes').insert({ user_id: session.user.id, item_type: item.type, item_id: realItemId });
+    }
+  };
+
+  const handleCommentClick = (item: FeedItem) => {
+    if (item.type === 'car' && item.carro?.id) {
+      navigate(`/carro/${item.carro.id}`);
+    } else {
+      // For now, post comments might need a separate modal, or we just alert
+      alert('Comentários em posts chegarão em breve!');
+    }
   };
 
   const handleCreatePost = async () => {
@@ -585,14 +634,14 @@ export default function Feed() {
             </PostContent>
             
             <PostFooter>
-              <ActionButton>
-                <i className="far fa-heart"></i> Curtir
+              <ActionButton $active={item.hasLiked} onClick={() => toggleLike(item)}>
+                <i className={item.hasLiked ? "fas fa-heart" : "far fa-heart"}></i> {item.likesCount || 0}
               </ActionButton>
-              <ActionButton>
-                <i className="far fa-comment"></i> Comentar
+              <ActionButton onClick={() => handleCommentClick(item)}>
+                <i className="far fa-comment"></i> {item.commentsCount || 0}
               </ActionButton>
               <ActionButton onClick={() => handleShare(item.user.username)} style={{ marginLeft: 'auto' }}>
-                <i className="fas fa-share-alt"></i> Compartilhar
+                <i className="fas fa-share-alt"></i>
               </ActionButton>
             </PostFooter>
           </PostCard>

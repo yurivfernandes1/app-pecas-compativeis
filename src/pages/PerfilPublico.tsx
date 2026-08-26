@@ -390,6 +390,26 @@ export default function PerfilPublico() {
                     </div>
                   </SaleBadge>
                 )}
+
+                <button 
+                  onClick={() => navigate(`/carro/${carro.id}`)}
+                  style={{
+                    marginTop: '1.5rem',
+                    background: 'transparent',
+                    border: '1px solid #333',
+                    color: 'white',
+                    padding: '0.8rem 1.5rem',
+                    borderRadius: '8px',
+                    cursor: 'pointer',
+                    width: '100%',
+                    fontWeight: 'bold',
+                    transition: 'all 0.2s'
+                  }}
+                  onMouseOver={(e) => e.currentTarget.style.borderColor = colors.primary}
+                  onMouseOut={(e) => e.currentTarget.style.borderColor = '#333'}
+                >
+                  <i className="fas fa-search"></i> Ver Projeto Completo
+                </button>
               </CarInfo>
             </CarCard>
           ))
