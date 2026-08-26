@@ -52,10 +52,12 @@ const Subtitle = styled.p`
   color: ${colors.gray[400]};
   text-align: center;
   margin-bottom: 2rem;
+  font-size: 0.95rem;
 `;
 
 const FormGroup = styled.div`
   margin-bottom: 1.5rem;
+  width: 100%;
   
   label {
     display: block;
@@ -108,6 +110,13 @@ const ErrorText = styled.div`
   text-align: center;
 `;
 
+const SuccessText = styled.div`
+  color: #4ade80;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  text-align: center;
+`;
+
 const Links = styled.div`
   margin-top: 2rem;
   text-align: center;
@@ -123,45 +132,28 @@ const Links = styled.div`
   }
 `;
 
-export default function LoginPublico() {
-  const [identifier, setIdentifier] = useState('');
-  const [password, setPassword] = useState('');
+export default function RecuperarSenha() {
+  const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const navigate = useNavigate();
+  const [success, setSuccess] = useState(false);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleReset = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    setSuccess(false);
 
-    let loginEmail = identifier;
-
-    if (!identifier.includes('@')) {
-      const { data, error: rpcError } = await supabase.rpc('get_mk3_login_email', {
-        p_username: identifier.toLowerCase().replace(/[^a-z0-9_]/g, '')
-      });
-
-      if (rpcError || !data) {
-        setError('Credenciais inválidas.');
-        setLoading(false);
-        return;
-      }
-      loginEmail = data;
-    }
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email: loginEmail,
-      password,
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/nova-senha`,
     });
 
     if (error) {
-      setError(error.message === 'Invalid login credentials' ? 'Credenciais inválidas.' : error.message);
-      setLoading(false);
+      setError(error.message);
     } else {
-      // Login bem-sucedido
-      navigate('/feed'); // Levar para o feed da garagem
+      setSuccess(true);
     }
+    setLoading(false);
   };
 
   return (
@@ -171,44 +163,38 @@ export default function LoginPublico() {
           src="https://raw.githubusercontent.com/yurivfernandes1/app-pecas-compativeis/refs/heads/main/Perfil1.png"
           alt="Falando de GTI"
         />
-        <Title>Entrar na Garagem</Title>
-        <Subtitle>Bem-vindo de volta à comunidade MK3</Subtitle>
+        <Title>Recuperar Senha</Title>
+        <Subtitle>
+          Digite o e-mail cadastrado na sua conta para enviarmos um link de redefinição de senha.
+        </Subtitle>
         
-        <form onSubmit={handleLogin} style={{ width: '100%' }}>
-          <FormGroup>
-            <label>E-mail ou Usuário</label>
-            <input 
-              type="text" 
-              required 
-              value={identifier}
-              onChange={e => setIdentifier(e.target.value)}
-              placeholder="seu@email.com ou seunome"
-            />
-          </FormGroup>
+        {!success ? (
+          <form onSubmit={handleReset} style={{ width: '100%' }}>
+            <FormGroup>
+              <label>E-mail da sua conta</label>
+              <input 
+                type="email" 
+                required 
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                placeholder="seu@email.com"
+              />
+            </FormGroup>
 
-          <FormGroup>
-            <label>Senha</label>
-            <input 
-              type="password" 
-              required 
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              placeholder="Sua senha secreta"
-            />
-          </FormGroup>
+            {error && <ErrorText>{error}</ErrorText>}
 
-          {error && <ErrorText>Credenciais inválidas ou erro no servidor.</ErrorText>}
-
-          <Button type="submit" disabled={loading}>
-            {loading ? 'Entrando...' : 'Entrar'}
-          </Button>
-        </form>
+            <Button type="submit" disabled={loading}>
+              {loading ? 'Enviando link...' : 'Enviar link de recuperação'}
+            </Button>
+          </form>
+        ) : (
+          <SuccessText>
+            Link de recuperação enviado! Verifique sua caixa de entrada e spam.
+          </SuccessText>
+        )}
 
         <Links>
-          <div style={{ marginBottom: '1rem' }}>
-            <Link to="/recuperar-senha" style={{ color: '#999' }}>Esqueceu a senha?</Link>
-          </div>
-          Ainda não tem garagem? <Link to="/cadastro">Cadastre-se grátis</Link>
+          Lembrou a senha? <Link to="/login">Voltar ao Login</Link>
         </Links>
       </FormContainer>
     </PageWrapper>

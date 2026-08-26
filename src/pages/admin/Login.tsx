@@ -108,7 +108,7 @@ const Login: React.FC = () => {
     let loginEmail = identifier;
 
     if (!identifier.includes('@')) {
-      const { data, error: rpcError } = await supabase.rpc('get_login_email', {
+      const { data, error: rpcError } = await supabase.rpc('get_mk3_login_email', {
         p_username: identifier.toLowerCase()
       });
 

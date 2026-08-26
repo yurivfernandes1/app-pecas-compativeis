@@ -18,8 +18,13 @@ import ListaNegra from './pages/ListaNegra';
 import Login from './pages/admin/Login';
 import LoginPublico from './pages/LoginPublico';
 import Cadastro from './pages/Cadastro';
+import RecuperarSenha from './pages/RecuperarSenha';
 import Onboarding from './pages/Onboarding';
 import Feed from './pages/Feed';
+import MinhaGaragem from './pages/MinhaGaragem';
+import EditarPerfil from './pages/EditarPerfil';
+import EditarCarro from './pages/EditarCarro';
+import AdminConfig from './pages/admin/AdminConfig';
 import AdminProdutos from './pages/admin/AdminProdutos';
 import AdminProdutoForm from './pages/admin/AdminProdutoForm';
 import AdminListaNegra from './pages/admin/AdminListaNegra';
@@ -45,15 +50,20 @@ const AppContent: React.FC = () => {
           <Route path="/lista-negra" element={<ListaNegra />} />
           <Route path="/admin/login" element={<Login />} />
           <Route path="/login" element={<LoginPublico />} />
+          <Route path="/recuperar-senha" element={<RecuperarSenha />} />
           <Route path="/cadastro" element={<Cadastro />} />
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/feed" element={<Feed />} />
+          <Route path="/minha-garagem" element={<MinhaGaragem />} />
+          <Route path="/editar-perfil" element={<EditarPerfil />} />
+          <Route path="/editar-carro/:id" element={<EditarCarro />} />
           <Route path="/admin/produtos" element={<AdminProdutos />} />
           <Route path="/admin/produtos/novo" element={<AdminProdutoForm />} />
           <Route path="/admin/produtos/:id" element={<AdminProdutoForm />} />
           <Route path="/admin/categorias" element={<AdminCategorias />} />
           <Route path="/admin/usuarios" element={<AdminUsuarios />} />
           <Route path="/admin/lista-negra" element={<AdminListaNegra />} />
+          <Route path="/admin/configuracoes" element={<AdminConfig />} />
         </Routes>
       </main>
       <Footer />

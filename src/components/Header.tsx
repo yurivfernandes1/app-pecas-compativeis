@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors, media } from '../styles/GlobalStyles';
 import { supabase } from '../lib/supabase';
@@ -368,23 +368,38 @@ const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [profile, setProfile] = useState<any>(null);
   const location = useLocation();
 
   React.useEffect(() => {
+    const fetchProfile = async (userId: string) => {
+      const { data } = await supabase.from('mk3_users').select('username, nome_completo, is_admin').eq('id', userId).single();
+      if (data) setProfile(data);
+    };
+
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
+      if (session?.user) fetchProfile(session.user.id);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        fetchProfile(session.user.id);
+      } else {
+        setProfile(null);
+      }
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
+  const navigate = useNavigate();
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setIsUserMenuOpen(false);
+    navigate('/');
   };
 
   const handleMenuToggle = () => {
@@ -455,15 +470,20 @@ const Header: React.FC = () => {
             {user ? (
               <>
                 <UserButton onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
-                  {user.email?.split('@')[0]} <span>▼</span>
+                  {profile ? `@${profile.username}` : user.email.split('@')[0]} <i className="fas fa-caret-down"></i>
                 </UserButton>
                 <DropdownMenu $isOpen={isUserMenuOpen}>
-                  <DropdownItem to="/feed" onClick={() => setIsUserMenuOpen(false)}>
+                  <DropdownItem to="/minha-garagem" onClick={() => setIsUserMenuOpen(false)}>
                     <i className="fas fa-car"></i> Minha Garagem
                   </DropdownItem>
-                  <DropdownItem to="/admin/produtos" onClick={() => setIsUserMenuOpen(false)}>
-                    <i className="fas fa-cog"></i> Configurações
+                  <DropdownItem to="/feed" onClick={() => setIsUserMenuOpen(false)}>
+                    <i className="fas fa-users"></i> Comunidade
                   </DropdownItem>
+                  {profile?.is_admin && (
+                    <DropdownItem to="/admin/produtos" onClick={() => setIsUserMenuOpen(false)}>
+                      <i className="fas fa-cog"></i> Configurações
+                    </DropdownItem>
+                  )}
                   <DropdownItemButton onClick={handleLogout}>
                     <i className="fas fa-sign-out-alt"></i> Sair
                   </DropdownItemButton>

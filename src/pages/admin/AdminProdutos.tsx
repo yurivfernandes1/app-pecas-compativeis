@@ -146,6 +146,11 @@ export default function AdminProdutos() {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
         navigate('/admin/login');
+        return;
+      }
+      const { data: profile } = await supabase.from('mk3_users').select('is_admin').eq('id', session.user.id).single();
+      if (!profile?.is_admin) {
+        navigate('/');
       }
     };
     checkSession();
