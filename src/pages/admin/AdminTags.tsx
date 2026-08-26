@@ -5,24 +5,21 @@ import { colors } from '../../styles/GlobalStyles';
 import AdminTabs from '../../components/AdminTabs';
 import { useNavigate } from 'react-router-dom';
 
-const PageWrapper = styled.div`
-  min-height: 100vh;
+const Container = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 2rem;
-  background: #000;
 `;
 
-const Container = styled.div`
-  max-width: 1000px;
-  margin: 0 auto;
-  background: #111;
-  border-radius: 12px;
-  padding: 2rem;
-  border: 1px solid #333;
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
 `;
 
 const Title = styled.h2`
-  color: white;
-  margin-bottom: 2rem;
+  color: ${colors.white};
 `;
 
 const FlexRow = styled.div`
@@ -109,8 +106,10 @@ const TagList = styled.ul`
 export default function AdminTags() {
   const [opcionais, setOpcionais] = useState<any[]>([]);
   const [pecasRaras, setPecasRaras] = useState<any[]>([]);
+  const [modMotor, setModMotor] = useState<any[]>([]);
   const [newOpcional, setNewOpcional] = useState('');
   const [newPeca, setNewPeca] = useState('');
+  const [newModMotor, setNewModMotor] = useState('');
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -138,11 +137,12 @@ export default function AdminTags() {
     if (data) {
       setOpcionais(data.filter(t => t.tipo === 'opcional'));
       setPecasRaras(data.filter(t => t.tipo === 'peca_rara'));
+      setModMotor(data.filter(t => t.tipo === 'mod_motor'));
     }
     setLoading(false);
   };
 
-  const handleAdd = async (e: React.FormEvent, tipo: 'opcional' | 'peca_rara', value: string, setter: (s: string) => void) => {
+  const handleAdd = async (e: React.FormEvent, tipo: 'opcional' | 'peca_rara' | 'mod_motor', value: string, setter: (s: string) => void) => {
     e.preventDefault();
     if (!value.trim()) return;
 
@@ -159,10 +159,11 @@ export default function AdminTags() {
   };
 
   return (
-    <PageWrapper>
-      <Container>
-        <Title>Painel Administrativo</Title>
-        <AdminTabs />
+    <Container>
+      <Header>
+        <Title>Painel Administrativo - Tags de Carros</Title>
+      </Header>
+      <AdminTabs />
         
         {loading ? (
           <p style={{ color: 'white' }}>Carregando...</p>
@@ -219,9 +220,34 @@ export default function AdminTags() {
                 ))}
               </TagList>
             </Column>
+
+            {/* MOD MOTOR */}
+            <Column>
+              <h3 style={{ color: 'white', marginBottom: '1rem' }}><i className="fas fa-cogs"></i> Motor</h3>
+              
+              <FormRow onSubmit={(e) => handleAdd(e, 'mod_motor', newModMotor, setNewModMotor)}>
+                <input 
+                  type="text" 
+                  placeholder="Nova Mod (Ex: Turbo)" 
+                  value={newModMotor}
+                  onChange={e => setNewModMotor(e.target.value)}
+                />
+                <button type="submit"><i className="fas fa-plus"></i></button>
+              </FormRow>
+
+              <TagList>
+                {modMotor.map(tag => (
+                  <li key={tag.id}>
+                    {tag.nome}
+                    <button onClick={() => handleDelete(tag.id)} title="Remover">
+                      <i className="fas fa-trash"></i>
+                    </button>
+                  </li>
+                ))}
+              </TagList>
+            </Column>
           </FlexRow>
         )}
       </Container>
-    </PageWrapper>
   );
 }

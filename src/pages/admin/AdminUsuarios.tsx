@@ -20,9 +20,8 @@ const Header = styled.div`
   margin-bottom: 2rem;
 `;
 
-const Title = styled.h1`
-  font-size: 2rem;
-  color: ${colors.primary};
+const Title = styled.h2`
+  color: ${colors.white};
 `;
 
 const Table = styled.table`

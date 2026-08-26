@@ -321,10 +321,28 @@ export default function EditarCarro() {
   // Tags do banco
   const [availableOpcionais, setAvailableOpcionais] = useState<any[]>([]);
   const [availablePecas, setAvailablePecas] = useState<any[]>([]);
+  const [availableModMotor, setAvailableModMotor] = useState<any[]>([]);
   
   // Tags selecionadas
   const [selectedOpcionais, setSelectedOpcionais] = useState<string[]>([]);
   const [selectedPecas, setSelectedPecas] = useState<string[]>([]);
+  const [selectedModMotor, setSelectedModMotor] = useState<string[]>([]);
+
+  // Modificações Motor e Suspensão
+  const [modificacaoMotor, setModificacaoMotor] = useState(false);
+  const [modificacaoSuspensao, setModificacaoSuspensao] = useState(false);
+  const [tipoSuspensao, setTipoSuspensao] = useState('');
+  const [marcaSuspensao, setMarcaSuspensao] = useState('');
+
+  const tiposSuspensao = [
+    'mola esportiva', 'mola cortada', 'suspensão fixa preparada', 
+    'suspensão a rosca', 'suspensão coilover', 'suspensão a ar'
+  ];
+  
+  const marcasSuspensao = [
+    'Tebao', 'castor', 'macaulay', 'sector', 'nasa', 'As suspensões', 
+    'Impacto suspensões', 'Surface', 'Redcoil', 'eibach', 'H&R', 'HKI', 'outros'
+  ];
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -370,6 +388,7 @@ export default function EditarCarro() {
     if (tags) {
       setAvailableOpcionais(tags.filter(t => t.tipo === 'opcional'));
       setAvailablePecas(tags.filter(t => t.tipo === 'peca_rara'));
+      setAvailableModMotor(tags.filter(t => t.tipo === 'mod_motor'));
     }
 
     // Buscar carro
@@ -388,6 +407,11 @@ export default function EditarCarro() {
       setFotosAtuais(carro.fotos || []);
       setSelectedOpcionais(carro.opcionais || []);
       setSelectedPecas(carro.pecas_raras || []);
+      setModificacaoMotor(carro.modificacao_motor || false);
+      setSelectedModMotor(carro.modificacoes_motor || []);
+      setModificacaoSuspensao(carro.modificacao_suspensao || false);
+      setTipoSuspensao(carro.tipo_suspensao || '');
+      setMarcaSuspensao(carro.marca_suspensao || '');
     } else {
       navigate('/minha-garagem');
     }
@@ -464,7 +488,12 @@ export default function EditarCarro() {
         pecas_raras: selectedPecas,
         venda_ativo: vendaAtivo,
         venda_preco: vendaPreco ? parseCurrency(vendaPreco) : null,
-        fotos: finalPhotoUrls
+        fotos: finalPhotoUrls,
+        modificacao_motor: modificacaoMotor,
+        modificacoes_motor: selectedModMotor,
+        modificacao_suspensao: modificacaoSuspensao,
+        tipo_suspensao: tipoSuspensao,
+        marca_suspensao: marcaSuspensao
     };
 
     const { error: updateError } = await supabase
@@ -639,41 +668,126 @@ export default function EditarCarro() {
           </FormGroup>
 
           {/* OPCIONAIS E PEÇAS RARAS */}
-          <div style={{ margin: '2rem 0', width: '100%' }}>
-            <h3 style={{ color: 'white', marginBottom: '1rem', borderBottom: '1px solid #333', paddingBottom: '0.5rem' }}>Opcionais</h3>
-            {availableOpcionais.length === 0 ? <p style={{color: '#666'}}>Nenhum opcional cadastrado no banco de dados.</p> : (
-              <CheckboxGrid>
-                {availableOpcionais.map(op => (
-                  <label key={op.id}>
-                    <input 
-                      type="checkbox" 
-                      checked={selectedOpcionais.includes(op.nome)}
-                      onChange={() => toggleTag(op.nome, selectedOpcionais, setSelectedOpcionais)}
-                    />
-                    {op.nome}
-                  </label>
-                ))}
-              </CheckboxGrid>
-            )}
-          </div>
+          <details style={{ margin: '2rem 0', width: '100%', background: '#1a1a1a', padding: '1.5rem', borderRadius: '12px', border: '1px solid #333' }}>
+            <summary style={{ color: 'white', cursor: 'pointer', outline: 'none', fontWeight: 'bold', fontSize: '1.1rem' }}>
+              Opcionais
+            </summary>
+            <div style={{ paddingTop: '1.5rem' }}>
+              {availableOpcionais.length === 0 ? <p style={{color: '#666'}}>Nenhum opcional cadastrado no banco de dados.</p> : (
+                <CheckboxGrid>
+                  {availableOpcionais.map(op => (
+                    <label key={op.id}>
+                      <input 
+                        type="checkbox" 
+                        checked={selectedOpcionais.includes(op.nome)}
+                        onChange={() => toggleTag(op.nome, selectedOpcionais, setSelectedOpcionais)}
+                      />
+                      {op.nome}
+                    </label>
+                  ))}
+                </CheckboxGrid>
+              )}
+            </div>
+          </details>
 
-          <div style={{ margin: '2rem 0', width: '100%' }}>
-            <h3 style={{ color: 'white', marginBottom: '1rem', borderBottom: '1px solid #333', paddingBottom: '0.5rem' }}>Peças Raras</h3>
-            {availablePecas.length === 0 ? <p style={{color: '#666'}}>Nenhuma peça rara cadastrada no banco de dados.</p> : (
-              <CheckboxGrid>
-                {availablePecas.map(pr => (
-                  <label key={pr.id}>
-                    <input 
-                      type="checkbox" 
-                      checked={selectedPecas.includes(pr.nome)}
-                      onChange={() => toggleTag(pr.nome, selectedPecas, setSelectedPecas)}
-                    />
-                    {pr.nome}
-                  </label>
-                ))}
-              </CheckboxGrid>
+          <details style={{ margin: '2rem 0', width: '100%', background: '#1a1a1a', padding: '1.5rem', borderRadius: '12px', border: '1px solid #333' }}>
+            <summary style={{ color: 'white', cursor: 'pointer', outline: 'none', fontWeight: 'bold', fontSize: '1.1rem' }}>
+              Peças Raras
+            </summary>
+            <div style={{ paddingTop: '1.5rem' }}>
+              {availablePecas.length === 0 ? <p style={{color: '#666'}}>Nenhuma peça rara cadastrada no banco de dados.</p> : (
+                <CheckboxGrid>
+                  {availablePecas.map(pr => (
+                    <label key={pr.id}>
+                      <input 
+                        type="checkbox" 
+                        checked={selectedPecas.includes(pr.nome)}
+                        onChange={() => toggleTag(pr.nome, selectedPecas, setSelectedPecas)}
+                      />
+                      {pr.nome}
+                    </label>
+                  ))}
+                </CheckboxGrid>
+              )}
+            </div>
+          </details>
+
+          <details style={{ margin: '2rem 0', width: '100%', background: '#1a1a1a', padding: '1.5rem', borderRadius: '12px', border: '1px solid #333' }}>
+            <summary style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', outline: 'none', fontWeight: 'bold', fontSize: '1.1rem', color: 'white' }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>Modificações de Motor</span>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', color: '#ccc', fontWeight: 'normal', fontSize: '0.9rem' }} onClick={e => e.stopPropagation()}>
+                  <input 
+                    type="checkbox" 
+                    checked={modificacaoMotor} 
+                    onChange={e => setModificacaoMotor(e.target.checked)} 
+                    style={{ width: '18px', height: '18px', accentColor: colors.primary }}
+                  />
+                  Sim
+                </label>
+              </div>
+            </summary>
+            
+            {modificacaoMotor && (
+              <div style={{ marginTop: '1.5rem', animation: 'fadeIn 0.3s ease' }}>
+                {availableModMotor.length === 0 ? <p style={{color: '#666'}}>Nenhuma modificação cadastrada.</p> : (
+                  <CheckboxGrid>
+                    {availableModMotor.map(mod => (
+                      <label key={mod.id}>
+                        <input 
+                          type="checkbox" 
+                          checked={selectedModMotor.includes(mod.nome)}
+                          onChange={() => toggleTag(mod.nome, selectedModMotor, setSelectedModMotor)}
+                        />
+                        {mod.nome}
+                      </label>
+                    ))}
+                  </CheckboxGrid>
+                )}
+              </div>
             )}
-          </div>
+          </details>
+
+          <details style={{ margin: '2rem 0', width: '100%', background: '#1a1a1a', padding: '1.5rem', borderRadius: '12px', border: '1px solid #333' }}>
+            <summary style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', outline: 'none', fontWeight: 'bold', fontSize: '1.1rem', color: 'white' }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>Modificações de Suspensão</span>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', color: '#ccc', fontWeight: 'normal', fontSize: '0.9rem' }} onClick={e => e.stopPropagation()}>
+                  <input 
+                    type="checkbox" 
+                    checked={modificacaoSuspensao} 
+                    onChange={e => setModificacaoSuspensao(e.target.checked)} 
+                    style={{ width: '18px', height: '18px', accentColor: colors.primary }}
+                  />
+                  Sim
+                </label>
+              </div>
+            </summary>
+            
+            {modificacaoSuspensao && (
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '1.5rem', animation: 'fadeIn 0.3s ease' }}>
+                <FormGroup style={{ marginBottom: 0 }}>
+                  <label>Tipo de Suspensão</label>
+                  <CustomSelect 
+                    options={tiposSuspensao.map(t => ({ label: t, value: t }))}
+                    value={tipoSuspensao}
+                    onChange={(val) => setTipoSuspensao(val)}
+                    placeholder="Selecione o tipo"
+                  />
+                </FormGroup>
+
+                <FormGroup style={{ marginBottom: 0 }}>
+                  <label>Marca</label>
+                  <CustomSelect 
+                    options={marcasSuspensao.map(m => ({ label: m, value: m }))}
+                    value={marcaSuspensao}
+                    onChange={(val) => setMarcaSuspensao(val)}
+                    placeholder="Selecione a marca"
+                  />
+                </FormGroup>
+              </div>
+            )}
+          </details>
 
           {/* MÓDULO DE VENDA (PREMIUM) */}
           <VendaBox>

@@ -202,7 +202,7 @@ const SystemMessage = styled.p`
 
 const CarGallery = styled.div`
   width: 100%;
-  height: 300px;
+  height: 450px;
   border-radius: 8px;
   overflow: hidden;
   margin-bottom: 1rem;
@@ -211,6 +211,10 @@ const CarGallery = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  
+  @media (max-width: 768px) {
+    height: 300px;
+  }
   
   img {
     width: 100%;

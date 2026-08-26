@@ -577,6 +577,31 @@ export default function CarroDetails() {
               </>
             )}
 
+            {(carro.modificacao_motor || carro.modificacao_suspensao) && (
+              <div style={{ marginTop: '2rem' }}>
+                <SectionTitle>Modificações</SectionTitle>
+                
+                {carro.modificacao_motor && carro.modificacoes_motor?.length > 0 && (
+                  <div style={{ marginBottom: '1.5rem' }}>
+                    <h4 style={{ color: '#ccc', margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}><i className="fas fa-cogs"></i> Motor</h4>
+                    <TagsContainer style={{ marginTop: 0 }}>
+                      {carro.modificacoes_motor.map((m: string) => <Tag key={m} style={{ background: 'rgba(220, 38, 38, 0.1)', color: colors.primary, borderColor: 'rgba(220, 38, 38, 0.3)' }}>{m}</Tag>)}
+                    </TagsContainer>
+                  </div>
+                )}
+
+                {carro.modificacao_suspensao && (
+                  <div style={{ marginBottom: '1.5rem' }}>
+                    <h4 style={{ color: '#ccc', margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}><i className="fas fa-tools"></i> Suspensão</h4>
+                    <TagsContainer style={{ marginTop: 0 }}>
+                      {carro.tipo_suspensao && <Tag style={{ background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', borderColor: 'rgba(59, 130, 246, 0.3)' }}>{carro.tipo_suspensao}</Tag>}
+                      {carro.marca_suspensao && <Tag style={{ background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', borderColor: 'rgba(59, 130, 246, 0.3)' }}>{carro.marca_suspensao}</Tag>}
+                    </TagsContainer>
+                  </div>
+                )}
+              </div>
+            )}
+
             {carro.problemas_atuais && (
               <ProblemasBox>
                 <h4><i className="fas fa-wrench"></i> Precisa de Ajuda</h4>

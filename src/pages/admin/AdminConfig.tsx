@@ -20,9 +20,8 @@ const Header = styled.div`
   margin-bottom: 2rem;
 `;
 
-const Title = styled.h1`
-  font-size: 2rem;
-  color: ${colors.primary};
+const Title = styled.h2`
+  color: ${colors.white};
 `;
 
 const FormBox = styled.div`
@@ -118,7 +117,8 @@ export default function AdminConfig() {
     setLoading(true);
     const { data } = await supabase.from('mk3_settings').select('*').limit(1).single();
     if (data) {
-      setPrice(data.premium_price.toString());
+      const num = Number(data.premium_price);
+      setPrice(num.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
       setSettingsId(data.id);
     }
     setLoading(false);
@@ -127,7 +127,7 @@ export default function AdminConfig() {
   const handleSave = async () => {
     setSaving(true);
     setMessage(null);
-    const numPrice = parseFloat(price.replace(',', '.'));
+    const numPrice = parseFloat(price.replace(/\./g, '').replace(',', '.'));
     
     if (isNaN(numPrice)) {
       setMessage({ text: 'Valor inválido.', type: 'error' });
@@ -176,8 +176,16 @@ export default function AdminConfig() {
             <input 
               type="text" 
               value={price} 
-              onChange={e => setPrice(e.target.value)} 
-              placeholder="Ex: 19.90"
+              onChange={e => {
+                let val = e.target.value.replace(/\D/g, '');
+                if (!val) {
+                  setPrice('');
+                  return;
+                }
+                const num = parseInt(val, 10) / 100;
+                setPrice(num.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+              }} 
+              placeholder="Ex: 19,90"
             />
           </FormGroup>
           
