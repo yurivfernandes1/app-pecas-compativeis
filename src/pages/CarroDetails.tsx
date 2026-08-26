@@ -373,6 +373,7 @@ export default function CarroDetails() {
   const [owner, setOwner] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [session, setSession] = useState<any>(null);
+  const [currentUserProfile, setCurrentUserProfile] = useState<any>(null);
 
   const [likes, setLikes] = useState<number>(0);
   const [hasLiked, setHasLiked] = useState(false);
@@ -383,6 +384,11 @@ export default function CarroDetails() {
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
+      if (data.session) {
+        supabase.from('mk3_users').select('*').eq('id', data.session.user.id).single().then(({ data: profileData }) => {
+          if (profileData) setCurrentUserProfile(profileData);
+        });
+      }
     });
     fetchCarDetails();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -454,7 +460,10 @@ export default function CarroDetails() {
       content: newComment.trim()
     });
 
-    if (!error) {
+    if (error) {
+      alert("Erro ao enviar: " + error.message);
+      console.error(error);
+    } else {
       setNewComment('');
       await fetchLikesAndComments();
     }
@@ -607,7 +616,7 @@ export default function CarroDetails() {
           <SectionTitle>Comentários ({comments.length})</SectionTitle>
           
           <CommentInputBox>
-            <img src={session?.user?.user_metadata?.avatar_url || `https://ui-avatars.com/api/?name=${session?.user?.email}&background=222222&color=dc2626`} alt="Você" />
+            <img src={currentUserProfile?.avatar_url || `https://ui-avatars.com/api/?name=${session?.user?.email || 'User'}&background=222222&color=dc2626`} alt="Você" />
             <div className="input-area">
               <textarea 
                 rows={3} 
