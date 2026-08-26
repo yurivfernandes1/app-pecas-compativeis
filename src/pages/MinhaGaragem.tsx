@@ -254,8 +254,8 @@ export default function MinhaGaragem() {
       isSuccess = true;
       setShowSuccessToast(true);
       setTimeout(() => setShowSuccessToast(false), 6000);
-      // Clean up the URL
-      window.history.replaceState({}, document.title, window.location.pathname);
+      // Clean up the URL properly using React Router
+      navigate('/minha-garagem', { replace: true });
     }
     
     fetchGaragem(isSuccess);

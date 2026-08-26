@@ -372,6 +372,7 @@ export default function Onboarding() {
     { label: 'GT (2.0)', value: 'GT' },
     { label: 'CL (1.8)', value: 'CL' },
     { label: 'Highline (2.0)', value: 'Highline' },
+    { label: 'TDi (Diesel)', value: 'TDi' },
     { label: 'Cabrio', value: 'Cabrio' },
     { label: 'Outro', value: 'Outro' }
   ];
@@ -462,6 +463,9 @@ export default function Onboarding() {
       const { data, error } = await supabase.functions.invoke('create-checkout-session');
       if (error) {
         throw error;
+      }
+      if (data && data.success === false) {
+        throw new Error(data.error);
       }
       if (data?.url) {
         window.location.href = data.url;
@@ -623,6 +627,7 @@ export default function Onboarding() {
                   <li><i className="fas fa-check"></i> Acesso à comunidade</li>
                   <li><i className="fas fa-check"></i> Carros ilimitados</li>
                   <li><i className="fas fa-check"></i> Até 10 fotos por carro</li>
+                  <li><i className="fas fa-check"></i> Venda seus carros (Anúncios)</li>
                   <li><i className="fas fa-check"></i> Selo Exclusivo no Perfil</li>
                   <li><i className="fas fa-check"></i> Suporte Prioritário</li>
                 </ul>

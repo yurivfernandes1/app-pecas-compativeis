@@ -46,6 +46,7 @@ export default function AdminTabs() {
       <StyledNavLink to="/admin/categorias">Categorias</StyledNavLink>
       <StyledNavLink to="/admin/usuarios">Usuários</StyledNavLink>
       <StyledNavLink to="/admin/lista-negra">Lista Negra</StyledNavLink>
+      <StyledNavLink to="/admin/tags">Tags de Carros</StyledNavLink>
       <StyledNavLink to="/admin/configuracoes">Configurações Gerais</StyledNavLink>
     </NavLinksWrapper>
   );

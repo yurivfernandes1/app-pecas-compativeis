@@ -24,12 +24,14 @@ import Feed from './pages/Feed';
 import MinhaGaragem from './pages/MinhaGaragem';
 import EditarPerfil from './pages/EditarPerfil';
 import EditarCarro from './pages/EditarCarro';
+import PerfilPublico from './pages/PerfilPublico';
 import AdminConfig from './pages/admin/AdminConfig';
 import AdminProdutos from './pages/admin/AdminProdutos';
 import AdminProdutoForm from './pages/admin/AdminProdutoForm';
 import AdminListaNegra from './pages/admin/AdminListaNegra';
 import AdminCategorias from './pages/admin/AdminCategorias';
 import AdminUsuarios from './pages/admin/AdminUsuarios';
+import AdminTags from './pages/admin/AdminTags';
 
 const AppContent: React.FC = () => {
   const { showModal, closeModal } = useAppProtection();
@@ -57,12 +59,14 @@ const AppContent: React.FC = () => {
           <Route path="/minha-garagem" element={<MinhaGaragem />} />
           <Route path="/editar-perfil" element={<EditarPerfil />} />
           <Route path="/editar-carro/:id" element={<EditarCarro />} />
+          <Route path="/u/:username" element={<PerfilPublico />} />
           <Route path="/admin/produtos" element={<AdminProdutos />} />
           <Route path="/admin/produtos/novo" element={<AdminProdutoForm />} />
           <Route path="/admin/produtos/:id" element={<AdminProdutoForm />} />
           <Route path="/admin/categorias" element={<AdminCategorias />} />
           <Route path="/admin/usuarios" element={<AdminUsuarios />} />
           <Route path="/admin/lista-negra" element={<AdminListaNegra />} />
+          <Route path="/admin/tags" element={<AdminTags />} />
           <Route path="/admin/configuracoes" element={<AdminConfig />} />
         </Routes>
       </main>
