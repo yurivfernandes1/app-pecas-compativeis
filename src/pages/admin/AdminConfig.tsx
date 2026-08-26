@@ -140,7 +140,7 @@ export default function AdminConfig() {
 
   const fetchSettings = async () => {
     setLoading(true);
-    const { data, error } = await supabase.from('mk3_settings').select('*').limit(1).single();
+    const { data } = await supabase.from('mk3_settings').select('*').limit(1).single();
     if (data) {
       setPrice(data.premium_price.toString());
       setSettingsId(data.id);

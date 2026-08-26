@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { supabase } from '../lib/supabase';
 import { useNavigate, Link } from 'react-router-dom';
-import { colors, media } from '../styles/GlobalStyles';
+import { colors } from '../styles/GlobalStyles';
 import { AsYouType, CountryCode } from 'libphonenumber-js';
 
 const PageWrapper = styled.div`

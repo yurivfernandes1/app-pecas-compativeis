@@ -208,6 +208,7 @@ export default function MinhaGaragem() {
 
   useEffect(() => {
     fetchGaragem();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchGaragem = async () => {
