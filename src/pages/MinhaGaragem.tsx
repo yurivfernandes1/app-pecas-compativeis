@@ -199,11 +199,51 @@ const CarInfo = styled.div`
   }
 `;
 
+const ToastContainer = styled.div<{ $show: boolean }>`
+  position: fixed;
+  bottom: ${props => props.$show ? '30px' : '-150px'};
+  left: 50%;
+  transform: translateX(-50%);
+  background: #111;
+  border: 2px solid ${colors.primary};
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: 0 10px 40px rgba(220, 38, 38, 0.4);
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  z-index: 1000;
+  
+  i {
+    font-size: 2.5rem;
+    color: ${colors.primary};
+    animation: bounce 2s infinite;
+  }
+  
+  h3 {
+    color: white;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  p {
+    color: ${colors.gray[300]};
+    margin: 0;
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+    40% {transform: translateY(-15px);}
+    60% {transform: translateY(-7px);}
+  }
+`;
+
 export default function MinhaGaragem() {
   const [profile, setProfile] = useState<any>(null);
   const [carros, setCarros] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [activePhotoIndexes, setActivePhotoIndexes] = useState<Record<string, number>>({});
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -212,7 +252,8 @@ export default function MinhaGaragem() {
     // Check for Stripe success redirect
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('success') === 'true') {
-      alert('Pagamento aprovado! Bem-vindo ao Clube Premium! 🚀🏆');
+      setShowSuccessToast(true);
+      setTimeout(() => setShowSuccessToast(false), 6000);
       // Clean up the URL
       window.history.replaceState({}, document.title, window.location.pathname);
     }
@@ -360,6 +401,14 @@ export default function MinhaGaragem() {
         )}
 
       </Container>
+      
+      <ToastContainer $show={showSuccessToast}>
+        <i className="fas fa-trophy"></i>
+        <div>
+          <h3>Pagamento Aprovado! 🚀</h3>
+          <p>Bem-vindo ao Clube VIP! Suas vantagens foram ativadas.</p>
+        </div>
+      </ToastContainer>
     </PageWrapper>
   );
 }
