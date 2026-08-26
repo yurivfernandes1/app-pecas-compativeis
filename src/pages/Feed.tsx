@@ -443,10 +443,22 @@ export default function Feed() {
     if (item.hasLiked) {
       // Optimistic update
       setFeed(feed.map(f => f.id === item.id ? { ...f, hasLiked: false, likesCount: (f.likesCount || 1) - 1 } : f));
-      await supabase.from('mk3_likes').delete().eq('user_id', session.user.id).eq('item_type', item.type).eq('item_id', realItemId);
+      const { error } = await supabase.from('mk3_likes').delete().eq('user_id', session.user.id).eq('item_type', item.type).eq('item_id', realItemId);
+      if (error) {
+        alert("Erro ao remover curtida: " + error.message);
+        console.error(error);
+        // Revert optimistic
+        setFeed(feed.map(f => f.id === item.id ? { ...f, hasLiked: true, likesCount: (f.likesCount || 0) + 1 } : f));
+      }
     } else {
       setFeed(feed.map(f => f.id === item.id ? { ...f, hasLiked: true, likesCount: (f.likesCount || 0) + 1 } : f));
-      await supabase.from('mk3_likes').insert({ user_id: session.user.id, item_type: item.type, item_id: realItemId });
+      const { error } = await supabase.from('mk3_likes').insert({ user_id: session.user.id, item_type: item.type, item_id: realItemId });
+      if (error) {
+        alert("Erro ao salvar curtida: " + error.message);
+        console.error(error);
+        // Revert optimistic
+        setFeed(feed.map(f => f.id === item.id ? { ...f, hasLiked: false, likesCount: (f.likesCount || 1) - 1 } : f));
+      }
     }
   };
 
