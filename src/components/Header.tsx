@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors, media } from '../styles/GlobalStyles';
 import { supabase } from '../lib/supabase';
+import NotificationBell from './NotificationBell';
 
 const HeaderContainer = styled.header`
   background: #0a0a0a;
@@ -469,6 +470,7 @@ const Header: React.FC = () => {
           <UserMenuContainer>
             {user ? (
               <>
+                <NotificationBell />
                 <UserButton onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
                   {profile ? `@${profile.username}` : user.email.split('@')[0]} <i className="fas fa-caret-down"></i>
                 </UserButton>
