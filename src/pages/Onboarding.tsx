@@ -332,9 +332,19 @@ export default function Onboarding() {
     const fetchInitData = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
+        let isUserPremium = false;
         const { data } = await supabase.from('mk3_users').select('is_premium, premium_manual').eq('id', session.user.id).single();
         if (data && (data.is_premium || data.premium_manual)) {
+          isUserPremium = true;
           setIsPremium(true);
+        }
+
+        if (!isUserPremium) {
+          const { count } = await supabase.from('mk3_garagem').select('*', { count: 'exact', head: true }).eq('user_id', session.user.id);
+          if (count && count >= 1) {
+            alert('Você atingiu o limite de carros do plano Grátis. Assine o Premium para adicionar mais!');
+            navigate('/minha-garagem');
+          }
         }
       }
       

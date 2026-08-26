@@ -256,6 +256,9 @@ export default function MinhaGaragem() {
 
   if (loading) return <PageWrapper><Container><h2 style={{color:'white'}}>Carregando...</h2></Container></PageWrapper>;
 
+  const isPremium = profile?.is_premium || profile?.premium_manual;
+  const canAddCar = isPremium || carros.length === 0;
+
   return (
     <PageWrapper>
       <Container>
@@ -276,7 +279,13 @@ export default function MinhaGaragem() {
 
         <SectionTitle>
           Meus Projetos
-          <button onClick={() => navigate('/onboarding')}><i className="fas fa-plus"></i> Novo Carro</button>
+          {canAddCar ? (
+            <button onClick={() => navigate('/onboarding')}><i className="fas fa-plus"></i> Novo Carro</button>
+          ) : (
+            <button onClick={() => alert('Usuários Entusiastas (Grátis) podem adicionar apenas 1 carro. Assine o Premium para ter carros ilimitados!')}>
+              <i className="fas fa-lock"></i> Novo Carro (Premium)
+            </button>
+          )}
         </SectionTitle>
 
         {carros.length === 0 ? (
