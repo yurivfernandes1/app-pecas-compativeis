@@ -303,6 +303,7 @@ export default function EditarCarro() {
   const [origem, setOrigem] = useState('');
   const [descricao, setDescricao] = useState('');
   const [problemas, setProblemas] = useState('');
+  const [instagramUrl, setInstagramUrl] = useState('');
   
   const [vendaAtivo, setVendaAtivo] = useState(false);
   const [vendaPreco, setVendaPreco] = useState('');
@@ -377,6 +378,7 @@ export default function EditarCarro() {
       setOrigem(carro.origem || '');
       setDescricao(carro.descricao || '');
       setProblemas(carro.problemas_atuais || '');
+      setInstagramUrl(carro.instagram_url || '');
       setVendaAtivo(carro.venda_ativo || false);
       setVendaPreco(carro.venda_preco ? formatCurrency(carro.venda_preco * 100) : '');
       setFotosAtuais(carro.fotos || []);
@@ -457,6 +459,7 @@ export default function EditarCarro() {
         origem,
         descricao,
         problemas_atuais: problemas,
+        instagram_url: instagramUrl,
         opcionais: selectedOpcionais,
         pecas_raras: selectedPecas,
         venda_ativo: vendaAtivo,
@@ -579,6 +582,16 @@ export default function EditarCarro() {
               <input type="text" value={cor} onChange={e => setCor(e.target.value)} />
             </FormGroup>
           </div>
+
+          <FormGroup>
+            <label>Link do Instagram do Projeto (Opcional)</label>
+            <input 
+              type="url" 
+              value={instagramUrl} 
+              onChange={e => setInstagramUrl(e.target.value)} 
+              placeholder="Ex: https://instagram.com/meugolfgti" 
+            />
+          </FormGroup>
 
           <FormGroup>
             <label>Descrição do Projeto (Histórico, Curiosidades)</label>

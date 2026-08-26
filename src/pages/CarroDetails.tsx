@@ -561,6 +561,29 @@ export default function CarroDetails() {
               </ActionButton>
             </ActionsBox>
 
+            {carro.instagram_url && (
+              <a 
+                href={carro.instagram_url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.5rem',
+                  background: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)',
+                  color: 'white',
+                  textDecoration: 'none',
+                  padding: '1rem',
+                  borderRadius: '12px',
+                  fontWeight: 'bold',
+                  fontSize: '1.1rem'
+                }}
+              >
+                <i className="fab fa-instagram" style={{ fontSize: '1.5rem' }}></i> Siga este projeto
+              </a>
+            )}
+
             {carro.venda_ativo && (
               <SaleBox>
                 <h4>À VENDA</h4>
