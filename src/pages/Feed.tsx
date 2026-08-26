@@ -499,6 +499,8 @@ export default function Feed() {
 
   const filteredFeed = useMemo(() => {
     if (!searchQuery.trim()) return feed;
+    if (searchQuery === 'type:car') return feed.filter(item => item.type === 'car');
+    if (searchQuery === 'type:post') return feed.filter(item => item.type === 'post');
     const q = searchQuery.toLowerCase();
     return feed.filter(item => {
       const matchUser = item.user.username.toLowerCase().includes(q) || item.user.nome_completo?.toLowerCase().includes(q);
@@ -521,11 +523,48 @@ export default function Feed() {
     <FeedContainer>
       <Header>
         <Title>Comunidade <span>MK3</span></Title>
+        <Link 
+          to="/minha-garagem" 
+          style={{
+            background: colors.primary,
+            color: 'white',
+            textDecoration: 'none',
+            padding: '0.6rem 1rem',
+            borderRadius: '6px',
+            fontWeight: 'bold',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}
+        >
+          <i className="fas fa-car"></i> Minha Garagem
+        </Link>
       </Header>
+
+      <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', overflowX: 'auto', paddingBottom: '0.5rem' }}>
+        <button 
+          onClick={() => setSearchQuery('')}
+          style={{ background: !searchQuery ? 'rgba(220, 38, 38, 0.2)' : '#111', border: `1px solid ${!searchQuery ? colors.primary : '#333'}`, color: !searchQuery ? colors.primary : 'white', padding: '0.5rem 1rem', borderRadius: '20px', cursor: 'pointer', whiteSpace: 'nowrap' }}
+        >
+          <i className="fas fa-layer-group"></i> Todos
+        </button>
+        <button 
+          onClick={() => setSearchQuery('type:car')}
+          style={{ background: searchQuery === 'type:car' ? 'rgba(220, 38, 38, 0.2)' : '#111', border: `1px solid ${searchQuery === 'type:car' ? colors.primary : '#333'}`, color: searchQuery === 'type:car' ? colors.primary : 'white', padding: '0.5rem 1rem', borderRadius: '20px', cursor: 'pointer', whiteSpace: 'nowrap' }}
+        >
+          <i className="fas fa-car"></i> Apenas Projetos
+        </button>
+        <button 
+          onClick={() => setSearchQuery('type:post')}
+          style={{ background: searchQuery === 'type:post' ? 'rgba(220, 38, 38, 0.2)' : '#111', border: `1px solid ${searchQuery === 'type:post' ? colors.primary : '#333'}`, color: searchQuery === 'type:post' ? colors.primary : 'white', padding: '0.5rem 1rem', borderRadius: '20px', cursor: 'pointer', whiteSpace: 'nowrap' }}
+        >
+          <i className="fas fa-comment"></i> Postagens
+        </button>
+      </div>
       
       <SearchBar 
         placeholder="🔍 Pesquisar por usuários, carros (ex: GTI, Azul) ou postagens..."
-        value={searchQuery}
+        value={searchQuery.startsWith('type:') ? '' : searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
 
