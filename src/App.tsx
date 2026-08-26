@@ -26,6 +26,7 @@ import EditarPerfil from './pages/EditarPerfil';
 import EditarCarro from './pages/EditarCarro';
 import PerfilPublico from './pages/PerfilPublico';
 import CarroDetails from './pages/CarroDetails';
+import GaleriaProjetos from './pages/GaleriaProjetos';
 import AdminConfig from './pages/admin/AdminConfig';
 import AdminProdutos from './pages/admin/AdminProdutos';
 import AdminProdutoForm from './pages/admin/AdminProdutoForm';
@@ -61,6 +62,7 @@ const AppContent: React.FC = () => {
           <Route path="/editar-perfil" element={<EditarPerfil />} />
           <Route path="/editar-carro/:id" element={<EditarCarro />} />
           <Route path="/carro/:id" element={<CarroDetails />} />
+          <Route path="/galeria" element={<GaleriaProjetos />} />
           <Route path="/u/:username" element={<PerfilPublico />} />
           <Route path="/admin/produtos" element={<AdminProdutos />} />
           <Route path="/admin/produtos/novo" element={<AdminProdutoForm />} />

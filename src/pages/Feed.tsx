@@ -3,12 +3,14 @@ import styled from 'styled-components';
 import { supabase } from '../lib/supabase';
 import { colors, media } from '../styles/GlobalStyles';
 import { Link, useNavigate } from 'react-router-dom';
+import CommunityLayout from '../components/CommunityLayout';
 
 interface FeedItem {
   id: string;
   type: 'post' | 'car';
   created_at: string;
   user: {
+    id: string;
     username: string;
     nome_completo: string;
     avatar_url: string;
@@ -20,7 +22,9 @@ interface FeedItem {
   carro?: {
     id: string;
     modelo: string;
-    ano: string;
+    ano?: string;
+    ano_fabricacao?: string;
+    ano_modelo?: string;
     cor: string;
     fotos: string[];
     origem?: string;
@@ -35,14 +39,82 @@ interface FeedItem {
   commentsCount?: number;
 }
 
-const FeedContainer = styled.div`
-  max-width: 800px;
+const PageLayout = styled.div`
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 1rem;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 2rem;
+  align-items: start;
   min-height: 80vh;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
 
   ${media.mobile} {
     padding: 1rem;
+  }
+`;
+
+const Sidebar = styled.aside`
+  position: sticky;
+  top: 90px;
+
+  @media (max-width: 900px) {
+    display: none;
+  }
+`;
+
+const SidebarTitle = styled.div`
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #555;
+  margin-bottom: 0.5rem;
+  padding: 0 0.5rem;
+`;
+
+const SidebarNav = styled.nav`
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+`;
+
+const SidebarLink = styled(Link)<{ $active?: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.85rem 1rem;
+  color: ${p => p.$active ? colors.primary : '#ccc'};
+  background: ${p => p.$active ? 'rgba(220,38,38,0.08)' : 'transparent'};
+  text-decoration: none;
+  border-left: 3px solid ${p => p.$active ? colors.primary : 'transparent'};
+  font-size: 0.92rem;
+  font-weight: ${p => p.$active ? '600' : '400'};
+  transition: all 0.2s;
+
+  &:hover {
+    background: rgba(255,255,255,0.04);
+    color: white;
+  }
+
+  i {
+    width: 20px;
+    text-align: center;
+    font-size: 1rem;
+  }
+`;
+
+const FeedContainer = styled.div`
+  width: 100%;
+  max-width: 800px;
+
+  @media (max-width: 900px) {
+    padding-bottom: 5rem; /* espaço para a barra mobile */
   }
 `;
 
@@ -345,6 +417,47 @@ const ActionButton = styled.button<{ $active?: boolean }>`
   }
 `;
 
+const MobileNavBar = styled.nav`
+  display: none;
+
+  @media (max-width: 900px) {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #0a0a0a;
+    border-top: 1px solid #222;
+    padding: 0.5rem 0;
+    z-index: 999;
+    justify-content: space-around;
+    align-items: center;
+  }
+`;
+
+const MobileNavItem = styled(Link)<{ $active?: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  text-decoration: none;
+  color: ${p => p.$active ? colors.primary : '#777'};
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  transition: all 0.2s;
+
+  i {
+    font-size: 1.3rem;
+  }
+
+  &:hover {
+    color: ${colors.primary};
+  }
+`;
+
 export default function Feed() {
   const [feed, setFeed] = useState<FeedItem[]>([]);
   const [newPost, setNewPost] = useState('');
@@ -366,7 +479,7 @@ export default function Feed() {
     
     const { data: postsData } = await supabase
       .from('mk3_posts')
-      .select('*, user:mk3_users(username, nome_completo, avatar_url)');
+      .select('*, user:mk3_users(id, username, nome_completo, avatar_url)');
 
     const { data: carsData } = await supabase
       .from('mk3_garagem')
@@ -392,7 +505,7 @@ export default function Feed() {
 
     if (carsData && usersData) {
       const formattedCars: FeedItem[] = carsData.map(c => {
-        const carUser = usersData.find(u => u.id === c.user_id) || { username: 'unknown', nome_completo: 'Desconhecido', avatar_url: '', telefone: '', cidade: '', estado: '' };
+        const carUser = usersData.find(u => u.id === c.user_id) || { id: '', username: 'unknown', nome_completo: 'Desconhecido', avatar_url: '', telefone: '', cidade: '', estado: '' };
         return {
           id: `car-${c.id}`,
           type: 'car',
@@ -401,7 +514,9 @@ export default function Feed() {
           carro: {
             id: c.id,
             modelo: c.modelo,
-            ano: c.ano,
+            ano: c.ano_fabricacao,
+            ano_fabricacao: c.ano_fabricacao,
+            ano_modelo: c.ano_modelo,
             cor: c.cor,
             fotos: c.fotos || [],
             origem: c.origem,
@@ -466,6 +581,14 @@ export default function Feed() {
         console.error(error);
         // Revert optimistic
         setFeed(feed.map(f => f.id === item.id ? { ...f, hasLiked: false, likesCount: (f.likesCount || 1) - 1 } : f));
+      } else if (session.user.id !== item.user.id) {
+        await supabase.from('mk3_notifications').insert({
+          user_id: item.user.id,
+          actor_id: session.user.id,
+          type: 'like',
+          item_type: item.type,
+          item_id: realItemId
+        });
       }
     }
   };
@@ -528,7 +651,7 @@ export default function Feed() {
       const matchCar = item.type === 'car' && (
         item.carro?.modelo.toLowerCase().includes(q) ||
         item.carro?.cor.toLowerCase().includes(q) ||
-        item.carro?.ano.includes(q)
+        (item.carro?.ano_fabricacao || item.carro?.ano || '').includes(q)
       );
       return matchUser || matchText || matchCar;
     });
@@ -540,7 +663,8 @@ export default function Feed() {
   };
 
   return (
-    <FeedContainer>
+    <CommunityLayout>
+      <FeedContainer>
       <Header>
         <Title>Comunidade <span>MK3</span></Title>
         <Link 
@@ -648,7 +772,7 @@ export default function Feed() {
                     )}
                     <CarSpecs>
                       <span><i className="fas fa-car"></i> Golf {item.carro?.modelo}</span>
-                      <span><i className="far fa-calendar-alt"></i> {item.carro?.ano}</span>
+                      <span><i className="far fa-calendar-alt"></i> {item.carro?.ano_fabricacao || item.carro?.ano}{item.carro?.ano_modelo ? `/${item.carro.ano_modelo}` : ''}</span>
                       <span><i className="fas fa-palette"></i> {item.carro?.cor}</span>
                       {item.carro?.origem && <span><i className="fas fa-globe"></i> {item.carro.origem}</span>}
                     </CarSpecs>
@@ -704,5 +828,6 @@ export default function Feed() {
         ))
       )}
     </FeedContainer>
+    </CommunityLayout>
   );
 }

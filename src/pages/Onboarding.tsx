@@ -610,11 +610,11 @@ export default function Onboarding() {
               <PlanCard>
                 <h3>Entusiasta (Grátis)</h3>
                 <div className="price">R$ 0 <span>/mês</span></div>
-                <ul>
+                <ul className="features">
                   <li><i className="fas fa-check"></i> Acesso à comunidade</li>
                   <li><i className="fas fa-check"></i> 1 Carro na Garagem</li>
-                  <li><i className="fas fa-check"></i> Até 2 fotos por carro</li>
-                  <li><i className="fas fa-times" style={{color: '#555'}}></i> Selo Exclusivo</li>
+                  <li><i className="fas fa-check"></i> Até 3 fotos por carro</li>
+                  <li className="disabled"><i className="fas fa-times"></i> Selo Exclusivo</li>
                 </ul>
                 <Button onClick={handleFreePlan} style={{ background: '#333' }}>
                   Continuar Grátis
@@ -625,10 +625,10 @@ export default function Onboarding() {
                 <PopularBadge>MAIS ESCOLHIDO</PopularBadge>
                 <h3>Membro Premium</h3>
                 <div className="price">R$ {premiumPrice} <span>/mês</span></div>
-                <ul>
+                <ul className="features">
                   <li><i className="fas fa-check"></i> Acesso à comunidade</li>
                   <li><i className="fas fa-check"></i> Carros ilimitados</li>
-                  <li><i className="fas fa-check"></i> Até 10 fotos por carro</li>
+                  <li><i className="fas fa-check"></i> Até 12 fotos por carro</li>
                   <li><i className="fas fa-check"></i> Venda seus carros (Anúncios)</li>
                   <li><i className="fas fa-check"></i> Selo Exclusivo no Perfil</li>
                   <li><i className="fas fa-check"></i> Suporte Prioritário</li>

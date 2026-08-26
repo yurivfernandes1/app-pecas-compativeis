@@ -446,6 +446,16 @@ export default function CarroDetails() {
       setHasLiked(true);
       setLikes(prev => prev + 1);
       await supabase.from('mk3_likes').insert({ user_id: session.user.id, item_type: 'car', item_id: id });
+      
+      if (owner && session.user.id !== owner.id) {
+        await supabase.from('mk3_notifications').insert({
+          user_id: owner.id,
+          actor_id: session.user.id,
+          type: 'like',
+          item_type: 'car',
+          item_id: id
+        });
+      }
     }
   };
 
@@ -465,6 +475,17 @@ export default function CarroDetails() {
       console.error(error);
     } else {
       setNewComment('');
+      
+      if (owner && session.user.id !== owner.id) {
+        await supabase.from('mk3_notifications').insert({
+          user_id: owner.id,
+          actor_id: session.user.id,
+          type: 'comment',
+          item_type: 'car',
+          item_id: id
+        });
+      }
+      
       await fetchLikesAndComments();
     }
     setPostingComment(false);
@@ -523,7 +544,7 @@ export default function CarroDetails() {
             <SpecsGrid>
               <SpecItem>
                 <div className="label">Ano Fab/Mod</div>
-                <div className="value">{carro.ano_fabricacao || carro.ano || '-'}{carro.ano_modelo ? `/${carro.ano_modelo}` : ''}</div>
+                <div className="value">{carro.ano_fabricacao || '-'}{carro.ano_modelo ? `/${carro.ano_modelo}` : ''}</div>
               </SpecItem>
               <SpecItem>
                 <div className="label">Cor</div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { supabase } from '../lib/supabase';
 import { colors } from '../styles/GlobalStyles';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const BellContainer = styled.div`
   position: relative;
@@ -189,7 +189,7 @@ const NotificationBell: React.FC = () => {
     if (!session) return;
 
     // A query requires mapping actor_id to mk3_users
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from('mk3_notifications')
       .select('*, actor:mk3_users!actor_id(username, nome_completo, avatar_url)')
       .eq('user_id', session.user.id)
