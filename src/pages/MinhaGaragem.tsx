@@ -282,7 +282,7 @@ export default function MinhaGaragem() {
           {canAddCar ? (
             <button onClick={() => navigate('/onboarding')}><i className="fas fa-plus"></i> Novo Carro</button>
           ) : (
-            <button onClick={() => alert('Usuários Entusiastas (Grátis) podem adicionar apenas 1 carro. Assine o Premium para ter carros ilimitados!')}>
+            <button onClick={() => navigate('/onboarding')}>
               <i className="fas fa-lock"></i> Novo Carro (Premium)
             </button>
           )}

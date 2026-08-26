@@ -342,8 +342,7 @@ export default function Onboarding() {
         if (!isUserPremium) {
           const { count } = await supabase.from('mk3_garagem').select('*', { count: 'exact', head: true }).eq('user_id', session.user.id);
           if (count && count >= 1) {
-            alert('Você atingiu o limite de carros do plano Grátis. Assine o Premium para adicionar mais!');
-            navigate('/minha-garagem');
+            setStep(2);
           }
         }
       }
