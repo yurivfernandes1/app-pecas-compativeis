@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { supabase } from '../lib/supabase';
-import { colors, media } from '../styles/GlobalStyles';
+import { colors } from '../styles/GlobalStyles';
 import { Link, useNavigate } from 'react-router-dom';
 import CommunityLayout from '../components/CommunityLayout';
 
@@ -38,76 +38,6 @@ interface FeedItem {
   hasLiked?: boolean;
   commentsCount?: number;
 }
-
-const PageLayout = styled.div`
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: 2rem;
-  align-items: start;
-  min-height: 80vh;
-
-  @media (max-width: 900px) {
-    grid-template-columns: 1fr;
-  }
-
-  ${media.mobile} {
-    padding: 1rem;
-  }
-`;
-
-const Sidebar = styled.aside`
-  position: sticky;
-  top: 90px;
-
-  @media (max-width: 900px) {
-    display: none;
-  }
-`;
-
-const SidebarTitle = styled.div`
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #555;
-  margin-bottom: 0.5rem;
-  padding: 0 0.5rem;
-`;
-
-const SidebarNav = styled.nav`
-  background: #111;
-  border: 1px solid #222;
-  border-radius: 12px;
-  overflow: hidden;
-  margin-bottom: 1.5rem;
-`;
-
-const SidebarLink = styled(Link)<{ $active?: boolean }>`
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  padding: 0.85rem 1rem;
-  color: ${p => p.$active ? colors.primary : '#ccc'};
-  background: ${p => p.$active ? 'rgba(220,38,38,0.08)' : 'transparent'};
-  text-decoration: none;
-  border-left: 3px solid ${p => p.$active ? colors.primary : 'transparent'};
-  font-size: 0.92rem;
-  font-weight: ${p => p.$active ? '600' : '400'};
-  transition: all 0.2s;
-
-  &:hover {
-    background: rgba(255,255,255,0.04);
-    color: white;
-  }
-
-  i {
-    width: 20px;
-    text-align: center;
-    font-size: 1rem;
-  }
-`;
 
 const FeedContainer = styled.div`
   width: 100%;
@@ -414,47 +344,6 @@ const ActionButton = styled.button<{ $active?: boolean }>`
 
   i {
     font-size: 1.1rem;
-  }
-`;
-
-const MobileNavBar = styled.nav`
-  display: none;
-
-  @media (max-width: 900px) {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #0a0a0a;
-    border-top: 1px solid #222;
-    padding: 0.5rem 0;
-    z-index: 999;
-    justify-content: space-around;
-    align-items: center;
-  }
-`;
-
-const MobileNavItem = styled(Link)<{ $active?: boolean }>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.2rem;
-  text-decoration: none;
-  color: ${p => p.$active ? colors.primary : '#777'};
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  padding: 0.4rem 0.8rem;
-  border-radius: 8px;
-  transition: all 0.2s;
-
-  i {
-    font-size: 1.3rem;
-  }
-
-  &:hover {
-    color: ${colors.primary};
   }
 `;
 

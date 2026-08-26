@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { supabase } from '../lib/supabase';
-import { colors, media } from '../styles/GlobalStyles';
+import { colors } from '../styles/GlobalStyles';
 import { Link, useNavigate } from 'react-router-dom';
 import CustomSelect from '../components/CustomSelect';
 import CommunityLayout from '../components/CommunityLayout';
