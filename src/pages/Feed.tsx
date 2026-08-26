@@ -216,6 +216,14 @@ const CarGallery = styled.div`
   }
 `;
 
+const CarClickableArea = styled.div`
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  &:hover {
+    opacity: 0.9;
+  }
+`;
+
 const CarSpecs = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -625,57 +633,54 @@ export default function Feed() {
                   <SystemMessage>
                     <i className="fas fa-car-side"></i> {item.user.nome_completo || `@${item.user.username}`} adicionou um novo projeto!
                   </SystemMessage>
-                  {item.carro?.fotos && item.carro.fotos.length > 0 ? (
-                    <CarGallery>
-                      <img src={item.carro.fotos[0]} alt={`Golf ${item.carro.modelo}`} />
-                    </CarGallery>
-                  ) : (
-                    <CarGallery>
-                      <div style={{ color: '#555', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%' }}>
-                        <i className="fas fa-camera" style={{ fontSize: '3rem', marginBottom: '1rem' }}></i>
-                        <span>Sem foto</span>
-                      </div>
-                    </CarGallery>
-                  )}
-                  <CarSpecs>
-                    <span><i className="fas fa-car"></i> Golf {item.carro?.modelo}</span>
-                    <span><i className="far fa-calendar-alt"></i> {item.carro?.ano}</span>
-                    <span><i className="fas fa-palette"></i> {item.carro?.cor}</span>
-                    {item.carro?.origem && <span><i className="fas fa-globe"></i> {item.carro.origem}</span>}
-                  </CarSpecs>
+                  <CarClickableArea onClick={() => navigate(`/carro/${item.carro?.id}`)}>
+                    {item.carro?.fotos && item.carro.fotos.length > 0 ? (
+                      <CarGallery>
+                        <img src={item.carro.fotos[0]} alt={`Golf ${item.carro.modelo}`} />
+                      </CarGallery>
+                    ) : (
+                      <CarGallery>
+                        <div style={{ color: '#555', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%' }}>
+                          <i className="fas fa-camera" style={{ fontSize: '3rem', marginBottom: '1rem' }}></i>
+                          <span>Sem foto</span>
+                        </div>
+                      </CarGallery>
+                    )}
+                    <CarSpecs>
+                      <span><i className="fas fa-car"></i> Golf {item.carro?.modelo}</span>
+                      <span><i className="far fa-calendar-alt"></i> {item.carro?.ano}</span>
+                      <span><i className="fas fa-palette"></i> {item.carro?.cor}</span>
+                      {item.carro?.origem && <span><i className="fas fa-globe"></i> {item.carro.origem}</span>}
+                    </CarSpecs>
 
-                  {((item.carro?.opcionais && item.carro.opcionais.length > 0) || (item.carro?.pecas_raras && item.carro.pecas_raras.length > 0)) && (
-                    <TagsContainer>
-                      {item.carro?.pecas_raras?.map((p: string) => <Tag key={p} $type="peca"><i className="fas fa-gem"></i> {p}</Tag>)}
-                      {item.carro?.opcionais?.map((o: string) => <Tag key={o}>{o}</Tag>)}
-                    </TagsContainer>
-                  )}
+                    {((item.carro?.opcionais && item.carro.opcionais.length > 0) || (item.carro?.pecas_raras && item.carro.pecas_raras.length > 0)) && (
+                      <TagsContainer>
+                        {item.carro?.pecas_raras?.map((p: string) => <Tag key={p} $type="peca"><i className="fas fa-gem"></i> {p}</Tag>)}
+                        {item.carro?.opcionais?.map((o: string) => <Tag key={o}>{o}</Tag>)}
+                      </TagsContainer>
+                    )}
 
-                  {item.carro?.problemas_atuais && (
-                    <ProblemasBox>
-                      <h4><i className="fas fa-wrench"></i> Precisa de Ajuda</h4>
-                      <p>{item.carro.problemas_atuais}</p>
-                    </ProblemasBox>
-                  )}
+                    {item.carro?.problemas_atuais && (
+                      <ProblemasBox>
+                        <h4><i className="fas fa-wrench"></i> Precisa de Ajuda</h4>
+                        <p>{item.carro.problemas_atuais}</p>
+                      </ProblemasBox>
+                    )}
 
-                  {item.carro?.venda_ativo && (
-                    <SaleBadge>
-                      <h4><i className="fas fa-tags"></i> À Venda</h4>
-                      <div className="price">
-                        {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.carro.venda_preco || 0)}
-                      </div>
-                      <div className="contact">
-                        {item.user?.cidade && item.user?.estado && (
-                          <span><i className="fas fa-map-marker-alt"></i> {item.user.cidade} - {item.user.estado}</span>
-                        )}
-                        {item.user?.telefone && (
-                          <a href={`https://wa.me/${item.user.telefone.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer">
-                            <i className="fab fa-whatsapp"></i> Falar com dono
-                          </a>
-                        )}
-                      </div>
-                    </SaleBadge>
-                  )}
+                    {item.carro?.venda_ativo && (
+                      <SaleBadge>
+                        <h4><i className="fas fa-tags"></i> À Venda</h4>
+                        <div className="price">
+                          {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.carro.venda_preco || 0)}
+                        </div>
+                        <div className="contact">
+                          {item.user?.cidade && item.user?.estado && (
+                            <span><i className="fas fa-map-marker-alt"></i> {item.user.cidade} - {item.user.estado}</span>
+                          )}
+                        </div>
+                      </SaleBadge>
+                    )}
+                  </CarClickableArea>
                 </>
               )}
               

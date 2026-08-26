@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { supabase } from '../lib/supabase';
 import { useNavigate, useParams } from 'react-router-dom';
 import { colors, media } from '../styles/GlobalStyles';
+import CustomSelect from '../components/CustomSelect';
 
 const PageWrapper = styled.div`
   min-height: 100vh;
@@ -554,21 +555,22 @@ export default function EditarCarro() {
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
             <FormGroup style={{ flex: '1 1 200px' }}>
               <label>Versão / Modelo</label>
-              <select required value={modelo} onChange={e => setModelo(e.target.value)}>
-                {modelos.map(m => (
-                  <option key={m.value} value={m.value}>{m.label}</option>
-                ))}
-              </select>
+              <CustomSelect 
+                options={modelos}
+                value={modelo}
+                onChange={(val) => setModelo(val)}
+                placeholder="Selecione o modelo"
+              />
             </FormGroup>
 
             <FormGroup style={{ flex: '1 1 200px' }}>
               <label>Origem de Fabricação</label>
-              <select value={origem} onChange={e => setOrigem(e.target.value)}>
-                <option value="">Desconhecida</option>
-                {origens.map(o => (
-                  <option key={o} value={o}>{o}</option>
-                ))}
-              </select>
+              <CustomSelect 
+                options={[{value: '', label: 'Desconhecida'}, ...origens.map(o => ({value: o, label: o}))]}
+                value={origem}
+                onChange={(val) => setOrigem(val)}
+                placeholder="Selecione a origem"
+              />
             </FormGroup>
           </div>
 
