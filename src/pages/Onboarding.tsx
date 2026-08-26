@@ -456,9 +456,23 @@ export default function Onboarding() {
     navigate('/minha-garagem');
   };
 
-  const handlePremiumPlan = () => {
-    alert('Integração com Stripe será adicionada aqui! Redirecionando para a garagem por enquanto...');
-    navigate('/minha-garagem');
+  const handlePremiumPlan = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('create-checkout-session');
+      if (error) {
+        throw error;
+      }
+      if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error('Falha ao gerar o link de pagamento.');
+      }
+    } catch (err: any) {
+      console.error(err);
+      alert('Erro ao redirecionar para o pagamento: ' + err.message);
+      setLoading(false);
+    }
   };
 
   return (

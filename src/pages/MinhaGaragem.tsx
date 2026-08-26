@@ -208,6 +208,14 @@ export default function MinhaGaragem() {
 
   useEffect(() => {
     fetchGaragem();
+    
+    // Check for Stripe success redirect
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'true') {
+      alert('Pagamento aprovado! Bem-vindo ao Clube Premium! 🚀🏆');
+      // Clean up the URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -229,6 +237,12 @@ export default function MinhaGaragem() {
       .select('*')
       .eq('user_id', session.user.id)
       .order('created_at', { ascending: false });
+
+    // If we just returned from a successful payment, optimistically show premium
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'true' && userProfile) {
+      userProfile.is_premium = true;
+    }
 
     setProfile(userProfile);
     setCarros(userCarros || []);
