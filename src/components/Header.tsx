@@ -529,6 +529,39 @@ const Header: React.FC = () => {
                 </MobileNavLink>
               </li>
             ))}
+            <li>
+              <MobileNavLink 
+                to="/minha-garagem" 
+                $isActive={isActive('/minha-garagem')}
+                onClick={handleLinkClick}
+              >
+                Minha Garagem
+              </MobileNavLink>
+            </li>
+            {user && (
+              <>
+                <li>
+                  <MobileNavLink 
+                    to="/feed" 
+                    $isActive={isActive('/feed')}
+                    onClick={handleLinkClick}
+                  >
+                    Comunidade
+                  </MobileNavLink>
+                </li>
+                {profile?.is_admin && (
+                  <li>
+                    <MobileNavLink 
+                      to="/admin/produtos" 
+                      $isActive={isActive('/admin/produtos')}
+                      onClick={handleLinkClick}
+                    >
+                      Configurações
+                    </MobileNavLink>
+                  </li>
+                )}
+              </>
+            )}
             {!user && (
               <>
                 <li>
@@ -563,13 +596,13 @@ const Header: React.FC = () => {
                     display: 'block',
                     width: '100%',
                     textAlign: 'left',
-                    padding: '1rem',
+                    padding: '1rem 2rem',
                     color: '#ff4444',
                     background: 'transparent',
                     border: 'none',
-                    borderBottom: '1px solid #222',
+                    borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
                     fontSize: '1rem',
-                    fontWeight: 'bold',
+                    fontWeight: 500,
                     cursor: 'pointer'
                   }}
                 >
