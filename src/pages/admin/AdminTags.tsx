@@ -24,6 +24,7 @@ const Title = styled.h2`
 
 const FlexRow = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
   
   @media (max-width: 768px) {
@@ -33,6 +34,7 @@ const FlexRow = styled.div`
 
 const Column = styled.div`
   flex: 1;
+  min-width: 300px;
   background: #1a1a1a;
   padding: 1.5rem;
   border-radius: 8px;
@@ -107,9 +109,11 @@ export default function AdminTags() {
   const [opcionais, setOpcionais] = useState<any[]>([]);
   const [pecasRaras, setPecasRaras] = useState<any[]>([]);
   const [modMotor, setModMotor] = useState<any[]>([]);
+  const [rodas, setRodas] = useState<any[]>([]);
   const [newOpcional, setNewOpcional] = useState('');
   const [newPeca, setNewPeca] = useState('');
   const [newModMotor, setNewModMotor] = useState('');
+  const [newRoda, setNewRoda] = useState('');
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -138,11 +142,12 @@ export default function AdminTags() {
       setOpcionais(data.filter(t => t.tipo === 'opcional'));
       setPecasRaras(data.filter(t => t.tipo === 'peca_rara'));
       setModMotor(data.filter(t => t.tipo === 'mod_motor'));
+      setRodas(data.filter(t => t.tipo === 'roda'));
     }
     setLoading(false);
   };
 
-  const handleAdd = async (e: React.FormEvent, tipo: 'opcional' | 'peca_rara' | 'mod_motor', value: string, setter: (s: string) => void) => {
+  const handleAdd = async (e: React.FormEvent, tipo: 'opcional' | 'peca_rara' | 'mod_motor' | 'roda', value: string, setter: (s: string) => void) => {
     e.preventDefault();
     if (!value.trim()) return;
 
@@ -237,6 +242,32 @@ export default function AdminTags() {
 
               <TagList>
                 {modMotor.map(tag => (
+                  <li key={tag.id}>
+                    {tag.nome}
+                    <button onClick={() => handleDelete(tag.id)} title="Remover">
+                      <i className="fas fa-trash"></i>
+                    </button>
+                  </li>
+                ))}
+              </TagList>
+            </Column>
+
+            {/* RODAS */}
+            <Column>
+              <h3 style={{ color: 'white', marginBottom: '1rem' }}><i className="fas fa-circle-notch"></i> Rodas</h3>
+              
+              <FormRow onSubmit={(e) => handleAdd(e, 'roda', newRoda, setNewRoda)}>
+                <input 
+                  type="text" 
+                  placeholder="Novo Modelo (Ex: BBS RS)" 
+                  value={newRoda}
+                  onChange={e => setNewRoda(e.target.value)}
+                />
+                <button type="submit"><i className="fas fa-plus"></i></button>
+              </FormRow>
+
+              <TagList>
+                {rodas.map(tag => (
                   <li key={tag.id}>
                     {tag.nome}
                     <button onClick={() => handleDelete(tag.id)} title="Remover">

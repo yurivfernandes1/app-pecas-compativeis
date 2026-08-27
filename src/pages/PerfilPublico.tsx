@@ -457,9 +457,16 @@ export default function PerfilPublico() {
                       
                       <CarSpecs>
                         <span><i className="fas fa-car"></i> Golf {item.carro?.modelo}</span>
-                        <span><i className="far fa-calendar-alt"></i> {item.carro?.ano_fabricacao || item.carro?.ano}</span>
+                        <span><i className="far fa-calendar-alt"></i> {item.carro?.ano_fabricacao || item.carro?.ano}{item.carro?.ano_modelo ? `/${item.carro.ano_modelo}` : ''}</span>
                         <span><i className="fas fa-palette"></i> {item.carro?.cor}</span>
                         {item.carro?.origem && <span><i className="fas fa-globe"></i> {item.carro.origem}</span>}
+                        {(item.carro?.aro_roda || item.carro?.modelo_roda) && (
+                          <span>
+                            <i className="fas fa-circle-notch"></i> {item.carro.aro_roda ? `Aro ${item.carro.aro_roda}` : ''}
+                            {item.carro.aro_roda && item.carro.modelo_roda ? ' - ' : ''}
+                            {item.carro.modelo_roda || ''}
+                          </span>
+                        )}
                       </CarSpecs>
 
                       {item.carro?.venda_ativo && (

@@ -329,6 +329,12 @@ export default function EditarCarro() {
   const [selectedPecas, setSelectedPecas] = useState<string[]>([]);
   const [selectedModMotor, setSelectedModMotor] = useState<string[]>([]);
 
+  // Rodas
+  const [availableRodas, setAvailableRodas] = useState<any[]>([]);
+  const [aroRoda, setAroRoda] = useState('');
+  const [modeloRoda, setModeloRoda] = useState('');
+  const [customRoda, setCustomRoda] = useState('');
+
   // Modificações Motor e Suspensão
   const [modificacaoMotor, setModificacaoMotor] = useState(false);
   const [modificacaoSuspensao, setModificacaoSuspensao] = useState(false);
@@ -390,6 +396,7 @@ export default function EditarCarro() {
       setAvailableOpcionais(tags.filter(t => t.tipo === 'opcional'));
       setAvailablePecas(tags.filter(t => t.tipo === 'peca_rara'));
       setAvailableModMotor(tags.filter(t => t.tipo === 'mod_motor'));
+      setAvailableRodas(tags.filter(t => t.tipo === 'roda'));
     }
 
     // Buscar carro
@@ -406,6 +413,17 @@ export default function EditarCarro() {
       setVendaAtivo(carro.venda_ativo || false);
       setVendaPreco(carro.venda_preco ? formatCurrency(carro.venda_preco * 100) : '');
       setFotosAtuais(carro.fotos || []);
+      
+      setAroRoda(carro.aro_roda || '');
+      const fetchedTags = tags || [];
+      const rodaList = fetchedTags.filter(t => t.tipo === 'roda').map(r => r.nome);
+      if (carro.modelo_roda && !rodaList.includes(carro.modelo_roda)) {
+         setModeloRoda('Outros');
+         setCustomRoda(carro.modelo_roda);
+      } else {
+         setModeloRoda(carro.modelo_roda || '');
+      }
+
       setSelectedOpcionais(carro.opcionais || []);
       setSelectedPecas(carro.pecas_raras || []);
       setModificacaoMotor(carro.modificacao_motor || false);
@@ -501,6 +519,8 @@ export default function EditarCarro() {
         venda_ativo: vendaAtivo,
         venda_preco: vendaPreco ? parseCurrency(vendaPreco) : null,
         fotos: finalPhotoUrls,
+        aro_roda: aroRoda,
+        modelo_roda: modeloRoda === 'Outros' ? customRoda : modeloRoda,
         modificacao_motor: modificacaoMotor,
         modificacoes_motor: selectedModMotor,
         modificacao_suspensao: modificacaoSuspensao,
@@ -564,6 +584,16 @@ export default function EditarCarro() {
                   <PhotoThumbnail key={url}>
                     <img src={url} alt={`Foto atual ${i}`} style={{ objectPosition: getObjectPosition(url) }} />
                     <div style={{ position: 'absolute', top: 5, left: 5, display: 'flex', gap: '5px' }}>
+                      <button type="button" onClick={() => {
+                        setFotosAtuais(prev => {
+                          const newArr = [...prev];
+                          const el = newArr.splice(i, 1)[0];
+                          newArr.unshift(el);
+                          return newArr;
+                        });
+                      }} style={{ background: i === 0 ? colors.primary : 'rgba(0,0,0,0.7)', border: 'none', color: 'white', padding: '5px', borderRadius: '4px', cursor: 'pointer', zIndex: 10 }}>
+                        {i === 0 ? '⭐ Capa' : 'Definir Capa'}
+                      </button>
                       <button type="button" onClick={() => setCropModalData({ isAtuais: true, index: i, url })} style={{ background: 'rgba(0,0,0,0.7)', border: 'none', color: 'white', padding: '5px', borderRadius: '4px', cursor: 'pointer', zIndex: 10 }}>
                         <i className="fas fa-crop-alt"></i> Ajustar
                       </button>
@@ -579,6 +609,16 @@ export default function EditarCarro() {
                   <PhotoThumbnail key={photo.file.name + i}>
                     <img src={url} alt={`Nova foto ${i}`} style={{ objectPosition: photo.pos.replace(',', '% ') + '%' }} />
                     <div style={{ position: 'absolute', top: 5, left: 5, display: 'flex', gap: '5px' }}>
+                      <button type="button" onClick={() => {
+                        setNovasFotos(prev => {
+                          const newArr = [...prev];
+                          const el = newArr.splice(i, 1)[0];
+                          newArr.unshift(el);
+                          return newArr;
+                        });
+                      }} style={{ background: (fotosAtuais.length === 0 && i === 0) ? colors.primary : 'rgba(0,0,0,0.7)', border: 'none', color: 'white', padding: '5px', borderRadius: '4px', cursor: 'pointer', zIndex: 10 }}>
+                        {(fotosAtuais.length === 0 && i === 0) ? '⭐ Capa' : 'Definir Capa'}
+                      </button>
                       <button type="button" onClick={() => setCropModalData({ isAtuais: false, index: i, url })} style={{ background: 'rgba(0,0,0,0.7)', border: 'none', color: 'white', padding: '5px', borderRadius: '4px', cursor: 'pointer', zIndex: 10 }}>
                         <i className="fas fa-crop-alt"></i> Ajustar
                       </button>
@@ -678,6 +718,49 @@ export default function EditarCarro() {
               placeholder="Ex: Carro morrendo na lenta, marcha lenta oscilando..."
             />
           </FormGroup>
+
+          <details style={{ margin: '2rem 0', width: '100%', background: '#1a1a1a', padding: '1.5rem', borderRadius: '12px', border: '1px solid #333' }}>
+            <summary style={{ color: 'white', cursor: 'pointer', outline: 'none', fontWeight: 'bold', fontSize: '1.1rem' }}>
+              Rodas
+            </summary>
+            <div style={{ paddingTop: '1.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              <FormGroup style={{ flex: 1, minWidth: '200px', marginBottom: 0 }}>
+                <label>Tamanho do Aro</label>
+                <CustomSelect 
+                  value={aroRoda} 
+                  onChange={val => setAroRoda(val)}
+                  placeholder="Selecione o aro"
+                  options={[14, 15, 16, 17, 18, 19, 20].map(aro => ({ label: `${aro}"`, value: String(aro) }))}
+                />
+              </FormGroup>
+              <FormGroup style={{ flex: 2, minWidth: '200px', marginBottom: 0 }}>
+                <label>Modelo da Roda</label>
+                <CustomSelect 
+                  value={modeloRoda} 
+                  onChange={val => {
+                    setModeloRoda(val);
+                    if (val !== 'Outros') setCustomRoda('');
+                  }}
+                  placeholder="Selecione o modelo"
+                  options={[
+                    ...availableRodas.map(roda => ({ label: roda.nome, value: roda.nome })),
+                    { label: 'Outros (Digitar)', value: 'Outros' }
+                  ]}
+                />
+              </FormGroup>
+              {modeloRoda === 'Outros' && (
+                <FormGroup style={{ width: '100%', marginTop: '1rem', marginBottom: 0 }}>
+                  <label>Qual é o modelo da roda?</label>
+                  <input 
+                    type="text" 
+                    value={customRoda} 
+                    onChange={e => setCustomRoda(e.target.value)} 
+                    placeholder="Ex: TSW Nurburgring" 
+                  />
+                </FormGroup>
+              )}
+            </div>
+          </details>
 
           {/* OPCIONAIS E PEÇAS RARAS */}
           <details style={{ margin: '2rem 0', width: '100%', background: '#1a1a1a', padding: '1.5rem', borderRadius: '12px', border: '1px solid #333' }}>

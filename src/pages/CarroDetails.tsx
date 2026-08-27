@@ -623,6 +623,16 @@ export default function CarroDetails() {
                 <div className="label">Origem</div>
                 <div className="value">{carro.origem || 'Desconhecida'}</div>
               </SpecItem>
+              {(carro.aro_roda || carro.modelo_roda) && (
+                <SpecItem>
+                  <div className="label">Rodas</div>
+                  <div className="value">
+                    {carro.aro_roda ? `Aro ${carro.aro_roda}` : ''}
+                    {carro.aro_roda && carro.modelo_roda ? ' - ' : ''}
+                    {carro.modelo_roda || ''}
+                  </div>
+                </SpecItem>
+              )}
             </SpecsGrid>
 
             {carro.descricao && (

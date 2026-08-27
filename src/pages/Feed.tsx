@@ -34,6 +34,8 @@ interface FeedItem {
     problemas_atuais?: string;
     venda_ativo?: boolean;
     venda_preco?: number;
+    aro_roda?: string;
+    modelo_roda?: string;
   };
   likesCount?: number;
   hasLiked?: boolean;
@@ -652,6 +654,13 @@ export default function Feed() {
                       <span><i className="far fa-calendar-alt"></i> {item.carro?.ano_fabricacao || item.carro?.ano}{item.carro?.ano_modelo ? `/${item.carro.ano_modelo}` : ''}</span>
                       <span><i className="fas fa-palette"></i> {item.carro?.cor}</span>
                       {item.carro?.origem && <span><i className="fas fa-globe"></i> {item.carro.origem}</span>}
+                      {(item.carro?.aro_roda || item.carro?.modelo_roda) && (
+                        <span>
+                          <i className="fas fa-circle-notch"></i> {item.carro.aro_roda ? `Aro ${item.carro.aro_roda}` : ''}
+                          {item.carro.aro_roda && item.carro.modelo_roda ? ' - ' : ''}
+                          {item.carro.modelo_roda || ''}
+                        </span>
+                      )}
                     </CarSpecs>
 
                     {((item.carro?.opcionais && item.carro.opcionais.length > 0) || (item.carro?.pecas_raras && item.carro.pecas_raras.length > 0)) && (
