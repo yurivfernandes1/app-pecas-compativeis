@@ -723,7 +723,8 @@ export default function EditarCarro() {
           </FormGroup>
 
           <details style={{ margin: '2rem 0', width: '100%', background: '#1a1a1a', padding: '1.5rem', borderRadius: '12px', border: '1px solid #333' }}>
-            <summary style={{ color: 'white', cursor: 'pointer', outline: 'none', fontWeight: 'bold', fontSize: '1.1rem' }}>
+            <summary style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'white', cursor: 'pointer', outline: 'none', fontWeight: 'bold', fontSize: '1.1rem' }}>
+              <i className="fas fa-chevron-down" style={{ fontSize: '0.9rem', color: '#888' }}></i>
               Rodas
             </summary>
             <div style={{ paddingTop: '1.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
@@ -767,7 +768,8 @@ export default function EditarCarro() {
 
           {/* OPCIONAIS E PEÇAS RARAS */}
           <details style={{ margin: '2rem 0', width: '100%', background: '#1a1a1a', padding: '1.5rem', borderRadius: '12px', border: '1px solid #333' }}>
-            <summary style={{ color: 'white', cursor: 'pointer', outline: 'none', fontWeight: 'bold', fontSize: '1.1rem' }}>
+            <summary style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'white', cursor: 'pointer', outline: 'none', fontWeight: 'bold', fontSize: '1.1rem' }}>
+              <i className="fas fa-chevron-down" style={{ fontSize: '0.9rem', color: '#888' }}></i>
               Opcionais
             </summary>
             <div style={{ paddingTop: '1.5rem' }}>
@@ -812,7 +814,10 @@ export default function EditarCarro() {
 
           <details style={{ margin: '2rem 0', width: '100%', background: '#1a1a1a', padding: '1.5rem', borderRadius: '12px', border: '1px solid #333' }}>
             <summary style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', outline: 'none', fontWeight: 'bold', fontSize: '1.1rem', color: 'white' }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>Modificações de Motor</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <i className="fas fa-chevron-down" style={{ fontSize: '0.9rem', color: '#888' }}></i>
+                Modificações de Motor
+              </span>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', color: '#ccc', fontWeight: 'normal', fontSize: '0.9rem' }} onClick={e => e.stopPropagation()}>
                   <input 
@@ -858,7 +863,10 @@ export default function EditarCarro() {
 
           <details style={{ margin: '2rem 0', width: '100%', background: '#1a1a1a', padding: '1.5rem', borderRadius: '12px', border: '1px solid #333' }}>
             <summary style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', outline: 'none', fontWeight: 'bold', fontSize: '1.1rem', color: 'white' }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>Modificações de Suspensão</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <i className="fas fa-chevron-down" style={{ fontSize: '0.9rem', color: '#888' }}></i>
+                Modificações de Suspensão
+              </span>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', color: '#ccc', fontWeight: 'normal', fontSize: '0.9rem' }} onClick={e => e.stopPropagation()}>
                   <input 
