@@ -567,8 +567,6 @@ export default function CarroDetails() {
   if (!carro) return null;
 
   const fotos = carro.fotos || [];
-  const mainPhoto = fotos[0] || 'https://raw.githubusercontent.com/yurivfernandes1/app-pecas-compativeis/refs/heads/main/logoMK3.png';
-  const subPhotos = fotos.slice(1, 3); // take next 2
 
   return (
     <CommunityLayout>

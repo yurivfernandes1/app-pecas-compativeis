@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase';
 import { useNavigate, Link } from 'react-router-dom';
 import { colors } from '../styles/GlobalStyles';
 import { AsYouType, CountryCode } from 'libphonenumber-js';
+import imageCompression from 'browser-image-compression';
 
 const PageWrapper = styled.div`
   min-height: 100vh;
@@ -505,15 +506,25 @@ export default function Cadastro() {
     if (session) {
       // Se tiver avatar, faz o upload (opcional)
       if (avatarFile) {
-        const fileExt = avatarFile.name.split('.').pop();
-        const fileName = `${session.user.id}-${Math.random()}.${fileExt}`;
-        const { error: uploadError, data } = await supabase.storage
-          .from('avatars')
-          .upload(fileName, avatarFile);
-        
-        if (!uploadError && data) {
-          const { data: publicUrlData } = supabase.storage.from('avatars').getPublicUrl(fileName);
-          avatar_url = publicUrlData.publicUrl;
+        const options = {
+          maxSizeMB: 0.5,
+          maxWidthOrHeight: 500,
+          useWebWorker: true,
+        };
+        try {
+          const compressedFile = await imageCompression(avatarFile, options);
+          const fileExt = compressedFile.name.split('.').pop();
+          const fileName = `${session.user.id}-${Math.random()}.${fileExt}`;
+          const { error: uploadError, data } = await supabase.storage
+            .from('avatars')
+            .upload(fileName, compressedFile);
+          
+          if (!uploadError && data) {
+            const { data: publicUrlData } = supabase.storage.from('avatars').getPublicUrl(fileName);
+            avatar_url = publicUrlData.publicUrl;
+          }
+        } catch (error) {
+          console.error('Error compressing image:', error);
         }
       }
 
@@ -569,15 +580,25 @@ export default function Cadastro() {
 
       // Se tiver avatar, faz o upload
       if (avatarFile) {
-        const fileExt = avatarFile.name.split('.').pop();
-        const fileName = `${authData.user.id}-${Math.random()}.${fileExt}`;
-        const { error: uploadError, data } = await supabase.storage
-          .from('avatars')
-          .upload(fileName, avatarFile);
-        
-        if (!uploadError && data) {
-          const { data: publicUrlData } = supabase.storage.from('avatars').getPublicUrl(fileName);
-          avatar_url = publicUrlData.publicUrl;
+        const options = {
+          maxSizeMB: 0.5,
+          maxWidthOrHeight: 500,
+          useWebWorker: true,
+        };
+        try {
+          const compressedFile = await imageCompression(avatarFile, options);
+          const fileExt = compressedFile.name.split('.').pop();
+          const fileName = `${authData.user.id}-${Math.random()}.${fileExt}`;
+          const { error: uploadError, data } = await supabase.storage
+            .from('avatars')
+            .upload(fileName, compressedFile);
+          
+          if (!uploadError && data) {
+            const { data: publicUrlData } = supabase.storage.from('avatars').getPublicUrl(fileName);
+            avatar_url = publicUrlData.publicUrl;
+          }
+        } catch (error) {
+          console.error('Error compressing image:', error);
         }
       }
 

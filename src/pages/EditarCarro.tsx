@@ -4,6 +4,7 @@ import { getObjectPosition } from '../utils/imagePos';
 import styled from 'styled-components';
 import { supabase } from '../lib/supabase';
 import { useNavigate, useParams } from 'react-router-dom';
+import imageCompression from 'browser-image-compression';
 import { colors, media } from '../styles/GlobalStyles';
 import CustomSelect from '../components/CustomSelect';
 
@@ -461,16 +462,27 @@ export default function EditarCarro() {
     let finalPhotoUrls = [...fotosAtuais];
 
     if (novasFotos.length > 0) {
-      for (const photo of novasFotos) {
-        const fileExt = photo.file.name.split('.').pop();
-        const fileName = `${session.user.id}-${Math.random()}.${fileExt}`;
-        const { error: uploadError, data } = await supabase.storage
-          .from('garagem_fotos')
-          .upload(fileName, photo.file);
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1200,
+        useWebWorker: true,
+      };
 
-        if (!uploadError && data) {
-          const { data: publicUrlData } = supabase.storage.from('garagem_fotos').getPublicUrl(fileName);
-          finalPhotoUrls.push(`${publicUrlData.publicUrl}?pos=${photo.pos}`);
+      for (const photo of novasFotos) {
+        try {
+          const compressedFile = await imageCompression(photo.file, options);
+          const fileExt = compressedFile.name.split('.').pop();
+          const fileName = `${session.user.id}-${Math.random()}.${fileExt}`;
+          const { error: uploadError, data } = await supabase.storage
+            .from('garagem_fotos')
+            .upload(fileName, compressedFile);
+
+          if (!uploadError && data) {
+            const { data: publicUrlData } = supabase.storage.from('garagem_fotos').getPublicUrl(fileName);
+            finalPhotoUrls.push(`${publicUrlData.publicUrl}?pos=${photo.pos}`);
+          }
+        } catch (error) {
+          console.error('Error compressing image:', error);
         }
       }
     }

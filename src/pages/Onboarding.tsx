@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import { colors, media } from '../styles/GlobalStyles';
+import imageCompression from 'browser-image-compression';
 
 const PageWrapper = styled.div`
   min-height: 100vh;
@@ -512,20 +513,30 @@ export default function Onboarding() {
 
     const { data: { session } } = await supabase.auth.getSession();
     
-    if (session) {
+      if (session) {
       const uploadedUrls: string[] = [];
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1200,
+        useWebWorker: true,
+      };
 
       for (const photo of photos) {
-        const fileExt = photo.file.name.split('.').pop();
-        const fileName = `${session.user.id}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
-        
-        const { error: uploadError } = await supabase.storage
-          .from('garagem_fotos')
-          .upload(fileName, photo.file);
+        try {
+          const compressedFile = await imageCompression(photo.file, options);
+          const fileExt = compressedFile.name.split('.').pop();
+          const fileName = `${session.user.id}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+          
+          const { error: uploadError } = await supabase.storage
+            .from('garagem_fotos')
+            .upload(fileName, compressedFile);
 
-        if (!uploadError) {
-          const { data: { publicUrl } } = supabase.storage.from('garagem_fotos').getPublicUrl(fileName);
-          uploadedUrls.push(`${publicUrl}?pos=${photo.pos}`);
+          if (!uploadError) {
+            const { data: { publicUrl } } = supabase.storage.from('garagem_fotos').getPublicUrl(fileName);
+            uploadedUrls.push(`${publicUrl}?pos=${photo.pos}`);
+          }
+        } catch (error) {
+          console.error('Error compressing image:', error);
         }
       }
 

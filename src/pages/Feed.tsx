@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import { supabase } from '../lib/supabase';
 import { colors } from '../styles/GlobalStyles';
@@ -359,92 +359,85 @@ export default function Feed() {
   const [posting, setPosting] = useState(false);
   const [session, setSession] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const PAGE_SIZE = 10;
+  
   const navigate = useNavigate();
+
+  const observer = useRef<IntersectionObserver>();
+  const lastElementRef = useCallback((node: any) => {
+    if (loading) return;
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasMore) {
+        setPage(prevPage => prevPage + 1);
+      }
+    });
+    if (node) observer.current.observe(node);
+  }, [loading, hasMore]);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
     });
-    fetchFeed();
   }, []);
 
-  const fetchFeed = async () => {
-    setLoading(true);
+  useEffect(() => {
+    fetchFeed(page);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
+
+  const fetchFeed = async (pageNumber: number) => {
+    if (pageNumber === 0) setLoading(true);
+    const start = pageNumber * PAGE_SIZE;
+    const end = start + PAGE_SIZE - 1;
     
-    const { data: postsData } = await supabase
-      .from('mk3_posts')
-      .select('*, user:mk3_users(id, username, nome_completo, avatar_url)');
+    const { data: viewData, error } = await supabase
+      .from('mk3_feed')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .range(start, end);
 
-    const { data: carsData } = await supabase
-      .from('mk3_garagem')
-      .select('*');
+    if (error || !viewData || viewData.length === 0) {
+      setHasMore(false);
+      if (pageNumber === 0) setLoading(false);
+      return;
+    }
 
-    // Fetch users for mapping cars because foreign key is missing
+    const userIds = Array.from(new Set(viewData.map(d => d.user_id)));
     const { data: usersData } = await supabase
       .from('mk3_users')
-      .select('id, username, nome_completo, avatar_url');
+      .select('id, username, nome_completo, avatar_url, cidade, estado, telefone')
+      .in('id', userIds);
 
-    let combinedFeed: FeedItem[] = [];
-
-    if (postsData) {
-      const formattedPosts: FeedItem[] = postsData.map(p => ({
-        id: `post-${p.id}`,
-        type: 'post',
-        created_at: p.created_at,
-        user: p.user || { username: 'unknown', nome_completo: 'Desconhecido', avatar_url: '', telefone: '', cidade: '', estado: '' },
-        texto: p.texto || p.content
-      }));
-      combinedFeed = [...combinedFeed, ...formattedPosts];
-    }
-
-    if (carsData && usersData) {
-      const formattedCars: FeedItem[] = carsData.map(c => {
-        const carUser = usersData.find(u => u.id === c.user_id) || { id: '', username: 'unknown', nome_completo: 'Desconhecido', avatar_url: '', telefone: '', cidade: '', estado: '' };
-        return {
-          id: `car-${c.id}`,
-          type: 'car',
-          created_at: c.created_at,
-          user: carUser,
-          carro: {
-            id: c.id,
-            modelo: c.modelo,
-            ano: c.ano_fabricacao,
-            ano_fabricacao: c.ano_fabricacao,
-            ano_modelo: c.ano_modelo,
-            cor: c.cor,
-            fotos: c.fotos || [],
-            origem: c.origem,
-            opcionais: c.opcionais,
-            pecas_raras: c.pecas_raras,
-            problemas_atuais: c.problemas_atuais,
-            venda_ativo: c.venda_ativo,
-            venda_preco: c.venda_preco
-          }
-        };
-      });
-      combinedFeed = [...combinedFeed, ...formattedCars];
-    }
-
-    // Fetch all likes and comments to map them
-    const { data: allLikes } = await supabase.from('mk3_likes').select('*');
-    const { data: allComments } = await supabase.from('mk3_comments').select('id, item_type, item_id');
+    const originalIds = viewData.map(d => d.original_id);
+    const { data: batchLikes } = await supabase.from('mk3_likes').select('*').in('item_id', originalIds);
+    const { data: batchComments } = await supabase.from('mk3_comments').select('id, item_type, item_id').in('item_id', originalIds);
 
     const currentUser = (await supabase.auth.getSession()).data.session?.user;
 
-    combinedFeed = combinedFeed.map(item => {
-      const itemLikes = allLikes?.filter(l => l.item_type === item.type && l.item_id === (item.type === 'car' ? item.carro?.id : item.id.replace('post-', ''))) || [];
-      const itemComments = allComments?.filter(c => c.item_type === item.type && c.item_id === (item.type === 'car' ? item.carro?.id : item.id.replace('post-', ''))) || [];
+    const newFeedItems: FeedItem[] = viewData.map(d => {
+      const user = usersData?.find(u => u.id === d.user_id) || { id: '', username: 'unknown', nome_completo: 'Desconhecido', avatar_url: '', telefone: '', cidade: '', estado: '' };
+      const itemLikes = batchLikes?.filter(l => l.item_type === d.type && l.item_id === d.original_id) || [];
+      const itemComments = batchComments?.filter(c => c.item_type === d.type && c.item_id === d.original_id) || [];
+      
       return {
-        ...item,
+        id: d.id,
+        type: d.type as 'post' | 'car',
+        created_at: d.created_at,
+        user: user,
+        texto: d.texto,
+        carro: d.car_data,
         likesCount: itemLikes.length,
         hasLiked: currentUser ? itemLikes.some(l => l.user_id === currentUser.id) : false,
         commentsCount: itemComments.length
       };
     });
-
-    combinedFeed.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
     
-    setFeed(combinedFeed);
+    setFeed(prev => pageNumber === 0 ? newFeedItems : [...prev, ...newFeedItems]);
+    if (viewData.length < PAGE_SIZE) setHasMore(false);
     setLoading(false);
   };
 
@@ -512,7 +505,7 @@ export default function Feed() {
       alert('Erro ao publicar: ' + error.message);
     } else {
       setNewPost('');
-      fetchFeed();
+      fetchFeed(0);
     }
     setPosting(false);
   };
@@ -611,8 +604,9 @@ export default function Feed() {
       ) : filteredFeed.length === 0 ? (
         <p style={{ textAlign: 'center', color: '#999' }}>Nenhum resultado encontrado.</p>
       ) : (
-        filteredFeed.map((item) => (
-          <PostCard key={item.id}>
+        <>
+        {filteredFeed.map((item, index) => (
+          <PostCard key={item.id} ref={index === filteredFeed.length - 1 ? lastElementRef : null}>
             <PostHeader>
               <UserGroup>
                 <Avatar 
@@ -641,6 +635,7 @@ export default function Feed() {
                         <img 
                           src={item.carro.fotos[0]} 
                           alt={`Golf ${item.carro.modelo}`} 
+                          loading="lazy"
                           style={{ objectPosition: getObjectPosition(item.carro.fotos[0]) }} 
                         />
                       </CarGallery>
@@ -705,9 +700,16 @@ export default function Feed() {
               <ActionButton onClick={() => handleShare(item.user.username)} style={{ marginLeft: 'auto' }}>
                 <i className="fas fa-share-alt"></i>
               </ActionButton>
-            </PostFooter>
-          </PostCard>
-        ))
+              </PostFooter>
+            </PostCard>
+          ))}
+          {loading && page > 0 && (
+            <p style={{ textAlign: 'center', color: '#999', margin: '2rem 0' }}>Carregando mais...</p>
+          )}
+          {!hasMore && feed.length > 0 && (
+            <p style={{ textAlign: 'center', color: '#666', margin: '2rem 0' }}>Você chegou ao fim da garagem!</p>
+          )}
+        </>
       )}
     </FeedContainer>
     </CommunityLayout>

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import { supabase } from '../lib/supabase';
-import { colors, media } from '../styles/GlobalStyles';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { colors } from '../styles/GlobalStyles';
+import { useParams, useNavigate } from 'react-router-dom';
 import CommunityLayout from '../components/CommunityLayout';
 import { getObjectPosition } from '../utils/imagePos';
 
@@ -175,38 +175,6 @@ const CarSpecs = styled.div`
   }
 `;
 
-const TagsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1rem;
-`;
-
-const Tag = styled.span<{ $type?: 'opcional' | 'peca' }>`
-  background: ${props => props.$type === 'peca' ? 'rgba(255, 215, 0, 0.1)' : '#222'};
-  color: ${props => props.$type === 'peca' ? '#FFD700' : '#ccc'};
-  border: 1px solid ${props => props.$type === 'peca' ? 'rgba(255, 215, 0, 0.3)' : '#333'};
-  padding: 0.2rem 0.6rem;
-  border-radius: 4px;
-  font-size: 0.8rem;
-`;
-
-const ProblemasBox = styled.div`
-  background: rgba(255, 165, 0, 0.1);
-  border-left: 4px solid orange;
-  padding: 1rem;
-  margin-top: 1.5rem;
-
-  h4 {
-    color: orange;
-    margin: 0 0 0.5rem 0;
-  }
-  p {
-    color: #ddd;
-    margin: 0;
-    font-size: 0.9rem;
-  }
-`;
 
 const SaleBadge = styled.div`
   background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(0,0,0,0) 100%);
@@ -278,15 +246,39 @@ export default function PerfilPublico() {
   const [loading, setLoading] = useState(true);
   const [session, setSession] = useState<any>(null);
 
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const PAGE_SIZE = 10;
+
+  const observer = useRef<IntersectionObserver>();
+  const lastElementRef = useCallback((node: any) => {
+    if (loading) return;
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasMore) {
+        setPage(prevPage => prevPage + 1);
+      }
+    });
+    if (node) observer.current.observe(node);
+  }, [loading, hasMore]);
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => setSession(data.session));
-    fetchProfileAndFeed();
+    fetchProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username]);
 
-  const fetchProfileAndFeed = async () => {
-    if (!username) return;
+  useEffect(() => {
+    if (profile) {
+      fetchFeed(page);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, profile]);
+
+  const fetchProfile = async () => {
     setLoading(true);
+    setPage(0);
+    setHasMore(true);
 
     const { data: userProfile, error: profileError } = await supabase
       .from('mk3_users')
@@ -300,79 +292,53 @@ export default function PerfilPublico() {
     }
 
     setProfile(userProfile);
+  };
 
-    // Fetch Posts
-    const { data: postsData } = await supabase
-      .from('mk3_posts')
+  const fetchFeed = async (pageNumber: number) => {
+    if (!profile) return;
+    if (pageNumber === 0) setLoading(true);
+
+    const start = pageNumber * PAGE_SIZE;
+    const end = start + PAGE_SIZE - 1;
+
+    const { data: viewData, error } = await supabase
+      .from('mk3_feed')
       .select('*')
-      .eq('user_id', userProfile.id);
+      .eq('user_id', profile.id)
+      .order('created_at', { ascending: false })
+      .range(start, end);
 
-    // Fetch Cars
-    const { data: carsData } = await supabase
-      .from('mk3_garagem')
-      .select('*')
-      .eq('user_id', userProfile.id);
-
-    let combinedFeed: FeedItem[] = [];
-
-    if (postsData) {
-      const formattedPosts: FeedItem[] = postsData.map(p => ({
-        id: `post-${p.id}`,
-        type: 'post',
-        created_at: p.created_at,
-        user: userProfile,
-        texto: p.texto || p.content
-      }));
-      combinedFeed = [...combinedFeed, ...formattedPosts];
+    if (error || !viewData || viewData.length === 0) {
+      setHasMore(false);
+      if (pageNumber === 0) setLoading(false);
+      return;
     }
 
-    if (carsData) {
-      const formattedCars: FeedItem[] = carsData.map(c => ({
-        id: `car-${c.id}`,
-        type: 'car',
-        created_at: c.created_at,
-        user: userProfile,
-        carro: {
-          id: c.id,
-          modelo: c.modelo,
-          ano: c.ano_fabricacao,
-          ano_fabricacao: c.ano_fabricacao,
-          ano_modelo: c.ano_modelo,
-          cor: c.cor,
-          fotos: c.fotos || [],
-          origem: c.origem,
-          opcionais: c.opcionais,
-          pecas_raras: c.pecas_raras,
-          problemas_atuais: c.problemas_atuais,
-          venda_ativo: c.venda_ativo,
-          venda_preco: c.venda_preco
-        }
-      }));
-      combinedFeed = [...combinedFeed, ...formattedCars];
-    }
-
-    // Likes & Comments
-    const { data: allLikes } = await supabase.from('mk3_likes').select('*');
-    const { data: allComments } = await supabase.from('mk3_comments').select('id, item_type, item_id');
+    const originalIds = viewData.map(d => d.original_id);
+    const { data: batchLikes } = await supabase.from('mk3_likes').select('*').in('item_id', originalIds);
+    const { data: batchComments } = await supabase.from('mk3_comments').select('id, item_type, item_id').in('item_id', originalIds);
 
     const currentUser = (await supabase.auth.getSession()).data.session?.user;
 
-    combinedFeed = combinedFeed.map(item => {
-      const realItemId = item.type === 'car' ? item.carro?.id : item.id.replace('post-', '');
-      const itemLikes = allLikes?.filter(l => l.item_type === item.type && l.item_id === realItemId) || [];
-      const itemComments = allComments?.filter(c => c.item_type === item.type && c.item_id === realItemId) || [];
+    const newFeedItems: FeedItem[] = viewData.map(d => {
+      const itemLikes = batchLikes?.filter(l => l.item_type === d.type && l.item_id === d.original_id) || [];
+      const itemComments = batchComments?.filter(c => c.item_type === d.type && c.item_id === d.original_id) || [];
       
       return {
-        ...item,
+        id: d.id,
+        type: d.type as 'post' | 'car',
+        created_at: d.created_at,
+        user: profile,
+        texto: d.texto,
+        carro: d.car_data,
         likesCount: itemLikes.length,
         hasLiked: currentUser ? itemLikes.some(l => l.user_id === currentUser.id) : false,
         commentsCount: itemComments.length
       };
     });
 
-    combinedFeed.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-    
-    setFeed(combinedFeed);
+    setFeed(prev => pageNumber === 0 ? newFeedItems : [...prev, ...newFeedItems]);
+    if (viewData.length < PAGE_SIZE) setHasMore(false);
     setLoading(false);
   };
 
@@ -455,8 +421,9 @@ export default function PerfilPublico() {
             <h3 style={{ color: '#888' }}>Este usuário ainda não publicou nada!</h3>
           </div>
         ) : (
-          feed.map(item => (
-            <PostCard key={item.id}>
+          <>
+          {feed.map((item, index) => (
+            <PostCard key={item.id} ref={index === feed.length - 1 ? lastElementRef : null}>
               <PostHeader>
                 <UserGroup>
                   <AvatarSmall src={item.user?.avatar_url || `https://ui-avatars.com/api/?name=${item.user?.username}&background=222222&color=dc2626`} />
@@ -477,7 +444,7 @@ export default function PerfilPublico() {
                     <CarClickableArea onClick={() => navigate(`/carro/${item.carro?.id}`)}>
                       {item.carro?.fotos && item.carro.fotos.length > 0 ? (
                         <CarGallery>
-                          <img src={item.carro.fotos[0]} alt={`Golf ${item.carro.modelo}`} style={{ objectPosition: getObjectPosition(item.carro.fotos[0]) }} />
+                          <img src={item.carro.fotos[0]} alt={`Golf ${item.carro.modelo}`} loading="lazy" style={{ objectPosition: getObjectPosition(item.carro.fotos[0]) }} />
                         </CarGallery>
                       ) : (
                         <CarGallery>
@@ -521,7 +488,14 @@ export default function PerfilPublico() {
                 </ActionButton>
               </PostFooter>
             </PostCard>
-          ))
+          ))}
+          {loading && page > 0 && (
+            <p style={{ textAlign: 'center', color: '#999', margin: '2rem 0' }}>Carregando mais...</p>
+          )}
+          {!hasMore && feed.length > 0 && (
+            <p style={{ textAlign: 'center', color: '#666', margin: '2rem 0' }}>Fim da linha do tempo deste usuário.</p>
+          )}
+          </>
         )}
       </Container>
     </CommunityLayout>
