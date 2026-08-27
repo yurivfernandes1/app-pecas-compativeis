@@ -436,6 +436,7 @@ export default function Onboarding() {
 
   // Modificações Motor e Suspensão
   const [modificacaoMotor, setModificacaoMotor] = useState(false);
+  const [potenciaMotor, setPotenciaMotor] = useState('');
   const [modificacaoSuspensao, setModificacaoSuspensao] = useState(false);
   const [tipoSuspensao, setTipoSuspensao] = useState('');
   const [marcaSuspensao, setMarcaSuspensao] = useState('');
@@ -563,6 +564,7 @@ export default function Onboarding() {
         instagram_url: instagramUrl,
         origem: origem,
         modificacao_motor: modificacaoMotor,
+        potencia_motor: potenciaMotor ? parseInt(potenciaMotor) : null,
         modificacoes_motor: selectedModMotor,
         modificacao_suspensao: modificacaoSuspensao,
         tipo_suspensao: tipoSuspensao,
@@ -804,6 +806,16 @@ export default function Onboarding() {
                 
                 {modificacaoMotor && (
                   <div style={{ marginTop: '1.5rem', animation: 'fadeIn 0.3s ease' }}>
+                    <FormGroup>
+                      <label>Potência Estimada (cv)</label>
+                      <input 
+                        type="number" 
+                        value={potenciaMotor} 
+                        onChange={e => setPotenciaMotor(e.target.value)} 
+                        placeholder="Ex: 350" 
+                        style={{ maxWidth: '200px' }}
+                      />
+                    </FormGroup>
                     {availableModMotor.length === 0 ? <p style={{color: '#666'}}>Nenhuma modificação cadastrada.</p> : (
                       <CheckboxGrid>
                         {availableModMotor.map(mod => (

@@ -337,6 +337,7 @@ export default function EditarCarro() {
 
   // Modificações Motor e Suspensão
   const [modificacaoMotor, setModificacaoMotor] = useState(false);
+  const [potenciaMotor, setPotenciaMotor] = useState('');
   const [modificacaoSuspensao, setModificacaoSuspensao] = useState(false);
   const [tipoSuspensao, setTipoSuspensao] = useState('');
   const [marcaSuspensao, setMarcaSuspensao] = useState('');
@@ -427,6 +428,7 @@ export default function EditarCarro() {
       setSelectedOpcionais(carro.opcionais || []);
       setSelectedPecas(carro.pecas_raras || []);
       setModificacaoMotor(carro.modificacao_motor || false);
+      setPotenciaMotor(carro.potencia_motor ? String(carro.potencia_motor) : '');
       setSelectedModMotor(carro.modificacoes_motor || []);
       setModificacaoSuspensao(carro.modificacao_suspensao || false);
       setTipoSuspensao(carro.tipo_suspensao || '');
@@ -522,6 +524,7 @@ export default function EditarCarro() {
         aro_roda: aroRoda,
         modelo_roda: modeloRoda === 'Outros' ? customRoda : modeloRoda,
         modificacao_motor: modificacaoMotor,
+        potencia_motor: potenciaMotor ? parseInt(potenciaMotor) : null,
         modificacoes_motor: selectedModMotor,
         modificacao_suspensao: modificacaoSuspensao,
         tipo_suspensao: tipoSuspensao,
@@ -825,6 +828,16 @@ export default function EditarCarro() {
             
             {modificacaoMotor && (
               <div style={{ marginTop: '1.5rem', animation: 'fadeIn 0.3s ease' }}>
+                <FormGroup>
+                  <label>Potência Estimada (cv)</label>
+                  <input 
+                    type="number" 
+                    value={potenciaMotor} 
+                    onChange={e => setPotenciaMotor(e.target.value)} 
+                    placeholder="Ex: 350" 
+                    style={{ maxWidth: '200px' }}
+                  />
+                </FormGroup>
                 {availableModMotor.length === 0 ? <p style={{color: '#666'}}>Nenhuma modificação cadastrada.</p> : (
                   <CheckboxGrid>
                     {availableModMotor.map(mod => (

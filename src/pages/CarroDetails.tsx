@@ -656,12 +656,16 @@ export default function CarroDetails() {
               <div style={{ marginTop: '2rem' }}>
                 <SectionTitle>Modificações</SectionTitle>
                 
-                {carro.modificacao_motor && carro.modificacoes_motor?.length > 0 && (
+                {carro.modificacao_motor && (carro.modificacoes_motor?.length > 0 || carro.potencia_motor) && (
                   <div style={{ marginBottom: '1.5rem' }}>
-                    <h4 style={{ color: '#ccc', margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}><i className="fas fa-cogs"></i> Motor</h4>
-                    <TagsContainer style={{ marginTop: 0 }}>
-                      {carro.modificacoes_motor.map((m: string) => <Tag key={m} style={{ background: 'rgba(220, 38, 38, 0.1)', color: colors.primary, borderColor: 'rgba(220, 38, 38, 0.3)' }}>{m}</Tag>)}
-                    </TagsContainer>
+                    <h4 style={{ color: '#ccc', margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}>
+                      <i className="fas fa-cogs"></i> Motor {carro.potencia_motor ? `(${carro.potencia_motor} cv)` : ''}
+                    </h4>
+                    {carro.modificacoes_motor?.length > 0 && (
+                      <TagsContainer style={{ marginTop: 0 }}>
+                        {carro.modificacoes_motor.map((m: string) => <Tag key={m} style={{ background: 'rgba(220, 38, 38, 0.1)', color: colors.primary, borderColor: 'rgba(220, 38, 38, 0.3)' }}>{m}</Tag>)}
+                      </TagsContainer>
+                    )}
                   </div>
                 )}
 
