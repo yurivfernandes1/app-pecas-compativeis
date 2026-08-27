@@ -561,22 +561,6 @@ export default function Feed() {
       <FeedContainer>
       <Header>
         <Title>Comunidade <span>MK3</span></Title>
-        <Link 
-          to="/minha-garagem" 
-          style={{
-            background: colors.primary,
-            color: 'white',
-            textDecoration: 'none',
-            padding: '0.6rem 1rem',
-            borderRadius: '6px',
-            fontWeight: 'bold',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem'
-          }}
-        >
-          <i className="fas fa-car"></i> Minha Garagem
-        </Link>
       </Header>
 
       <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', overflowX: 'auto', paddingBottom: '0.5rem' }}>

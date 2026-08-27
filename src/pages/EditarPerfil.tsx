@@ -4,14 +4,7 @@ import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import { colors } from '../styles/GlobalStyles';
 
-const PageWrapper = styled.div`
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  background: #000;
-`;
+import CommunityLayout from '../components/CommunityLayout';
 
 const FormContainer = styled.div`
   background: #111;
@@ -215,11 +208,12 @@ export default function EditarPerfil() {
     navigate('/minha-garagem');
   };
 
-  if (loading) return <PageWrapper><h2 style={{color:'white'}}>Carregando...</h2></PageWrapper>;
+  if (loading) return <CommunityLayout><h2 style={{color:'white'}}>Carregando...</h2></CommunityLayout>;
 
   return (
-    <PageWrapper>
-      <FormContainer>
+    <CommunityLayout>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
+        <FormContainer>
         <h1 style={{ color: 'white', marginBottom: '2rem' }}>Editar Perfil</h1>
         
         <form onSubmit={handleSubmit} style={{ width: '100%' }}>
@@ -307,6 +301,7 @@ export default function EditarPerfil() {
           </OutlineButton>
         </form>
       </FormContainer>
-    </PageWrapper>
+      </div>
+    </CommunityLayout>
   );
 }

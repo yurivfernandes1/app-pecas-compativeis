@@ -2,154 +2,176 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { supabase } from '../lib/supabase';
 import { colors, media } from '../styles/GlobalStyles';
-import { useParams, useNavigate } from 'react-router-dom';
-
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import CommunityLayout from '../components/CommunityLayout';
+import { getObjectPosition } from '../utils/imagePos';
+
+// --- STYLES ---
 
 const Container = styled.div`
-  max-width: 1000px;
+  max-width: 800px;
   margin: 0 auto;
 `;
 
 const ProfileHeader = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  text-align: center;
   background: #111;
-  padding: 2rem;
+  padding: 3rem 2rem;
   border-radius: 12px;
   border: 1px solid #222;
   margin-bottom: 2rem;
-  position: relative;
-
-  ${media.tablet} {
-    flex-direction: row;
-  }
-  flex-direction: column;
-  text-align: center;
 `;
 
-const Avatar = styled.img`
-  width: 120px;
-  height: 120px;
+const AvatarLarge = styled.img`
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid ${colors.primary};
-`;
-
-const ProfileInfo = styled.div`
-  flex: 1;
-  text-align: left;
-  
-  h1 {
-    margin: 0 0 0.5rem 0;
-    color: white;
-  }
-
-  p {
-    color: ${colors.gray[400]};
-    margin: 0 0 1rem 0;
-  }
-
-  .premium-badge {
-    display: inline-block;
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-    color: black;
-    font-size: 0.8rem;
-    font-weight: bold;
-    padding: 0.2rem 0.6rem;
-    border-radius: 4px;
-    margin-left: 1rem;
-    vertical-align: middle;
-  }
-`;
-
-const ShareButton = styled.button`
-  background: transparent;
-  border: 1px solid ${colors.gray[700]};
-  color: ${colors.white};
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-  transition: all 0.2s;
-
-  &:hover {
-    background: #222;
-    border-color: ${colors.primary};
-  }
-`;
-
-const SectionTitle = styled.h2`
-  color: white;
+  border: 4px solid ${colors.primary};
   margin-bottom: 1.5rem;
-  border-bottom: 2px solid #222;
-  padding-bottom: 0.5rem;
 `;
 
-const CarCard = styled.div`
-  background: #111;
-  border-radius: 12px;
-  border: 1px solid #222;
-  overflow: hidden;
-  margin-bottom: 2rem;
-  display: flex;
-  flex-direction: column;
-
-  ${media.tablet} {
-    flex-direction: row;
-  }
-`;
-
-const CarGallery = styled.div`
-  flex: 1;
-  min-height: 300px;
-  background: #0a0a0a;
-  position: relative;
+const Name = styled.h1`
+  margin: 0 0 0.5rem 0;
+  color: white;
+  font-size: 1.8rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
+`;
 
+const Username = styled.p`
+  color: ${colors.primary};
+  margin: 0 0 1rem 0;
+  font-weight: bold;
+`;
+
+const Bio = styled.p`
+  color: ${colors.gray[400]};
+  max-width: 500px;
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
+`;
+
+const PremiumBadge = styled.span`
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: black;
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+`;
+
+// --- FEED STYLES (Reused from Feed.tsx) ---
+
+const PostCard = styled.div`
+  background: #111;
+  border-radius: 12px;
+  border: 1px solid #222;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+`;
+
+const PostHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+`;
+
+const UserGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`;
+
+const AvatarSmall = styled.img`
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #333;
+`;
+
+const UserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  .name {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    &:hover { text-decoration: underline; }
+  }
+
+  .username {
+    color: #888;
+    font-size: 0.9rem;
+  }
+`;
+
+const DateText = styled.span`
+  color: #666;
+  font-size: 0.85rem;
+`;
+
+const PostContent = styled.div`
+  color: #ddd;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  
+  p { margin: 0; }
+`;
+
+const SystemMessage = styled.div`
+  color: ${colors.primary};
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+`;
+
+const CarClickableArea = styled.div`
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  &:hover { opacity: 0.9; }
+`;
+
+const CarGallery = styled.div`
+  width: 100%;
+  height: 450px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  background: #0a0a0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  @media (max-width: 768px) { height: 300px; }
+  
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
   }
 `;
 
-const CarInfo = styled.div`
-  flex: 1;
-  padding: 2rem;
+const CarSpecs = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
   
-  h3 {
-    margin: 0 0 1rem 0;
-    color: white;
-    font-size: 1.8rem;
-  }
-  
-  .specs {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    
-    span {
-      background: #222;
-      padding: 0.4rem 0.8rem;
-      border-radius: 4px;
-      color: ${colors.gray[300]};
-      font-size: 0.9rem;
-    }
-  }
-
-  p {
-    color: ${colors.gray[400]};
-    line-height: 1.6;
+  span {
+    background: #222;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    color: ${colors.gray[300]};
+    font-size: 0.9rem;
   }
 `;
 
@@ -169,6 +191,23 @@ const Tag = styled.span<{ $type?: 'opcional' | 'peca' }>`
   font-size: 0.8rem;
 `;
 
+const ProblemasBox = styled.div`
+  background: rgba(255, 165, 0, 0.1);
+  border-left: 4px solid orange;
+  padding: 1rem;
+  margin-top: 1.5rem;
+
+  h4 {
+    color: orange;
+    margin: 0 0 0.5rem 0;
+  }
+  p {
+    color: #ddd;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+`;
+
 const SaleBadge = styled.div`
   background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(0,0,0,0) 100%);
   border: 1px solid ${colors.primary};
@@ -179,72 +218,73 @@ const SaleBadge = styled.div`
   h4 {
     color: ${colors.primary};
     margin: 0 0 0.5rem 0;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
   }
-
   .price {
     font-size: 1.5rem;
     color: white;
     font-weight: bold;
     margin-bottom: 0.5rem;
   }
-
   .contact {
     display: flex;
     gap: 1rem;
     color: #ccc;
     font-size: 0.9rem;
-    
-    a {
-      color: #25D366;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      
-      &:hover {
-        text-decoration: underline;
-      }
-    }
   }
 `;
 
-const ProblemasBox = styled.div`
-  background: rgba(255, 165, 0, 0.1);
-  border-left: 4px solid orange;
-  padding: 1rem;
-  margin-top: 1.5rem;
+const PostFooter = styled.div`
+  display: flex;
+  gap: 1rem;
+  border-top: 1px solid #222;
+  padding-top: 1rem;
+`;
 
-  h4 {
-    color: orange;
-    margin: 0 0 0.5rem 0;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
+const ActionButton = styled.button<{ $active?: boolean }>`
+  background: transparent;
+  border: none;
+  color: ${props => props.$active ? colors.primary : '#888'};
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  transition: color 0.2s;
   
-  p {
-    color: #ddd;
-    margin: 0;
-    font-size: 0.9rem;
+  &:hover {
+    color: ${props => props.$active ? colors.primary : 'white'};
   }
 `;
+
+type FeedItem = {
+  id: string;
+  type: 'post' | 'car';
+  created_at: string;
+  user: any;
+  texto?: string;
+  carro?: any;
+  likesCount?: number;
+  hasLiked?: boolean;
+  commentsCount?: number;
+};
+
+// --- COMPONENT ---
 
 export default function PerfilPublico() {
   const { username } = useParams<{ username: string }>();
   const navigate = useNavigate();
   const [profile, setProfile] = useState<any>(null);
-  const [carros, setCarros] = useState<any[]>([]);
+  const [feed, setFeed] = useState<FeedItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [session, setSession] = useState<any>(null);
 
   useEffect(() => {
-    fetchProfile();
+    supabase.auth.getSession().then(({ data }) => setSession(data.session));
+    fetchProfileAndFeed();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username]);
 
-  const fetchProfile = async () => {
+  const fetchProfileAndFeed = async () => {
     if (!username) return;
     setLoading(true);
 
@@ -261,31 +301,120 @@ export default function PerfilPublico() {
 
     setProfile(userProfile);
 
-    const { data: userCarros } = await supabase
+    // Fetch Posts
+    const { data: postsData } = await supabase
+      .from('mk3_posts')
+      .select('*')
+      .eq('user_id', userProfile.id);
+
+    // Fetch Cars
+    const { data: carsData } = await supabase
       .from('mk3_garagem')
       .select('*')
-      .eq('user_id', userProfile.id)
-      .order('created_at', { ascending: false });
+      .eq('user_id', userProfile.id);
 
-    setCarros(userCarros || []);
+    let combinedFeed: FeedItem[] = [];
+
+    if (postsData) {
+      const formattedPosts: FeedItem[] = postsData.map(p => ({
+        id: `post-${p.id}`,
+        type: 'post',
+        created_at: p.created_at,
+        user: userProfile,
+        texto: p.texto || p.content
+      }));
+      combinedFeed = [...combinedFeed, ...formattedPosts];
+    }
+
+    if (carsData) {
+      const formattedCars: FeedItem[] = carsData.map(c => ({
+        id: `car-${c.id}`,
+        type: 'car',
+        created_at: c.created_at,
+        user: userProfile,
+        carro: {
+          id: c.id,
+          modelo: c.modelo,
+          ano: c.ano_fabricacao,
+          ano_fabricacao: c.ano_fabricacao,
+          ano_modelo: c.ano_modelo,
+          cor: c.cor,
+          fotos: c.fotos || [],
+          origem: c.origem,
+          opcionais: c.opcionais,
+          pecas_raras: c.pecas_raras,
+          problemas_atuais: c.problemas_atuais,
+          venda_ativo: c.venda_ativo,
+          venda_preco: c.venda_preco
+        }
+      }));
+      combinedFeed = [...combinedFeed, ...formattedCars];
+    }
+
+    // Likes & Comments
+    const { data: allLikes } = await supabase.from('mk3_likes').select('*');
+    const { data: allComments } = await supabase.from('mk3_comments').select('id, item_type, item_id');
+
+    const currentUser = (await supabase.auth.getSession()).data.session?.user;
+
+    combinedFeed = combinedFeed.map(item => {
+      const realItemId = item.type === 'car' ? item.carro?.id : item.id.replace('post-', '');
+      const itemLikes = allLikes?.filter(l => l.item_type === item.type && l.item_id === realItemId) || [];
+      const itemComments = allComments?.filter(c => c.item_type === item.type && c.item_id === realItemId) || [];
+      
+      return {
+        ...item,
+        likesCount: itemLikes.length,
+        hasLiked: currentUser ? itemLikes.some(l => l.user_id === currentUser.id) : false,
+        commentsCount: itemComments.length
+      };
+    });
+
+    combinedFeed.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    
+    setFeed(combinedFeed);
     setLoading(false);
   };
 
-  const handleShare = async () => {
-    const url = window.location.href;
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: `Perfil de @${profile.username} na Comunidade MK3`,
-          url: url
-        });
-      } catch (err) {
-        console.error(err);
-      }
-    } else {
-      navigator.clipboard.writeText(url);
-      alert('Link do perfil copiado para compartilhar!');
+  const toggleLike = async (item: FeedItem) => {
+    if (!session) {
+      alert('Faça login para curtir!');
+      return;
     }
+    
+    const realItemId = item.type === 'car' ? item.carro?.id : item.id.replace('post-', '');
+    if (!realItemId) return;
+
+    if (item.hasLiked) {
+      setFeed(feed.map(f => f.id === item.id ? { ...f, hasLiked: false, likesCount: (f.likesCount || 1) - 1 } : f));
+      await supabase.from('mk3_likes').delete().eq('user_id', session.user.id).eq('item_type', item.type).eq('item_id', realItemId);
+    } else {
+      setFeed(feed.map(f => f.id === item.id ? { ...f, hasLiked: true, likesCount: (f.likesCount || 0) + 1 } : f));
+      const { error } = await supabase.from('mk3_likes').insert({ user_id: session.user.id, item_type: item.type, item_id: realItemId });
+      
+      if (!error && session.user.id !== item.user.id) {
+        await supabase.from('mk3_notifications').insert({
+          user_id: item.user.id,
+          actor_id: session.user.id,
+          type: 'like',
+          item_type: item.type,
+          item_id: realItemId
+        });
+      }
+    }
+  };
+
+  const handleCommentClick = (item: FeedItem) => {
+    if (item.type === 'car' && item.carro?.id) {
+      navigate(`/carro/${item.carro.id}`);
+    } else {
+      alert('Comentários em posts chegarão em breve!');
+    }
+  };
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
   };
 
   if (loading) return <CommunityLayout><Container><h2 style={{color:'white'}}>Carregando perfil...</h2></Container></CommunityLayout>;
@@ -307,104 +436,91 @@ export default function PerfilPublico() {
     <CommunityLayout>
       <Container>
         <ProfileHeader>
-          <Avatar src={profile?.avatar_url || `https://ui-avatars.com/api/?name=${profile?.nome_completo || profile?.username || 'GTI'}&background=222222&color=dc2626&size=150`} alt="Avatar" />
-          <ProfileInfo>
-            <h1>
-              {profile?.nome_completo || profile?.username} 
-              {(profile?.is_premium || profile?.premium_manual) && <span className="premium-badge">VIP</span>}
-            </h1>
-            <p>@{profile?.username}</p>
-            <p>{profile?.bio || 'Nenhuma biografia adicionada.'}</p>
-          </ProfileInfo>
-          <ShareButton onClick={handleShare}>
-            <i className="fas fa-share-alt"></i> Compartilhar
-          </ShareButton>
+          <AvatarLarge src={profile?.avatar_url || `https://ui-avatars.com/api/?name=${profile?.nome_completo || profile?.username || 'User'}&background=222222&color=dc2626&size=150`} alt="Avatar" />
+          <Name>
+            {profile?.nome_completo || profile?.username} 
+            {(profile?.is_premium || profile?.premium_manual) && <PremiumBadge>VIP</PremiumBadge>}
+          </Name>
+          <Username>@{profile?.username}</Username>
+          <Bio>{profile?.bio || 'Nenhuma biografia adicionada.'}</Bio>
         </ProfileHeader>
 
-        <SectionTitle>
-          Garagem de @{profile.username}
-        </SectionTitle>
+        <h2 style={{ color: 'white', borderBottom: '1px solid #333', paddingBottom: '1rem', marginBottom: '1.5rem' }}>
+          Linha do Tempo
+        </h2>
 
-        {carros.length === 0 ? (
+        {feed.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '3rem', background: '#111', borderRadius: '12px' }}>
-            <h3 style={{ color: '#888' }}>Esta garagem está vazia!</h3>
+            <i className="fas fa-ghost" style={{ fontSize: '3rem', color: '#333', marginBottom: '1rem' }}></i>
+            <h3 style={{ color: '#888' }}>Este usuário ainda não publicou nada!</h3>
           </div>
         ) : (
-          carros.map(carro => (
-            <CarCard key={carro.id}>
-              <CarGallery>
-                {carro.fotos && carro.fotos.length > 0 ? (
-                  <img src={carro.fotos[0]} alt={carro.modelo} />
-                ) : (
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#555', flexDirection: 'column' }}>
-                    <i className="fas fa-car" style={{ fontSize: '3rem', marginBottom: '1rem' }}></i>
-                    <span>Sem fotos</span>
-                  </div>
-                )}
-              </CarGallery>
-              <CarInfo>
-                <h3>Golf {carro.modelo}</h3>
-                <div className="specs">
-                  <span><i className="far fa-calendar-alt"></i> {carro.ano}</span>
-                  <span><i className="fas fa-palette"></i> {carro.cor}</span>
-                  {carro.origem && <span><i className="fas fa-globe"></i> {carro.origem}</span>}
-                </div>
-                <p>{carro.descricao || 'Nenhuma descrição fornecida.'}</p>
+          feed.map(item => (
+            <PostCard key={item.id}>
+              <PostHeader>
+                <UserGroup>
+                  <AvatarSmall src={item.user?.avatar_url || `https://ui-avatars.com/api/?name=${item.user?.username}&background=222222&color=dc2626`} />
+                  <UserInfo>
+                    <span className="name">{item.user?.nome_completo || item.user?.username}</span>
+                    <span className="username">@{item.user?.username}</span>
+                  </UserInfo>
+                </UserGroup>
+                <DateText>{formatDate(item.created_at)}</DateText>
+              </PostHeader>
 
-                {(carro.opcionais?.length > 0 || carro.pecas_raras?.length > 0) && (
-                  <TagsContainer>
-                    {carro.pecas_raras?.map((p: string) => <Tag key={p} $type="peca"><i className="fas fa-gem"></i> {p}</Tag>)}
-                    {carro.opcionais?.map((o: string) => <Tag key={o}>{o}</Tag>)}
-                  </TagsContainer>
-                )}
-
-                {carro.problemas_atuais && (
-                  <ProblemasBox>
-                    <h4><i className="fas fa-wrench"></i> Precisa de Ajuda</h4>
-                    <p>{carro.problemas_atuais}</p>
-                  </ProblemasBox>
-                )}
-
-                {carro.venda_ativo && (
-                  <SaleBadge>
-                    <h4><i className="fas fa-tags"></i> À Venda</h4>
-                    <div className="price">
-                      {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(carro.venda_preco || 0)}
-                    </div>
-                    <div className="contact">
-                      {profile.cidade && profile.estado && (
-                        <span><i className="fas fa-map-marker-alt"></i> {profile.cidade} - {profile.estado}</span>
+              <PostContent>
+                {item.type === 'car' && (
+                  <>
+                    <SystemMessage>
+                      <i className="fas fa-car-side"></i> {item.user.nome_completo || `@${item.user.username}`} adicionou um novo projeto!
+                    </SystemMessage>
+                    <CarClickableArea onClick={() => navigate(`/carro/${item.carro?.id}`)}>
+                      {item.carro?.fotos && item.carro.fotos.length > 0 ? (
+                        <CarGallery>
+                          <img src={item.carro.fotos[0]} alt={`Golf ${item.carro.modelo}`} style={{ objectPosition: getObjectPosition(item.carro.fotos[0]) }} />
+                        </CarGallery>
+                      ) : (
+                        <CarGallery>
+                          <div style={{ color: '#555', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%' }}>
+                            <i className="fas fa-camera" style={{ fontSize: '3rem', marginBottom: '1rem' }}></i>
+                            <span>Sem foto</span>
+                          </div>
+                        </CarGallery>
                       )}
-                      {profile.telefone && (
-                        <a href={`https://wa.me/${profile.telefone.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer">
-                          <i className="fab fa-whatsapp"></i> Falar com dono
-                        </a>
+                      
+                      <CarSpecs>
+                        <span><i className="fas fa-car"></i> Golf {item.carro?.modelo}</span>
+                        <span><i className="far fa-calendar-alt"></i> {item.carro?.ano_fabricacao || item.carro?.ano}</span>
+                        <span><i className="fas fa-palette"></i> {item.carro?.cor}</span>
+                        {item.carro?.origem && <span><i className="fas fa-globe"></i> {item.carro.origem}</span>}
+                      </CarSpecs>
+
+                      {item.carro?.venda_ativo && (
+                        <SaleBadge>
+                          <h4><i className="fas fa-tags"></i> À Venda</h4>
+                          <div className="price">
+                            {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.carro.venda_preco || 0)}
+                          </div>
+                        </SaleBadge>
                       )}
-                    </div>
-                  </SaleBadge>
+                    </CarClickableArea>
+                  </>
                 )}
 
-                <button 
-                  onClick={() => navigate(`/carro/${carro.id}`)}
-                  style={{
-                    marginTop: '1.5rem',
-                    background: 'transparent',
-                    border: '1px solid #333',
-                    color: 'white',
-                    padding: '0.8rem 1.5rem',
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                    width: '100%',
-                    fontWeight: 'bold',
-                    transition: 'all 0.2s'
-                  }}
-                  onMouseOver={(e) => e.currentTarget.style.borderColor = colors.primary}
-                  onMouseOut={(e) => e.currentTarget.style.borderColor = '#333'}
-                >
-                  <i className="fas fa-search"></i> Ver Projeto Completo
-                </button>
-              </CarInfo>
-            </CarCard>
+                {item.type === 'post' && (
+                  <p>{item.texto}</p>
+                )}
+              </PostContent>
+
+              <PostFooter>
+                <ActionButton $active={item.hasLiked} onClick={() => toggleLike(item)}>
+                  <i className={item.hasLiked ? "fas fa-heart" : "far fa-heart"}></i> {item.likesCount || 0}
+                </ActionButton>
+                <ActionButton onClick={() => handleCommentClick(item)}>
+                  <i className="far fa-comment"></i> {item.commentsCount || 0}
+                </ActionButton>
+              </PostFooter>
+            </PostCard>
           ))
         )}
       </Container>

@@ -55,6 +55,11 @@ const FiltersBar = styled.div`
   border: 1px solid #222;
   border-radius: 12px;
   padding: 1rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
 `;
 
 const SearchInput = styled.input`
@@ -74,10 +79,21 @@ const SearchInput = styled.input`
   &::placeholder {
     color: #555;
   }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    min-width: unset;
+  }
 `;
 
 const SelectWrapper = styled.div`
   min-width: 160px;
+  flex: 1;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    min-width: unset;
+  }
 `;
 
 const SortBadge = styled.button<{ $active?: boolean }>`

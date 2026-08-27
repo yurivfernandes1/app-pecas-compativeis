@@ -7,11 +7,7 @@ import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import { getObjectPosition } from '../utils/imagePos';
 
-const PageWrapper = styled.div`
-  min-height: 100vh;
-  background: #000;
-  padding: 2rem 1rem;
-`;
+import CommunityLayout from '../components/CommunityLayout';
 
 const Container = styled.div`
   max-width: 1000px;
@@ -74,17 +70,32 @@ const GalleryGrid = styled.div<{ $count: number }>`
   height: 500px;
   margin-bottom: 2rem;
 
+  & > div:first-child {
+    grid-row: 1 / -1;
+  }
+
+  @media (min-width: 481px) {
+    & > div:nth-child(n+4) {
+      display: none;
+    }
+  }
+
   ${media.mobile} {
     display: flex;
     flex-direction: row;
-    height: 250px;
+    height: 300px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    gap: 1rem;
+    gap: 0;
+    margin-bottom: 1rem;
     
     & > div {
-      flex: 0 0 85%;
+      flex: 0 0 100%;
       scroll-snap-align: center;
+    }
+
+    & > div:nth-child(n+4) {
+      display: block;
     }
 
     &::-webkit-scrollbar {
@@ -95,39 +106,38 @@ const GalleryGrid = styled.div<{ $count: number }>`
   }
 `;
 
-const MainPhoto = styled.div`
-  grid-row: 1 / -1;
+const PhotoItem = styled.div`
   background: #111;
   border-radius: 12px;
   overflow: hidden;
+  cursor: pointer;
+  position: relative;
   
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-  }
-  
-  ${media.mobile} {
-    height: 100%;
   }
 `;
 
-const SubPhoto = styled.div`
-  background: #111;
-  border-radius: 12px;
-  overflow: hidden;
+const DotsContainer = styled.div`
+  display: none;
   
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
   ${media.mobile} {
-    height: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
   }
+`;
+
+const Dot = styled.div<{ $active: boolean }>`
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: ${p => p.$active ? colors.primary : '#333'};
+  transition: all 0.3s;
 `;
 
 const ContentGrid = styled.div`
@@ -419,6 +429,17 @@ export default function CarroDetails() {
   const [newComment, setNewComment] = useState('');
   const [postingComment, setPostingComment] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(-1);
+  const [activePhotoIndex, setActivePhotoIndex] = useState(0);
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const el = e.currentTarget;
+    const scrollLeft = el.scrollLeft;
+    const itemWidth = el.clientWidth;
+    const newIndex = Math.round(scrollLeft / itemWidth);
+    if (newIndex !== activePhotoIndex) {
+      setActivePhotoIndex(newIndex);
+    }
+  };
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -542,7 +563,7 @@ export default function CarroDetails() {
     }
   };
 
-  if (loading) return <PageWrapper><Container><h2 style={{color: 'white'}}>Carregando...</h2></Container></PageWrapper>;
+  if (loading) return <CommunityLayout><Container><h2 style={{color: 'white'}}>Carregando...</h2></Container></CommunityLayout>;
   if (!carro) return null;
 
   const fotos = carro.fotos || [];
@@ -550,7 +571,7 @@ export default function CarroDetails() {
   const subPhotos = fotos.slice(1, 3); // take next 2
 
   return (
-    <PageWrapper>
+    <CommunityLayout>
       <Container>
         <BackButton onClick={() => navigate(-1)}>
           <i className="fas fa-arrow-left"></i> Voltar
@@ -566,16 +587,23 @@ export default function CarroDetails() {
           </div>
         </CarHeader>
 
-        <GalleryGrid $count={fotos.length}>
-          <MainPhoto onClick={() => setLightboxIndex(0)} style={{ cursor: 'pointer' }}>
-            <img src={mainPhoto} alt="Foto principal" style={{ objectPosition: getObjectPosition(mainPhoto) }} />
-          </MainPhoto>
-          {subPhotos.map((url: string, idx: number) => (
-            <SubPhoto key={idx} onClick={() => setLightboxIndex(idx + 1)} style={{ cursor: 'pointer' }}>
-              <img src={url} alt={`Foto secundária ${idx+1}`} style={{ objectPosition: getObjectPosition(url) }} />
-            </SubPhoto>
-          ))}
-        </GalleryGrid>
+        <div>
+          <GalleryGrid $count={fotos.length} onScroll={handleScroll}>
+            {fotos.map((url: string, idx: number) => (
+              <PhotoItem key={idx} onClick={() => setLightboxIndex(idx)}>
+                <img src={url} alt={`Foto ${idx+1}`} style={{ objectPosition: getObjectPosition(url) }} />
+              </PhotoItem>
+            ))}
+          </GalleryGrid>
+          
+          {fotos.length > 1 && (
+            <DotsContainer>
+              {fotos.map((_: string, idx: number) => (
+                <Dot key={idx} $active={idx === activePhotoIndex} />
+              ))}
+            </DotsContainer>
+          )}
+        </div>
 
         <ContentGrid>
           <InfoSection>
@@ -746,6 +774,6 @@ export default function CarroDetails() {
           slides={fotos.map((url: string) => ({ src: url }))}
         />
       </Container>
-    </PageWrapper>
+    </CommunityLayout>
   );
 }
