@@ -4,12 +4,7 @@ import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import { colors, media } from '../styles/GlobalStyles';
 import { getObjectPosition } from '../utils/imagePos';
-
-const PageWrapper = styled.div`
-  min-height: 100vh;
-  background: #050505;
-  padding: 2rem 1rem;
-`;
+import CommunityLayout from '../components/CommunityLayout';
 
 const Container = styled.div`
   max-width: 1000px;
@@ -313,13 +308,13 @@ export default function MinhaGaragem() {
     }));
   };
 
-  if (loading) return <PageWrapper><Container><h2 style={{color:'white'}}>Carregando...</h2></Container></PageWrapper>;
+  if (loading) return <CommunityLayout><Container><h2 style={{color:'white'}}>Carregando...</h2></Container></CommunityLayout>;
 
   const isPremium = profile?.is_premium || profile?.premium_manual;
   const canAddCar = isPremium || carros.length === 0;
 
   return (
-    <PageWrapper>
+    <CommunityLayout>
       <Container>
         <ProfileHeader>
           <Avatar src={profile?.avatar_url || `https://ui-avatars.com/api/?name=${profile?.nome_completo || profile?.username || 'GTI'}&background=222222&color=dc2626&size=150`} alt="Avatar" />
@@ -417,6 +412,6 @@ export default function MinhaGaragem() {
           <p>Bem-vindo ao Clube VIP! Suas vantagens foram ativadas.</p>
         </div>
       </ToastContainer>
-    </PageWrapper>
+    </CommunityLayout>
   );
 }

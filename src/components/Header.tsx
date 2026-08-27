@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors, media } from '../styles/GlobalStyles';
 import { supabase } from '../lib/supabase';
-import NotificationBell from './NotificationBell';
 
 const HeaderContainer = styled.header`
   background: #0a0a0a;
@@ -278,6 +277,10 @@ const UserMenuContainer = styled.div`
   display: flex;
   align-items: center;
   margin-left: 1rem;
+
+  @media (max-width: 900px) {
+    display: none;
+  }
 `;
 
 const UserButton = styled.button`
@@ -479,7 +482,6 @@ const Header: React.FC = () => {
           <UserMenuContainer>
             {user ? (
               <>
-                <NotificationBell />
                 <UserButton onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
                   {profile ? profile.username : user.email.split('@')[0]} <i className="fas fa-caret-down"></i>
                 </UserButton>
@@ -549,6 +551,31 @@ const Header: React.FC = () => {
                   </MobileNavLink>
                 </li>
               </>
+            )}
+            {user && (
+              <li>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    handleLinkClick();
+                  }}
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    textAlign: 'left',
+                    padding: '1rem',
+                    color: '#ff4444',
+                    background: 'transparent',
+                    border: 'none',
+                    borderBottom: '1px solid #222',
+                    fontSize: '1rem',
+                    fontWeight: 'bold',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <i className="fas fa-sign-out-alt" style={{ marginRight: '8px' }}></i> Sair
+                </button>
+              </li>
             )}
           </MobileNavList>
         </MobileMenu>

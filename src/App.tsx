@@ -27,6 +27,7 @@ import EditarCarro from './pages/EditarCarro';
 import PerfilPublico from './pages/PerfilPublico';
 import CarroDetails from './pages/CarroDetails';
 import GaleriaProjetos from './pages/GaleriaProjetos';
+import Notificacoes from './pages/Notificacoes';
 import AdminConfig from './pages/admin/AdminConfig';
 import AdminProdutos from './pages/admin/AdminProdutos';
 import AdminProdutoForm from './pages/admin/AdminProdutoForm';
@@ -59,6 +60,7 @@ const AppContent: React.FC = () => {
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/feed" element={<Feed />} />
           <Route path="/minha-garagem" element={<MinhaGaragem />} />
+          <Route path="/notificacoes" element={<Notificacoes />} />
           <Route path="/editar-perfil" element={<EditarPerfil />} />
           <Route path="/editar-carro/:id" element={<EditarCarro />} />
           <Route path="/carro/:id" element={<CarroDetails />} />

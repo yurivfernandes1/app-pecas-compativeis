@@ -4,11 +4,7 @@ import { supabase } from '../lib/supabase';
 import { colors, media } from '../styles/GlobalStyles';
 import { useParams, useNavigate } from 'react-router-dom';
 
-const PageWrapper = styled.div`
-  min-height: 100vh;
-  background: #050505;
-  padding: 2rem 1rem;
-`;
+import CommunityLayout from '../components/CommunityLayout';
 
 const Container = styled.div`
   max-width: 1000px;
@@ -292,13 +288,10 @@ export default function PerfilPublico() {
     }
   };
 
-  if (loading) {
-    return <PageWrapper><Container><h2 style={{color:'white'}}>Carregando perfil...</h2></Container></PageWrapper>;
-  }
-
+  if (loading) return <CommunityLayout><Container><h2 style={{color:'white'}}>Carregando perfil...</h2></Container></CommunityLayout>;
   if (!profile) {
     return (
-      <PageWrapper>
+      <CommunityLayout>
         <Container style={{ textAlign: 'center', paddingTop: '4rem' }}>
           <i className="fas fa-user-slash" style={{ fontSize: '4rem', color: '#555', marginBottom: '1rem' }}></i>
           <h2 style={{color:'white'}}>Usuário não encontrado</h2>
@@ -306,12 +299,12 @@ export default function PerfilPublico() {
             Voltar para Comunidade
           </button>
         </Container>
-      </PageWrapper>
+      </CommunityLayout>
     );
   }
 
   return (
-    <PageWrapper>
+    <CommunityLayout>
       <Container>
         <ProfileHeader>
           <Avatar src={profile?.avatar_url || `https://ui-avatars.com/api/?name=${profile?.nome_completo || profile?.username || 'GTI'}&background=222222&color=dc2626&size=150`} alt="Avatar" />
@@ -415,6 +408,6 @@ export default function PerfilPublico() {
           ))
         )}
       </Container>
-    </PageWrapper>
+    </CommunityLayout>
   );
 }

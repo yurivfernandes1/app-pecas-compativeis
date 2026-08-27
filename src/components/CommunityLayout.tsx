@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { colors, media } from '../styles/GlobalStyles';
@@ -81,7 +81,17 @@ const SidebarLink = styled(Link)<{ $active?: boolean }>`
   }
 `;
 
-const MobileBar = styled.nav`
+const NotificationBadgeDesktop = styled.span`
+  background: ${colors.primary};
+  color: white;
+  font-size: 0.65rem;
+  font-weight: bold;
+  border-radius: 12px;
+  padding: 0.1rem 0.4rem;
+  margin-left: auto;
+`;
+
+const MobileBar = styled.nav<{ $visible: boolean }>`
   display: none;
 
   @media (max-width: 900px) {
@@ -93,10 +103,13 @@ const MobileBar = styled.nav`
     background: rgba(10, 10, 10, 0.97);
     border-top: 1px solid #222;
     padding: 0.4rem 0;
+    padding-bottom: env(safe-area-inset-bottom, 0.4rem);
     z-index: 999;
     justify-content: space-around;
     align-items: center;
     backdrop-filter: blur(10px);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(${p => p.$visible ? '0' : '100%'});
   }
 `;
 
@@ -106,21 +119,50 @@ const MobileItem = styled(Link)<{ $active?: boolean }>`
   align-items: center;
   gap: 0.2rem;
   text-decoration: none;
-  color: ${p => p.$active ? colors.primary : '#666'};
+  color: ${p => p.$active ? `${colors.primary} !important` : '#666'};
   font-size: 0.6rem;
   text-transform: uppercase;
   letter-spacing: 0.4px;
-  padding: 0.4rem 0.8rem;
+  padding: 0.4rem;
   border-radius: 8px;
   transition: all 0.2s;
+  position: relative;
+  flex: 1;
 
   i {
     font-size: 1.25rem;
+    color: ${p => p.$active ? `${colors.primary} !important` : 'inherit'};
+  }
+
+  img {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid ${p => p.$active ? colors.primary : 'transparent'};
   }
 
   &:hover {
     color: ${colors.primary};
   }
+`;
+
+const NotificationBadge = styled.span`
+  position: absolute;
+  top: 0;
+  right: 50%;
+  margin-right: -12px;
+  background: ${colors.primary};
+  color: white;
+  font-size: 0.55rem;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #0a0a0a;
 `;
 
 const Content = styled.main`
@@ -136,11 +178,53 @@ interface CommunityLayoutProps {
 
 const CommunityLayout: React.FC<CommunityLayoutProps> = ({ children }) => {
   const location = useLocation();
-  const [session, setSession] = React.useState<any>(null);
+  const [session, setSession] = useState<any>(null);
+  const [profile, setProfile] = useState<any>(null);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [isMobileBarVisible, setIsMobileBarVisible] = useState(true);
 
-  React.useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => setSession(data.session));
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, s) => setSession(s));
+  useEffect(() => {
+    let lastScrollY = window.pageYOffset;
+    
+    const handleScroll = () => {
+      const currentScrollY = window.pageYOffset;
+      if (currentScrollY > lastScrollY && currentScrollY > 60) {
+        setIsMobileBarVisible(false);
+      } else {
+        setIsMobileBarVisible(true);
+      }
+      lastScrollY = currentScrollY;
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const fetchProfileAndData = async (userId: string) => {
+      const { data: userProfile } = await supabase.from('mk3_users').select('*').eq('id', userId).single();
+      if (userProfile) setProfile(userProfile);
+      
+      const { count } = await supabase
+        .from('mk3_notifications')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', userId)
+        .eq('read', false);
+        
+      if (count !== null) setUnreadCount(count);
+    };
+
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      if (data.session) fetchProfileAndData(data.session.user.id);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, s) => {
+      setSession(s);
+      if (s) fetchProfileAndData(s.user.id);
+      else setProfile(null);
+    });
+
     return () => subscription.unsubscribe();
   }, []);
 
@@ -170,8 +254,9 @@ const CommunityLayout: React.FC<CommunityLayoutProps> = ({ children }) => {
               </SidebarLink>
               {session ? (
                 <>
-                  <SidebarLink to="/onboarding" $active={isActive('/onboarding')}>
-                    <i className="fas fa-plus-circle" /> Novo Projeto
+                  <SidebarLink to="/notificacoes" $active={isActive('/notificacoes')}>
+                    <i className="fas fa-bell" /> Notificações
+                    {unreadCount > 0 && <NotificationBadgeDesktop>{unreadCount}</NotificationBadgeDesktop>}
                   </SidebarLink>
                   <SidebarLink to="/editar-perfil" $active={isActive('/editar-perfil')}>
                     <i className="fas fa-user-edit" /> Editar Perfil
@@ -190,9 +275,9 @@ const CommunityLayout: React.FC<CommunityLayoutProps> = ({ children }) => {
       </Wrapper>
 
       {/* Barra de navegação inferior para mobile */}
-      <MobileBar>
+      <MobileBar $visible={isMobileBarVisible}>
         <MobileItem to="/feed" $active={isActive('/feed')}>
-          <i className="fas fa-stream" />
+          <i className="fas fa-home" />
           Feed
         </MobileItem>
         <MobileItem to="/galeria" $active={isActive('/galeria')}>
@@ -203,10 +288,25 @@ const CommunityLayout: React.FC<CommunityLayoutProps> = ({ children }) => {
           <i className="fas fa-car" />
           Garagem
         </MobileItem>
-        {session && (
-          <MobileItem to="/onboarding" $active={isActive('/onboarding')}>
-            <i className="fas fa-plus-circle" />
-            Novo
+        {session && profile ? (
+          <>
+            <MobileItem to="/notificacoes" $active={isActive('/notificacoes')}>
+              {unreadCount > 0 && <NotificationBadge>{unreadCount}</NotificationBadge>}
+              <i className="fas fa-bell" />
+              Alertas
+            </MobileItem>
+            <MobileItem to={`/u/${profile.username}`} $active={isActive(`/u/${profile.username}`)}>
+              <img 
+                src={profile.avatar_url || `https://ui-avatars.com/api/?name=${profile.username}&background=222222&color=dc2626`} 
+                alt="Perfil" 
+              />
+              Perfil
+            </MobileItem>
+          </>
+        ) : (
+          <MobileItem to="/login" $active={isActive('/login')}>
+            <i className="fas fa-user" />
+            Entrar
           </MobileItem>
         )}
       </MobileBar>

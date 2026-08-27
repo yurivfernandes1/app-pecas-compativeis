@@ -355,6 +355,10 @@ export const Watermark = styled.div`
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   font-size: 0.75rem;
-  z-index: 1000;
+  z-index: 900;
   pointer-events: none;
+
+  @media (max-width: 900px) {
+    display: none;
+  }
 `;
