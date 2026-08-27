@@ -202,7 +202,7 @@ const CarInfo = styled.div`
 
 const ToastContainer = styled.div<{ $show: boolean }>`
   position: fixed;
-  bottom: ${props => props.$show ? '30px' : '-150px'};
+  bottom: ${props => props.$show ? '30px' : '-200px'};
   left: 50%;
   transform: translateX(-50%);
   background: #111;
@@ -214,6 +214,8 @@ const ToastContainer = styled.div<{ $show: boolean }>`
   gap: 1.5rem;
   box-shadow: 0 10px 40px rgba(220, 38, 38, 0.4);
   transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  opacity: ${props => props.$show ? '1' : '0'};
+  pointer-events: ${props => props.$show ? 'auto' : 'none'};
   z-index: 1000;
   
   i {

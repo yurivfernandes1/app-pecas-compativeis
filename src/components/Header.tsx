@@ -365,6 +365,15 @@ const AuthButton = styled(Link)<{ $primary?: boolean }>`
   }
 `;
 
+const DesktopAuth = styled.div`
+  display: none;
+
+  ${media.tablet} {
+    display: flex;
+    align-items: center;
+  }
+`;
+
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -472,7 +481,7 @@ const Header: React.FC = () => {
               <>
                 <NotificationBell />
                 <UserButton onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
-                  {profile ? `@${profile.username}` : user.email.split('@')[0]} <i className="fas fa-caret-down"></i>
+                  {profile ? profile.username : user.email.split('@')[0]} <i className="fas fa-caret-down"></i>
                 </UserButton>
                 <DropdownMenu $isOpen={isUserMenuOpen}>
                   <DropdownItem to="/minha-garagem" onClick={() => setIsUserMenuOpen(false)}>
@@ -492,10 +501,9 @@ const Header: React.FC = () => {
                 </DropdownMenu>
               </>
             ) : (
-              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                <AuthButton to="/login">Entrar</AuthButton>
-                <AuthButton to="/cadastro" $primary>Criar conta</AuthButton>
-              </div>
+              <DesktopAuth>
+                <AuthButton to="/login" style={{ border: `1px solid ${colors.primary}`, color: colors.white }}>Entrar</AuthButton>
+              </DesktopAuth>
             )}
           </UserMenuContainer>
 
@@ -519,6 +527,29 @@ const Header: React.FC = () => {
                 </MobileNavLink>
               </li>
             ))}
+            {!user && (
+              <>
+                <li>
+                  <MobileNavLink 
+                    to="/login" 
+                    $isActive={isActive('/login')}
+                    onClick={handleLinkClick}
+                    style={{ color: colors.primary, fontWeight: 'bold' }}
+                  >
+                    <i className="fas fa-sign-in-alt" style={{ marginRight: '8px' }}></i> Entrar
+                  </MobileNavLink>
+                </li>
+                <li>
+                  <MobileNavLink 
+                    to="/cadastro" 
+                    $isActive={isActive('/cadastro')}
+                    onClick={handleLinkClick}
+                  >
+                    Criar conta
+                  </MobileNavLink>
+                </li>
+              </>
+            )}
           </MobileNavList>
         </MobileMenu>
       </Container>

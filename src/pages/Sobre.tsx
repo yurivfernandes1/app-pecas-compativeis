@@ -326,14 +326,14 @@ const Sobre: React.FC = () => {
                 </div>
                 <div className="tech">
                   <i className="fas fa-database"></i>
-                  <span>JSON</span>
+                  <span>Supabase</span>
                 </div>
               </TechStack>
 
               <h3>Arquitetura</h3>
               <ul>
-                <li><strong>Frontend Only:</strong> Aplicação 100% client-side</li>
-                <li><strong>Sem Backend:</strong> Dados em JSON integrados ao frontend</li>
+                <li><strong>BaaS (Backend as a Service):</strong> Autenticação e dados integrados com Supabase</li>
+                <li><strong>Banco de Dados:</strong> Estrutura relacional escalável e em tempo real</li>
                 <li><strong>Mobile-First:</strong> Design responsivo com foco em mobile</li>
                 <li><strong>Performance:</strong> Carregamento rápido e otimizado</li>
               </ul>
