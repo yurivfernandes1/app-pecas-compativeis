@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import ImagePositionModal from '../components/ImagePositionModal';
 import CustomSelect from '../components/CustomSelect';
 import styled from 'styled-components';
@@ -6,6 +6,8 @@ import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import { colors, media } from '../styles/GlobalStyles';
 import imageCompression from 'browser-image-compression';
+import SuperTrunfoCard, { exportSuperTrunfoCard } from '../components/SuperTrunfoCard';
+import { calculateSuperTrunfoPoints } from '../utils/superTrunfo';
 
 const PageWrapper = styled.div`
   min-height: 100vh;
@@ -93,13 +95,19 @@ const PhotoGrid = styled.div`
   margin-top: 1rem;
 `;
 
-const PhotoPreview = styled.div`
+const PhotoPreview = styled.div<{ $isCapa?: boolean }>`
   position: relative;
-  aspect-ratio: 1;
+  width: 100%;
+  padding-bottom: ${props => props.$isCapa ? '56.25%' : '100%'};
+  grid-column: ${props => props.$isCapa ? '1 / -1' : 'auto'};
   border-radius: 8px;
   overflow: hidden;
+  background: #222;
+  border: ${props => props.$isCapa ? `2px solid ${colors.primary}` : 'none'};
 
   img {
+    position: absolute;
+    top: 0; left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -359,6 +367,7 @@ export default function Onboarding() {
   const navigate = useNavigate();
 
   const [isPremium, setIsPremium] = useState(false);
+  const [currentUsername, setCurrentUsername] = useState('');
   const [photos, setPhotos] = useState<{file: File, pos: string}[]>([]);
   const [cropModalData, setCropModalData] = useState<{index: number, url: string} | null>(null);
   const [isDragActive, setIsDragActive] = useState(false);
@@ -373,7 +382,8 @@ export default function Onboarding() {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
         let isUserPremium = false;
-        const { data } = await supabase.from('mk3_users').select('is_premium, premium_manual').eq('id', session.user.id).single();
+        const { data } = await supabase.from('mk3_users').select('username, is_premium, premium_manual').eq('id', session.user.id).single();
+        if (data?.username) setCurrentUsername(data.username);
         if (data && (data.is_premium || data.premium_manual)) {
           isUserPremium = true;
           setIsPremium(true);
@@ -390,10 +400,14 @@ export default function Onboarding() {
       
       const { data: tags } = await supabase.from('mk3_car_tags').select('*');
       if (tags) {
+        setAllTags(tags);
         setAvailableOpcionais(tags.filter(t => t.tipo === 'opcional').sort((a, b) => a.nome.localeCompare(b.nome)));
         setAvailablePecas(tags.filter(t => t.tipo === 'peca_rara').sort((a, b) => a.nome.localeCompare(b.nome)));
         setAvailableModMotor(tags.filter(t => t.tipo === 'mod_motor').sort((a, b) => a.nome.localeCompare(b.nome)));
         setAvailableRodas(tags.filter(t => t.tipo === 'roda').sort((a, b) => a.nome.localeCompare(b.nome)));
+        setAvailableTiposSuspensao(tags.filter(t => t.tipo === 'tipo_suspensao').sort((a, b) => a.nome.localeCompare(b.nome)));
+        setAvailableMarcasSuspensao(tags.filter(t => t.tipo === 'marca_suspensao').sort((a, b) => a.nome.localeCompare(b.nome)));
+        setAvailableVersoes(tags.filter(t => t.tipo === 'versao_carro'));
       }
 
       const { data: settings } = await supabase.from('mk3_settings').select('premium_price').limit(1).single();
@@ -409,7 +423,8 @@ export default function Onboarding() {
     modelo: 'GTI',
     ano: '1995',
     ano_modelo: '1995',
-    cor: 'Vermelho Tornado',
+    cor: 'Vermelho Flash',
+    origem: 'Alemanha (Wolfsburg/Zwickau)',
     descricao: ''
   });
   
@@ -418,38 +433,34 @@ export default function Onboarding() {
   const [problemas, setProblemas] = useState('');
   const [instagramUrl, setInstagramUrl] = useState('');
   
-  // Tags do banco
+  const [allTags, setAllTags] = useState<any[]>([]);
   const [availableOpcionais, setAvailableOpcionais] = useState<any[]>([]);
   const [availablePecas, setAvailablePecas] = useState<any[]>([]);
   const [availableModMotor, setAvailableModMotor] = useState<any[]>([]);
+  const [availableRodas, setAvailableRodas] = useState<any[]>([]);
+  const [availableTiposSuspensao, setAvailableTiposSuspensao] = useState<any[]>([]);
+  const [availableMarcasSuspensao, setAvailableMarcasSuspensao] = useState<any[]>([]);
+  const [availableVersoes, setAvailableVersoes] = useState<any[]>([]);
   
-  // Tags selecionadas
   const [selectedOpcionais, setSelectedOpcionais] = useState<string[]>([]);
   const [selectedPecas, setSelectedPecas] = useState<string[]>([]);
   const [selectedModMotor, setSelectedModMotor] = useState<string[]>([]);
 
-  // Rodas
-  const [availableRodas, setAvailableRodas] = useState<any[]>([]);
   const [aroRoda, setAroRoda] = useState('');
   const [modeloRoda, setModeloRoda] = useState('');
   const [customRoda, setCustomRoda] = useState('');
+  const [talaRoda, setTalaRoda] = useState('');
 
-  // Modificações Motor e Suspensão
+  const [calculatedPoints, setCalculatedPoints] = useState({ motor: 0, suspensao: 0, pecas: 0, opcionais: 0, rodas: 0, total: 0 });
   const [modificacaoMotor, setModificacaoMotor] = useState(false);
   const [potenciaMotor, setPotenciaMotor] = useState('');
   const [modificacaoSuspensao, setModificacaoSuspensao] = useState(false);
   const [tipoSuspensao, setTipoSuspensao] = useState('');
   const [marcaSuspensao, setMarcaSuspensao] = useState('');
+  const [placaPreta, setPlacaPreta] = useState(false);
 
-  const tiposSuspensao = [
-    'mola esportiva', 'mola cortada', 'suspensão fixa preparada', 
-    'suspensão a rosca', 'suspensão coilover', 'suspensão a ar'
-  ];
-  
-  const marcasSuspensao = [
-    'Tebao', 'castor', 'macaulay', 'sector', 'nasa', 'As suspensões', 
-    'Impacto suspensões', 'Surface', 'Redcoil', 'eibach', 'H&R', 'HKI', 'outros'
-  ];
+  const tiposSuspensao = availableTiposSuspensao.map(t => t.nome);
+  const marcasSuspensao = availableMarcasSuspensao.map(t => t.nome);
 
   const origens = [
     { value: 'Alemanha (Wolfsburg/Zwickau)', label: '🇩🇪 Alemanha (Wolfsburg/Zwickau)' },
@@ -468,7 +479,7 @@ export default function Onboarding() {
   };
 
   const [isSelectOpen, setIsSelectOpen] = useState(false);
-  const modelos = [
+  const defaultModelos = [
     { label: 'GTI (2.0 8v/16v)', value: 'GTI' },
     { label: 'GLX (2.0 8v)', value: 'GLX' },
     { label: 'VR6 (2.8 12v)', value: 'VR6' },
@@ -480,6 +491,24 @@ export default function Onboarding() {
     { label: 'Cabrio', value: 'Cabrio' },
     { label: 'Outro', value: 'Outro' }
   ];
+
+  const modelos = useMemo(() => {
+    if (!availableVersoes || availableVersoes.length === 0) {
+      return defaultModelos;
+    }
+    const list = availableVersoes.map(v => {
+      const match = defaultModelos.find(m => m.value.toLowerCase() === v.nome.toLowerCase());
+      return {
+        label: match ? match.label : v.nome,
+        value: v.nome
+      };
+    });
+    if (form.modelo && !list.some(m => m.value.toLowerCase() === form.modelo.toLowerCase())) {
+      list.push({ label: form.modelo, value: form.modelo });
+    }
+    return list;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [availableVersoes, form.modelo]);
 
   const handleFiles = (newFiles: File[]) => {
     const limit = isPremium ? 12 : 3;
@@ -548,15 +577,16 @@ export default function Onboarding() {
         }
       }
 
-      const { error: insertError } = await supabase.from('mk3_garagem').insert({
+      const carroData: any = {
         user_id: session.user.id,
         modelo: form.modelo,
         ano_fabricacao: form.ano,
-        ano_modelo: form.ano_modelo,
+        ano_modelo: form.ano_modelo || form.ano,
         cor: form.cor,
         descricao: form.descricao,
         fotos: uploadedUrls,
         aro_roda: aroRoda,
+        tala_roda: talaRoda !== '' ? parseInt(talaRoda) : null,
         modelo_roda: modeloRoda === 'Outros' ? customRoda : modeloRoda,
         opcionais: selectedOpcionais,
         pecas_raras: selectedPecas,
@@ -568,8 +598,29 @@ export default function Onboarding() {
         modificacoes_motor: selectedModMotor,
         modificacao_suspensao: modificacaoSuspensao,
         tipo_suspensao: tipoSuspensao,
-        marca_suspensao: marcaSuspensao
-      });
+        marca_suspensao: marcaSuspensao,
+        placa_preta: placaPreta
+      };
+
+      const points = calculateSuperTrunfoPoints(carroData, allTags);
+      carroData.pontuacao_total = points.total;
+      setCalculatedPoints(points);
+
+      let { error: insertError } = await supabase.from('mk3_garagem').insert(carroData);
+
+      // Se o banco ainda não tiver a coluna tala_roda, tenta salvar sem ela
+      if (insertError && insertError.message && insertError.message.includes('tala_roda')) {
+        const { tala_roda, ...carroDataSemTala } = carroData;
+        const retry = await supabase.from('mk3_garagem').insert(carroDataSemTala);
+        insertError = retry.error;
+      }
+
+      // Se o banco ainda não tiver a coluna placa_preta, tenta salvar sem ela
+      if (insertError && insertError.message && insertError.message.includes('placa_preta')) {
+        const { placa_preta, ...carroDataSemPlaca } = carroData;
+        const retry = await supabase.from('mk3_garagem').insert(carroDataSemPlaca);
+        insertError = retry.error;
+      }
 
       if (insertError) {
         console.error('Erro ao salvar carro:', insertError);
@@ -579,7 +630,8 @@ export default function Onboarding() {
       }
       
       if (isPremium) {
-        navigate('/minha-garagem');
+        setStep(3);
+        setLoading(false);
       } else {
         setStep(2);
         setLoading(false);
@@ -590,7 +642,7 @@ export default function Onboarding() {
   };
 
   const handleFreePlan = () => {
-    navigate('/minha-garagem');
+    setStep(3);
   };
 
   const handlePremiumPlan = async () => {
@@ -624,6 +676,64 @@ export default function Onboarding() {
             <Subtitle>Para começar, cadastre o seu primeiro carro na sua garagem virtual.</Subtitle>
             
             <form onSubmit={handleSubmit}>
+              {/* FLAG PLACA PRETA */}
+              <div 
+                onClick={() => setPlacaPreta(!placaPreta)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '1rem 1.25rem',
+                  background: placaPreta ? 'linear-gradient(135deg, #18181b, #09090b)' : '#18181b',
+                  border: placaPreta ? '1.5px solid #d4af37' : '1px solid #27272a',
+                  borderRadius: '12px',
+                  cursor: 'pointer',
+                  marginBottom: '1.5rem',
+                  transition: 'all 0.2s ease',
+                  boxShadow: placaPreta ? '0 4px 20px rgba(212, 175, 55, 0.15)' : 'none'
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <div style={{
+                    background: '#000',
+                    color: '#fff',
+                    border: '1px solid #444',
+                    padding: '4px 10px',
+                    borderRadius: '4px',
+                    fontFamily: 'monospace',
+                    fontWeight: 900,
+                    fontSize: '0.95rem',
+                    letterSpacing: '1px',
+                    boxShadow: 'inset 0 0 5px rgba(255,255,255,0.1)'
+                  }}>
+                    ⬛ BRASIL
+                  </div>
+                  <div>
+                    <strong style={{ color: placaPreta ? '#fef08a' : '#fff', fontSize: '1rem', display: 'block' }}>
+                      Placa Preta / Certificado de Coleção
+                    </strong>
+                    <span style={{ color: '#a1a1aa', fontSize: '0.8rem' }}>
+                      Veículo com certificado de originalidade (+50 pts no Super Trunfo)
+                    </span>
+                  </div>
+                </div>
+                <div style={{
+                  width: '24px',
+                  height: '24px',
+                  borderRadius: '6px',
+                  border: placaPreta ? '2px solid #d4af37' : '2px solid #52525b',
+                  background: placaPreta ? '#d4af37' : 'transparent',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#000',
+                  fontWeight: 900,
+                  fontSize: '0.8rem'
+                }}>
+                  {placaPreta && <i className="fas fa-check" />}
+                </div>
+              </div>
+
               <FormGroup style={{ position: 'relative', zIndex: 50 }}>
                 <label>Versão / Modelo</label>
                 <CustomSelectWrapper>
@@ -739,6 +849,17 @@ export default function Onboarding() {
                       options={[14, 15, 16, 17, 18, 19, 20].map(aro => ({ label: `${aro}"`, value: String(aro) }))}
                     />
                   </FormGroup>
+                  <FormGroup style={{ flex: 1, minWidth: '160px', marginBottom: 0 }}>
+                    <label>Tala (-40 a +80)</label>
+                    <input 
+                      type="number" 
+                      min="-40" 
+                      max="80" 
+                      value={talaRoda} 
+                      onChange={e => setTalaRoda(e.target.value)} 
+                      placeholder="Ex: 35" 
+                    />
+                  </FormGroup>
                   <FormGroup style={{ flex: 2, minWidth: '200px', marginBottom: 0 }}>
                     <label>Modelo da Roda</label>
                     <CustomSelect 
@@ -769,7 +890,8 @@ export default function Onboarding() {
               </details>
 
               <details style={{ margin: '2rem 0', width: '100%', background: '#1a1a1a', padding: '1.5rem', borderRadius: '12px', border: '1px solid #333' }}>
-                <summary style={{ color: 'white', cursor: 'pointer', outline: 'none', fontWeight: 'bold', fontSize: '1.1rem' }}>
+                <summary style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'white', cursor: 'pointer', outline: 'none', fontWeight: 'bold', fontSize: '1.1rem' }}>
+                  <i className="fas fa-chevron-down" style={{ fontSize: '0.9rem', color: '#888' }}></i>
                   Peças Raras / Acessórios
                 </summary>
                 <div style={{ paddingTop: '1.5rem' }}>
@@ -885,9 +1007,9 @@ export default function Onboarding() {
 
 
               <FormGroup>
-                <label>Conte-nos um pouco sobre o seu projeto (Opcional)</label>
+                <label>Descrição do Projeto (Histórico, Curiosidades)</label>
                 <textarea 
-                  rows={4}
+                  rows={6}
                   value={form.descricao} 
                   onChange={e => setForm({...form, descricao: e.target.value})}
                   placeholder="Minha história com esse carro..."
@@ -933,7 +1055,7 @@ export default function Onboarding() {
                     {photos.map((p, idx) => {
                       const url = URL.createObjectURL(p.file);
                       return (
-                      <PhotoPreview key={idx}>
+                      <PhotoPreview key={idx} $isCapa={idx === 0}>
                         <img src={url} alt="Preview" style={{ objectPosition: p.pos.replace(',', '% ') + '%' }} />
                         <div style={{ position: 'absolute', top: 5, left: 5, display: 'flex', gap: '5px' }}>
                           <button type="button" onClick={() => {
@@ -985,7 +1107,7 @@ export default function Onboarding() {
               </button>
             </form>
           </>
-        ) : (
+        ) : step === 2 ? (
           <>
             <Title>Escolha seu Plano 🏆</Title>
             <Subtitle>Você está quase lá! Como você deseja participar da comunidade?</Subtitle>
@@ -1022,6 +1144,30 @@ export default function Onboarding() {
                 </Button>
               </PlanCard>
             </PlanGrid>
+          </>
+        ) : (
+          <>
+            <Title>🎉 Projeto Salvo!</Title>
+            <Subtitle style={{ marginBottom: '2rem' }}>O seu Golf entrou pro ranking da comunidade! Baixe sua carta Super Trunfo para o Instagram!</Subtitle>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
+              <Button type="button" onClick={() => exportSuperTrunfoCard('super-trunfo-169-onb', form.modelo, currentUsername)} style={{ background: '#222', border: '1px solid #444', width: '100%', maxWidth: '300px' }}>
+                <i className="fab fa-instagram" /> Stories (9:16)
+              </Button>
+              <Button type="button" onClick={() => exportSuperTrunfoCard('super-trunfo-45-onb', form.modelo, currentUsername)} style={{ background: '#222', border: '1px solid #444', width: '100%', maxWidth: '300px' }}>
+                <i className="fab fa-instagram"></i> Baixar Feed (4:5)
+              </Button>
+            </div>
+            
+            <button 
+              type="button"
+              onClick={() => navigate('/minha-garagem')}
+              style={{ width: '100%', background: 'transparent', color: '#999', border: 'none', marginTop: '2rem', cursor: 'pointer', textDecoration: 'underline' }}
+            >
+              Ir para Minha Garagem
+            </button>
+            <SuperTrunfoCard id="super-trunfo-169-onb" carName={form.modelo} ownerUsername={currentUsername} photoUrl={photos[0]?.file ? `${URL.createObjectURL(photos[0].file)}${photos[0].pos ? `?pos=${photos[0].pos}` : ''}` : ''} ratio="9:16" points={calculatedPoints} hp={potenciaMotor} placaPreta={placaPreta} />
+            <SuperTrunfoCard id="super-trunfo-45-onb" carName={form.modelo} ownerUsername={currentUsername} photoUrl={photos[0]?.file ? `${URL.createObjectURL(photos[0].file)}${photos[0].pos ? `?pos=${photos[0].pos}` : ''}` : ''} ratio="4:5" points={calculatedPoints} hp={potenciaMotor} placaPreta={placaPreta} />
           </>
         )}
       </FormContainer>

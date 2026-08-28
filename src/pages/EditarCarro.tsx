@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import ImagePositionModal from '../components/ImagePositionModal';
 import { getObjectPosition } from '../utils/imagePos';
 import styled from 'styled-components';
@@ -7,6 +7,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import imageCompression from 'browser-image-compression';
 import { colors, media } from '../styles/GlobalStyles';
 import CustomSelect from '../components/CustomSelect';
+import SuperTrunfoCard, { exportSuperTrunfoCard } from '../components/SuperTrunfoCard';
+import { calculateSuperTrunfoPoints } from '../utils/superTrunfo';
 
 const PageWrapper = styled.div`
   min-height: 100vh;
@@ -28,6 +30,61 @@ const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const ExportModal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 1rem;
+`;
+
+const ExportModalContent = styled.div`
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid #333;
+  color: white;
+  
+  h2 { margin-bottom: 1rem; color: ${colors.primary}; }
+  p { margin-bottom: 2rem; color: #ccc; }
+  
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+`;
+
+const ExportButton = styled.button`
+  background: #222;
+  border: 1px solid #444;
+  color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+  
+  &:hover {
+    background: #333;
+    border-color: ${colors.primary};
+  }
 `;
 
 const FormGroup = styled.div`
@@ -99,13 +156,15 @@ const PhotoGrid = styled.div`
   width: 100%;
 `;
 
-const PhotoThumbnail = styled.div`
+const PhotoThumbnail = styled.div<{ $isCapa?: boolean }>`
   position: relative;
   width: 100%;
-  padding-bottom: 100%;
+  padding-bottom: ${props => props.$isCapa ? '56.25%' : '100%'};
+  grid-column: ${props => props.$isCapa ? '1 / -1' : 'auto'};
   border-radius: 8px;
   overflow: hidden;
   background: #222;
+  border: ${props => props.$isCapa ? `2px solid ${colors.primary}` : 'none'};
 
   img {
     position: absolute;
@@ -299,7 +358,12 @@ export default function EditarCarro() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [showExportModal, setShowExportModal] = useState(false);
+  const [transferUsername, setTransferUsername] = useState('');
+  const [transferLoading, setTransferLoading] = useState(false);
+  const [calculatedPoints, setCalculatedPoints] = useState({ motor: 0, suspensao: 0, pecas: 0, opcionais: 0, rodas: 0, total: 0 });
   const [isPremium, setIsPremium] = useState(false);
+  const [currentUsername, setCurrentUsername] = useState('');
   
   const [modelo, setModelo] = useState('');
   const [ano, setAno] = useState('');
@@ -334,27 +398,26 @@ export default function EditarCarro() {
   const [aroRoda, setAroRoda] = useState('');
   const [modeloRoda, setModeloRoda] = useState('');
   const [customRoda, setCustomRoda] = useState('');
+  const [talaRoda, setTalaRoda] = useState('');
 
   // Modificações Motor e Suspensão
+  const [allTags, setAllTags] = useState<any[]>([]);
+  const [availableTiposSuspensao, setAvailableTiposSuspensao] = useState<any[]>([]);
+  const [availableMarcasSuspensao, setAvailableMarcasSuspensao] = useState<any[]>([]);
   const [modificacaoMotor, setModificacaoMotor] = useState(false);
   const [potenciaMotor, setPotenciaMotor] = useState('');
   const [modificacaoSuspensao, setModificacaoSuspensao] = useState(false);
   const [tipoSuspensao, setTipoSuspensao] = useState('');
   const [marcaSuspensao, setMarcaSuspensao] = useState('');
+  const [placaPreta, setPlacaPreta] = useState(false);
+  const [availableVersoes, setAvailableVersoes] = useState<any[]>([]);
 
-  const tiposSuspensao = [
-    'mola esportiva', 'mola cortada', 'suspensão fixa preparada', 
-    'suspensão a rosca', 'suspensão coilover', 'suspensão a ar'
-  ];
-  
-  const marcasSuspensao = [
-    'Tebao', 'castor', 'macaulay', 'sector', 'nasa', 'As suspensões', 
-    'Impacto suspensões', 'Surface', 'Redcoil', 'eibach', 'H&R', 'HKI', 'outros'
-  ];
+  const tiposSuspensao = availableTiposSuspensao.map(t => t.nome);
+  const marcasSuspensao = availableMarcasSuspensao.map(t => t.nome);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const modelos = [
+  const defaultModelos = [
     { label: 'GTI (2.0 8v/16v)', value: 'GTI' },
     { label: 'GLX (2.0 8v)', value: 'GLX' },
     { label: 'VR6 (2.8 12v)', value: 'VR6' },
@@ -366,6 +429,24 @@ export default function EditarCarro() {
     { label: 'Cabrio', value: 'Cabrio' },
     { label: 'Outro', value: 'Outro' }
   ];
+
+  const modelos = useMemo(() => {
+    if (!availableVersoes || availableVersoes.length === 0) {
+      return defaultModelos;
+    }
+    const list = availableVersoes.map(v => {
+      const match = defaultModelos.find(m => m.value.toLowerCase() === v.nome.toLowerCase());
+      return {
+        label: match ? match.label : v.nome,
+        value: v.nome
+      };
+    });
+    if (modelo && !list.some(m => m.value.toLowerCase() === modelo.toLowerCase())) {
+      list.push({ label: modelo, value: modelo });
+    }
+    return list;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [availableVersoes, modelo]);
 
   const origens = [
     { value: 'Alemanha (Wolfsburg/Zwickau)', label: '🇩🇪 Alemanha (Wolfsburg/Zwickau)' },
@@ -388,22 +469,28 @@ export default function EditarCarro() {
     }
 
     // Buscar perfil do usuário
-    const { data: profile } = await supabase.from('mk3_users').select('is_premium, premium_manual').eq('id', session.user.id).single();
+    const { data: profile } = await supabase.from('mk3_users').select('username, is_premium, premium_manual').eq('id', session.user.id).single();
     setIsPremium(profile?.is_premium || profile?.premium_manual || false);
+    if (profile?.username) setCurrentUsername(profile.username);
 
     // Buscar Tags do sistema
     const { data: tags } = await supabase.from('mk3_car_tags').select('*');
     if (tags) {
+      setAllTags(tags);
       setAvailableOpcionais(tags.filter(t => t.tipo === 'opcional'));
       setAvailablePecas(tags.filter(t => t.tipo === 'peca_rara'));
       setAvailableModMotor(tags.filter(t => t.tipo === 'mod_motor'));
       setAvailableRodas(tags.filter(t => t.tipo === 'roda'));
+      setAvailableTiposSuspensao(tags.filter(t => t.tipo === 'tipo_suspensao').sort((a, b) => a.nome.localeCompare(b.nome)));
+      setAvailableMarcasSuspensao(tags.filter(t => t.tipo === 'marca_suspensao').sort((a, b) => a.nome.localeCompare(b.nome)));
+      setAvailableVersoes(tags.filter(t => t.tipo === 'versao_carro'));
     }
 
     // Buscar carro
     const { data: carro } = await supabase.from('mk3_garagem').select('*').eq('id', id).single();
     if (carro) {
       setModelo(carro.modelo || 'GTI');
+      setPlacaPreta(carro.placa_preta || false);
       setAno(carro.ano_fabricacao || carro.ano || '');
       setAnoModelo(carro.ano_modelo || '');
       setCor(carro.cor || '');
@@ -416,20 +503,25 @@ export default function EditarCarro() {
       setFotosAtuais(carro.fotos || []);
       
       setAroRoda(carro.aro_roda || '');
-      const fetchedTags = tags || [];
-      const rodaList = fetchedTags.filter(t => t.tipo === 'roda').map(r => r.nome);
-      if (carro.modelo_roda && !rodaList.includes(carro.modelo_roda)) {
-         setModeloRoda('Outros');
-         setCustomRoda(carro.modelo_roda);
-      } else {
-         setModeloRoda(carro.modelo_roda || '');
+      setTalaRoda(carro.tala_roda !== undefined && carro.tala_roda !== null ? carro.tala_roda.toString() : '');
+      
+      if (carro.modelo_roda) {
+        const isCustom = !tags?.find(t => t.tipo === 'roda' && t.nome === carro.modelo_roda);
+        if (isCustom) {
+          setModeloRoda('Outros');
+          setCustomRoda(carro.modelo_roda);
+        } else {
+          setModeloRoda(carro.modelo_roda);
+        }
       }
 
       setSelectedOpcionais(carro.opcionais || []);
       setSelectedPecas(carro.pecas_raras || []);
+      
       setModificacaoMotor(carro.modificacao_motor || false);
-      setPotenciaMotor(carro.potencia_motor ? String(carro.potencia_motor) : '');
+      setPotenciaMotor(carro.potencia_motor ? carro.potencia_motor.toString() : '');
       setSelectedModMotor(carro.modificacoes_motor || []);
+      
       setModificacaoSuspensao(carro.modificacao_suspensao || false);
       setTipoSuspensao(carro.tipo_suspensao || '');
       setMarcaSuspensao(carro.marca_suspensao || '');
@@ -454,6 +546,47 @@ export default function EditarCarro() {
       const allowedCount = limit - totalCurrentPhotos;
       setNovasFotos(prev => [...prev, ...validFiles.slice(0, allowedCount)]);
     }
+  };
+
+  const handleTransfer = async () => {
+    if (!transferUsername) return alert('Digite o username do novo dono.');
+    
+    setTransferLoading(true);
+    
+    // Buscar id do novo dono
+    const { data: newOwner } = await supabase.from('mk3_users').select('id').eq('username', transferUsername).single();
+    if (!newOwner) {
+      setTransferLoading(false);
+      return alert('Usuário não encontrado. Verifique se o username está correto (sem @).');
+    }
+    
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session || newOwner.id === session.user.id) {
+      setTransferLoading(false);
+      return alert('Você não pode transferir para si mesmo!');
+    }
+    
+    if (!window.confirm('Tem certeza? Essa ação não pode ser desfeita e o projeto sumirá da sua garagem!')) {
+      setTransferLoading(false);
+      return;
+    }
+    
+    // Atualizar garagem
+    const { error: carError } = await supabase.from('mk3_garagem').update({ user_id: newOwner.id }).eq('id', id);
+    if (carError) {
+      setTransferLoading(false);
+      return alert('Erro ao transferir: ' + carError.message);
+    }
+    
+    // Registrar historico
+    await supabase.from('mk3_car_ownership').insert({
+      car_id: id,
+      from_user_id: session.user.id,
+      to_user_id: newOwner.id
+    });
+    
+    alert('Projeto transferido com sucesso para @' + transferUsername + '!');
+    navigate('/minha-garagem');
   };
 
   const handleDeleteCarro = async () => {
@@ -507,10 +640,10 @@ export default function EditarCarro() {
       }
     }
 
-    const carroUpdate = {
+    const carroUpdate: any = {
         modelo,
         ano_fabricacao: ano,
-        ano_modelo: anoModelo,
+        ano_modelo: anoModelo || ano,
         cor,
         origem,
         descricao,
@@ -522,19 +655,39 @@ export default function EditarCarro() {
         venda_preco: vendaPreco ? parseCurrency(vendaPreco) : null,
         fotos: finalPhotoUrls,
         aro_roda: aroRoda,
+        tala_roda: talaRoda !== '' ? parseInt(talaRoda) : null,
         modelo_roda: modeloRoda === 'Outros' ? customRoda : modeloRoda,
         modificacao_motor: modificacaoMotor,
         potencia_motor: potenciaMotor ? parseInt(potenciaMotor) : null,
         modificacoes_motor: selectedModMotor,
         modificacao_suspensao: modificacaoSuspensao,
         tipo_suspensao: tipoSuspensao,
-        marca_suspensao: marcaSuspensao
+        marca_suspensao: marcaSuspensao,
+        placa_preta: placaPreta
     };
 
-    const { error: updateError } = await supabase
+    // Calcular pontuação total via função padrão do Super Trunfo
+    const points = calculateSuperTrunfoPoints(carroUpdate, allTags);
+    carroUpdate.pontuacao_total = points.total;
+
+    let { error: updateError } = await supabase
       .from('mk3_garagem')
       .update(carroUpdate)
       .eq('id', id);
+
+    // Se o banco ainda não tiver a coluna tala_roda, tenta salvar sem ela
+    if (updateError && updateError.message && updateError.message.includes('tala_roda')) {
+      const { tala_roda, ...carroUpdateSemTala } = carroUpdate;
+      const retry = await supabase.from('mk3_garagem').update(carroUpdateSemTala).eq('id', id);
+      updateError = retry.error;
+    }
+
+    // Se o banco ainda não tiver a coluna placa_preta, tenta salvar sem ela
+    if (updateError && updateError.message && updateError.message.includes('placa_preta')) {
+      const { placa_preta, ...carroUpdateSemPlaca } = carroUpdate;
+      const retry = await supabase.from('mk3_garagem').update(carroUpdateSemPlaca).eq('id', id);
+      updateError = retry.error;
+    }
 
     if (updateError) {
       console.error('Erro ao atualizar carro:', updateError);
@@ -543,7 +696,9 @@ export default function EditarCarro() {
       return;
     }
 
-    navigate('/minha-garagem');
+    setCalculatedPoints(points);
+    setSaving(false);
+    setShowExportModal(true);
   };
 
   const handlePremiumPlan = async () => {
@@ -584,7 +739,7 @@ export default function EditarCarro() {
             {(fotosAtuais.length > 0 || novasFotos.length > 0) && (
               <PhotoGrid>
                 {fotosAtuais.map((url, i) => (
-                  <PhotoThumbnail key={url}>
+                  <PhotoThumbnail key={url} $isCapa={i === 0}>
                     <img src={url} alt={`Foto atual ${i}`} style={{ objectPosition: getObjectPosition(url) }} />
                     <div style={{ position: 'absolute', top: 5, left: 5, display: 'flex', gap: '5px' }}>
                       <button type="button" onClick={() => {
@@ -609,7 +764,7 @@ export default function EditarCarro() {
                 {novasFotos.map((photo, i) => {
                   const url = URL.createObjectURL(photo.file);
                   return (
-                  <PhotoThumbnail key={photo.file.name + i}>
+                  <PhotoThumbnail key={photo.file.name + i} $isCapa={fotosAtuais.length === 0 && i === 0}>
                     <img src={url} alt={`Nova foto ${i}`} style={{ objectPosition: photo.pos.replace(',', '% ') + '%' }} />
                     <div style={{ position: 'absolute', top: 5, left: 5, display: 'flex', gap: '5px' }}>
                       <button type="button" onClick={() => {
@@ -656,6 +811,64 @@ export default function EditarCarro() {
             )}
             {error && <div style={{ color: '#ef4444', marginBottom: '1rem' }}>{error}</div>}
           </FormGroup>
+
+          {/* FLAG PLACA PRETA */}
+          <div 
+            onClick={() => setPlacaPreta(!placaPreta)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '1rem 1.25rem',
+              background: placaPreta ? 'linear-gradient(135deg, #18181b, #09090b)' : '#18181b',
+              border: placaPreta ? '1.5px solid #d4af37' : '1px solid #27272a',
+              borderRadius: '12px',
+              cursor: 'pointer',
+              marginBottom: '1.5rem',
+              transition: 'all 0.2s ease',
+              boxShadow: placaPreta ? '0 4px 20px rgba(212, 175, 55, 0.15)' : 'none'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <div style={{
+                background: '#000',
+                color: '#fff',
+                border: '1px solid #444',
+                padding: '4px 10px',
+                borderRadius: '4px',
+                fontFamily: 'monospace',
+                fontWeight: 900,
+                fontSize: '0.95rem',
+                letterSpacing: '1px',
+                boxShadow: 'inset 0 0 5px rgba(255,255,255,0.1)'
+              }}>
+                ⬛ BRASIL
+              </div>
+              <div>
+                <strong style={{ color: placaPreta ? '#fef08a' : '#fff', fontSize: '1rem', display: 'block' }}>
+                  Placa Preta / Certificado de Coleção
+                </strong>
+                <span style={{ color: '#a1a1aa', fontSize: '0.8rem' }}>
+                  Veículo com certificado de originalidade (+50 pts no Super Trunfo)
+                </span>
+              </div>
+            </div>
+            <div style={{
+              width: '24px',
+              height: '24px',
+              borderRadius: '6px',
+              border: placaPreta ? '2px solid #d4af37' : '2px solid #52525b',
+              background: placaPreta ? '#d4af37' : 'transparent',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#000',
+              fontWeight: 900,
+              fontSize: '0.8rem'
+            }}>
+              {placaPreta && <i className="fas fa-check" />}
+            </div>
+          </div>
 
           {/* DADOS BÁSICOS */}
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
@@ -709,7 +922,7 @@ export default function EditarCarro() {
 
           <FormGroup>
             <label>Descrição do Projeto (Histórico, Curiosidades)</label>
-            <textarea rows={3} value={descricao} onChange={e => setDescricao(e.target.value)} />
+            <textarea rows={6} value={descricao} onChange={e => setDescricao(e.target.value)} placeholder="Minha história com esse carro..." />
           </FormGroup>
 
           <FormGroup>
@@ -735,6 +948,17 @@ export default function EditarCarro() {
                   onChange={val => setAroRoda(val)}
                   placeholder="Selecione o aro"
                   options={[14, 15, 16, 17, 18, 19, 20].map(aro => ({ label: `${aro}"`, value: String(aro) }))}
+                />
+              </FormGroup>
+              <FormGroup style={{ flex: 1, minWidth: '160px', marginBottom: 0 }}>
+                <label>Tala (-40 a +80)</label>
+                <input 
+                  type="number" 
+                  min="-40" 
+                  max="80" 
+                  value={talaRoda} 
+                  onChange={e => setTalaRoda(e.target.value)} 
+                  placeholder="Ex: 35" 
                 />
               </FormGroup>
               <FormGroup style={{ flex: 2, minWidth: '200px', marginBottom: 0 }}>
@@ -791,7 +1015,8 @@ export default function EditarCarro() {
           </details>
 
           <details style={{ margin: '2rem 0', width: '100%', background: '#1a1a1a', padding: '1.5rem', borderRadius: '12px', border: '1px solid #333' }}>
-            <summary style={{ color: 'white', cursor: 'pointer', outline: 'none', fontWeight: 'bold', fontSize: '1.1rem' }}>
+            <summary style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'white', cursor: 'pointer', outline: 'none', fontWeight: 'bold', fontSize: '1.1rem' }}>
+              <i className="fas fa-chevron-down" style={{ fontSize: '0.9rem', color: '#888' }}></i>
               Peças Raras
             </summary>
             <div style={{ paddingTop: '1.5rem' }}>
@@ -956,6 +1181,27 @@ export default function EditarCarro() {
             )}
           </VendaBox>
 
+          <VendaBox style={{ borderLeft: '4px solid #ef4444' }}>
+            <div className="header">
+              <h3><i className="fas fa-exchange-alt"></i> Transferir Projeto</h3>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'flex-start', marginTop: '1rem' }}>
+               <p style={{ color: '#ccc', fontSize: '0.9rem' }}>Vendeu o carro? Transfira o projeto para o novo dono. O projeto sairá da sua garagem e o histórico de donos ficará gravado no carro.</p>
+               <div style={{ display: 'flex', gap: '1rem', width: '100%' }}>
+                 <input 
+                   type="text" 
+                   placeholder="Username do novo dono (sem @)" 
+                   value={transferUsername} 
+                   onChange={(e) => setTransferUsername(e.target.value)} 
+                   style={{ flex: 1, padding: '0.8rem', borderRadius: '8px', border: '1px solid #444', background: '#222', color: 'white' }} 
+                 />
+                 <OutlineButton type="button" style={{ width: 'auto' }} onClick={handleTransfer} disabled={transferLoading}>
+                   {transferLoading ? 'Transferindo...' : 'Transferir'}
+                 </OutlineButton>
+               </div>
+            </div>
+          </VendaBox>
+
           <Button type="submit" disabled={saving}>
             {saving ? 'Salvando...' : 'Salvar Alterações'}
           </Button>
@@ -985,6 +1231,32 @@ export default function EditarCarro() {
             setCropModalData(null);
           }}
         />
+      )}
+      
+      {showExportModal && (
+        <ExportModal>
+          <ExportModalContent>
+            <h2>🎉 Projeto Atualizado!</h2>
+            <p>Seu Golf acabou de ganhar pontos. Compartilhe sua carta do Super Trunfo no Instagram e desafie a galera!</p>
+            <div className="btn-group">
+              <ExportButton type="button" onClick={() => exportSuperTrunfoCard('super-trunfo-169', modelo, currentUsername)}>
+                <i className="fab fa-instagram" /> Formato Stories (9:16)
+              </ExportButton>
+              <ExportButton type="button" onClick={() => exportSuperTrunfoCard('super-trunfo-45', modelo, currentUsername)}>
+                <i className="fab fa-instagram"></i> Baixar para Feed (4:5)
+              </ExportButton>
+            </div>
+            <button 
+              type="button"
+              onClick={() => navigate('/minha-garagem')}
+              style={{ background: 'transparent', color: '#888', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
+            >
+              Voltar para minha garagem
+            </button>
+          </ExportModalContent>
+          <SuperTrunfoCard id="super-trunfo-169" carName={modelo} ownerUsername={currentUsername} photoUrl={fotosAtuais[0] || (novasFotos[0]?.file ? `${URL.createObjectURL(novasFotos[0].file)}${novasFotos[0].pos ? `?pos=${novasFotos[0].pos}` : ''}` : '')} ratio="9:16" points={calculatedPoints} hp={potenciaMotor} placaPreta={placaPreta} />
+          <SuperTrunfoCard id="super-trunfo-45" carName={modelo} ownerUsername={currentUsername} photoUrl={fotosAtuais[0] || (novasFotos[0]?.file ? `${URL.createObjectURL(novasFotos[0].file)}${novasFotos[0].pos ? `?pos=${novasFotos[0].pos}` : ''}` : '')} ratio="4:5" points={calculatedPoints} hp={potenciaMotor} placaPreta={placaPreta} />
+        </ExportModal>
       )}
     </PageWrapper>
   );

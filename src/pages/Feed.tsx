@@ -5,6 +5,7 @@ import { colors } from '../styles/GlobalStyles';
 import { Link, useNavigate } from 'react-router-dom';
 import { getObjectPosition } from '../utils/imagePos';
 import CommunityLayout from '../components/CommunityLayout';
+import { calculateSuperTrunfoPoints, formatPoints } from '../utils/superTrunfo';
 
 interface FeedItem {
   id: string;
@@ -36,6 +37,11 @@ interface FeedItem {
     venda_preco?: number;
     aro_roda?: string;
     modelo_roda?: string;
+    tala_roda?: number;
+    placa_preta?: boolean;
+    modificacoes_motor?: string[];
+    tipo_suspensao?: string;
+    pontuacao_total?: number;
   };
   likesCount?: number;
   hasLiked?: boolean;
@@ -248,22 +254,6 @@ const CarSpecs = styled.div`
   }
 `;
 
-const TagsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1rem;
-`;
-
-const Tag = styled.span<{ $type?: 'opcional' | 'peca' }>`
-  background: ${props => props.$type === 'peca' ? 'rgba(255, 215, 0, 0.1)' : '#222'};
-  color: ${props => props.$type === 'peca' ? '#FFD700' : '#ccc'};
-  border: 1px solid ${props => props.$type === 'peca' ? 'rgba(255, 215, 0, 0.3)' : '#333'};
-  padding: 0.2rem 0.6rem;
-  border-radius: 4px;
-  font-size: 0.8rem;
-`;
-
 const SaleBadge = styled.div`
   background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(0,0,0,0) 100%);
   border: 1px solid ${colors.primary};
@@ -364,6 +354,7 @@ export default function Feed() {
   
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
+  const [tags, setTags] = useState<any[]>([]);
   const PAGE_SIZE = 10;
   
   const navigate = useNavigate();
@@ -384,10 +375,17 @@ export default function Feed() {
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
     });
+    fetchTags();
+    fetchFeed(0);
   }, []);
 
+  const fetchTags = async () => {
+    const { data } = await supabase.from('mk3_car_tags').select('*');
+    if (data) setTags(data);
+  };
+
   useEffect(() => {
-    fetchFeed(page);
+    if (page > 0) fetchFeed(page);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
@@ -663,12 +661,56 @@ export default function Feed() {
                       )}
                     </CarSpecs>
 
-                    {((item.carro?.opcionais && item.carro.opcionais.length > 0) || (item.carro?.pecas_raras && item.carro.pecas_raras.length > 0)) && (
-                      <TagsContainer>
-                        {item.carro?.pecas_raras?.map((p: string) => <Tag key={p} $type="peca"><i className="fas fa-gem"></i> {p}</Tag>)}
-                        {item.carro?.opcionais?.map((o: string) => <Tag key={o}>{o}</Tag>)}
-                      </TagsContainer>
-                    )}
+                    {(() => {
+                      const pts = calculateSuperTrunfoPoints(item.carro, tags);
+                      const pVersao = pts.versao;
+                      const pPlacaPreta = pts.placa_preta;
+                      const pMotor = pts.motor;
+                      const pSuspensao = pts.suspensao;
+                      const pPecas = pts.pecas;
+                      const pOpcionais = pts.opcionais;
+                      const pRodas = pts.rodas;
+                      const total = pts.total;
+                      
+                      if (total > 0 || (item.carro?.pontuacao_total && item.carro.pontuacao_total > 0)) {
+                        return (
+                          <div style={{ background: 'linear-gradient(145deg, #1f1f1f, #111)', borderRadius: '12px', padding: '1rem', border: '1px solid #333', marginTop: '1rem' }}>
+                            <div style={{ textAlign: 'center', marginBottom: '0.8rem' }}>
+                              <h4 style={{ color: colors.primary, textTransform: 'uppercase', letterSpacing: '2px', fontSize: '0.9rem', margin: 0 }}>Super Trunfo</h4>
+                            </div>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', fontSize: '0.9rem', color: '#ccc' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.3rem', background: '#222', borderRadius: '4px' }}>
+                                <span>🏷️ Versão</span> <strong>{formatPoints(pVersao)} pts</strong>
+                              </div>
+                              {pPlacaPreta > 0 && (
+                                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.3rem', background: '#222', borderRadius: '4px', color: '#fef08a' }}>
+                                  <span>⬛ Placa Preta</span> <strong>{formatPoints(pPlacaPreta)} pts</strong>
+                                </div>
+                              )}
+                              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.3rem', background: '#222', borderRadius: '4px' }}>
+                                <span>🏎️ Motor</span> <strong>{formatPoints(pMotor)} pts</strong>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.3rem', background: '#222', borderRadius: '4px' }}>
+                                <span>🛠️ Suspensão</span> <strong>{formatPoints(pSuspensao)} pts</strong>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.3rem', background: '#222', borderRadius: '4px' }}>
+                                <span>✨ Peças Raras</span> <strong>{formatPoints(pPecas)} pts</strong>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.3rem', background: '#222', borderRadius: '4px' }}>
+                                <span>🛞 Rodas</span> <strong>{formatPoints(pRodas)} pts</strong>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.3rem', background: '#222', borderRadius: '4px', gridColumn: pPlacaPreta > 0 ? 'auto' : '1 / -1' }}>
+                                <span>➕ Opcionais</span> <strong>{formatPoints(pOpcionais)} pts</strong>
+                              </div>
+                            </div>
+                            <div style={{ marginTop: '0.8rem', padding: '0.8rem', background: 'rgba(220, 38, 38, 0.1)', border: `1px solid ${colors.primary}`, borderRadius: '6px', textAlign: 'center' }}>
+                              <strong style={{ fontSize: '1.2rem', color: 'white' }}>🏆 TOTAL: {formatPoints(item.carro?.pontuacao_total || total)} PTS</strong>
+                            </div>
+                          </div>
+                        );
+                      }
+                      return null;
+                    })()}
 
                     {item.carro?.problemas_atuais && (
                       <ProblemasBox>

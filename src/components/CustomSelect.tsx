@@ -21,7 +21,7 @@ const SelectContainer = styled.div`
 
 const SelectHeader = styled.div<{ $isOpen: boolean }>`
   width: 100%;
-  padding: 0.8rem 1rem;
+  padding: 0.6rem 1rem;
   background: #1a1a1a;
   border: 1px solid ${props => props.$isOpen ? colors.primary : '#333'};
   color: white;

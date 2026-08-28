@@ -6,6 +6,8 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import { getObjectPosition } from '../utils/imagePos';
+import SuperTrunfoCard, { exportSuperTrunfoCard } from '../components/SuperTrunfoCard';
+import { calculateSuperTrunfoPoints, formatPoints } from '../utils/superTrunfo';
 
 import CommunityLayout from '../components/CommunityLayout';
 
@@ -205,6 +207,30 @@ const SectionTitle = styled.h3`
   padding-bottom: 0.5rem;
 `;
 
+const ScoreCard = styled.div`
+  background: linear-gradient(145deg, #292929, #111);
+  border: 4px solid ${colors.primary};
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+
+  h2 { color: white; font-size: 1.1rem; text-transform: uppercase; margin: 0 0 0.8rem; }
+  .scores { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .score { display: flex; justify-content: space-between; gap: 0.5rem; background: #222; border-left: 4px solid ${colors.primary}; border-radius: 5px; padding: 0.65rem; color: #aaa; }
+  .score strong { color: white; }
+  .total { grid-column: 1 / -1; background: ${colors.primary}; color: white; font-weight: bold; }
+  @media (max-width: 480px) { .score { font-size: 0.8rem; } }
+`;
+
+const ExportPanel = styled.div`
+  position: fixed; inset: 0; z-index: 30; display: flex; align-items: center; justify-content: center; padding: 1rem; background: rgba(0,0,0,0.8);
+  .content { width: min(100%, 420px); background: #171717; border: 1px solid #444; border-radius: 12px; padding: 1.5rem; text-align: center; color: white; }
+  h2 { margin: 0 0 0.5rem; } p { color: #aaa; margin: 0 0 1rem; }
+  .actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+  button { padding: 0.75rem 1rem; border: 0; border-radius: 6px; background: ${colors.primary}; color: white; font-weight: bold; cursor: pointer; }
+  button:last-child { background: #333; }
+`;
+
 const ProblemasBox = styled.div`
   background: rgba(255, 165, 0, 0.1);
   border-left: 4px solid orange;
@@ -250,56 +276,110 @@ const ActionButton = styled.button<{ $active?: boolean }>`
   padding: 0.8rem 1.5rem;
   border-radius: 8px;
   cursor: pointer;
+  font-weight: bold;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-weight: bold;
   transition: all 0.2s;
   flex: 1;
   justify-content: center;
 
   &:hover {
     background: ${props => props.$active ? 'rgba(220, 38, 38, 0.2)' : '#222'};
-    border-color: ${props => props.$active ? colors.primary : '#555'};
+    border-color: ${colors.primary};
   }
 `;
 
 const SaleBox = styled.div`
-  background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(0,0,0,0) 100%);
-  border: 1px solid ${colors.primary};
-  border-radius: 12px;
-  padding: 2rem;
-  text-align: center;
-
+  background: rgba(34, 197, 94, 0.1);
+  border-left: 4px solid #22c55e;
+  padding: 1.5rem;
+  border-radius: 0 8px 8px 0;
+  
   h4 {
-    color: ${colors.primary};
-    margin: 0 0 1rem 0;
-    font-size: 1.2rem;
+    color: #22c55e;
+    margin: 0 0 0.5rem 0;
   }
-
+  
   .price {
-    font-size: 2.5rem;
-    color: white;
+    font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 1.5rem;
+    color: white;
+    margin-bottom: 1rem;
   }
-
+  
   a {
-    display: inline-block;
-    background: #25D366;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #25d366;
     color: white;
     text-decoration: none;
-    padding: 1rem 2rem;
+    padding: 0.8rem 1.5rem;
     border-radius: 8px;
     font-weight: bold;
-    font-size: 1.1rem;
-    width: 100%;
+    transition: background 0.2s;
     
     &:hover {
-      background: #20bd5a;
+      background: #128c7e;
     }
   }
 `;
+
+const HistoryBox = styled.div`
+  background: #111;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #222;
+
+  h4 {
+    color: white;
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+`;
+
+const HistoryItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #222;
+  
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  
+  .date {
+    font-size: 0.8rem;
+    color: #666;
+  }
+  
+  .transfer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #aaa;
+    
+    a {
+      color: ${colors.primary};
+      text-decoration: none;
+      font-weight: bold;
+      &:hover { text-decoration: underline; }
+    }
+    
+    i {
+      color: #555;
+    }
+  }
+`;
+
+
 
 const CommentsSection = styled.div`
   margin-top: 3rem;
@@ -426,10 +506,13 @@ export default function CarroDetails() {
   const [likes, setLikes] = useState<number>(0);
   const [hasLiked, setHasLiked] = useState(false);
   const [comments, setComments] = useState<any[]>([]);
+  const [history, setHistory] = useState<any[]>([]);
   const [newComment, setNewComment] = useState('');
   const [postingComment, setPostingComment] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(-1);
   const [activePhotoIndex, setActivePhotoIndex] = useState(0);
+  const [tags, setTags] = useState<any[]>([]);
+  const [showExport, setShowExport] = useState(false);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const el = e.currentTarget;
@@ -451,6 +534,9 @@ export default function CarroDetails() {
       }
     });
     fetchCarDetails();
+    supabase.from('mk3_car_tags').select('nome, tipo, pontuacao').then(({ data }) => {
+      if (data) setTags(data);
+    });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
@@ -465,6 +551,26 @@ export default function CarroDetails() {
 
     const { data: userData } = await supabase.from('mk3_users').select('*').eq('id', carData.user_id).single();
     if (userData) setOwner(userData);
+
+    // Fetch Ownership History
+    const { data: historyData } = await supabase
+      .from('mk3_car_ownership')
+      .select('*')
+      .eq('car_id', id)
+      .order('created_at', { ascending: false });
+
+    if (historyData && historyData.length > 0) {
+      const userIds = new Set<string>();
+      historyData.forEach(h => { userIds.add(h.from_user_id); userIds.add(h.to_user_id); });
+      const { data: usersData } = await supabase.from('mk3_users').select('id, username, nome_completo, avatar_url').in('id', Array.from(userIds));
+      
+      const enrichedHistory = historyData.map(h => ({
+         ...h,
+         fromUser: usersData?.find(u => u.id === h.from_user_id),
+         toUser: usersData?.find(u => u.id === h.to_user_id)
+      }));
+      setHistory(enrichedHistory);
+    }
 
     await fetchLikesAndComments();
     setLoading(false);
@@ -567,6 +673,7 @@ export default function CarroDetails() {
   if (!carro) return null;
 
   const fotos = carro.fotos || [];
+  const points = calculateSuperTrunfoPoints(carro, tags);
 
   return (
     <CommunityLayout>
@@ -603,6 +710,45 @@ export default function CarroDetails() {
           )}
         </div>
 
+        <ScoreCard>
+          <h2>Super Trunfo</h2>
+          <div className="scores">
+            <div className="score">🏷️ Versão <strong>{formatPoints(points.versao)}</strong></div>
+            {points.placa_preta > 0 && (
+              <div className="score" style={{ color: '#fef08a' }}>⬛ Placa Preta <strong>{formatPoints(points.placa_preta)}</strong></div>
+            )}
+            <div className="score">🏎️ Motor <strong>{formatPoints(points.motor)}</strong></div>
+            <div className="score">🛠️ Suspensão <strong>{formatPoints(points.suspensao)}</strong></div>
+            <div className="score">✨ Peças Raras <strong>{formatPoints(points.pecas)}</strong></div>
+            <div className="score">🛞 Rodas <strong>{formatPoints(points.rodas)}</strong></div>
+            <div className="score">➕ Opcionais <strong>{formatPoints(points.opcionais)}</strong></div>
+            <div className="score total">🏆 TOTAL <strong>{formatPoints(points.total)} PTS</strong></div>
+          </div>
+          <button 
+            type="button"
+            onClick={() => setShowExport(true)} 
+            style={{ 
+              marginTop: '1.2rem', 
+              width: '100%', 
+              background: colors.primary, 
+              color: 'white', 
+              border: 'none', 
+              padding: '0.8rem', 
+              borderRadius: '8px', 
+              fontSize: '1rem',
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.5rem'
+            }}
+          >
+            <i className="fas fa-download" />
+            Exportar Carta Super Trunfo
+          </button>
+        </ScoreCard>
+
         <ContentGrid>
           <InfoSection>
             <SectionTitle>Especificações do Projeto</SectionTitle>
@@ -623,13 +769,23 @@ export default function CarroDetails() {
                 <div className="label">Origem</div>
                 <div className="value">{carro.origem || 'Desconhecida'}</div>
               </SpecItem>
-              {(carro.aro_roda || carro.modelo_roda) && (
+              {(carro.aro_roda || carro.modelo_roda || (carro.tala_roda !== undefined && carro.tala_roda !== null)) && (
                 <SpecItem>
                   <div className="label">Rodas</div>
                   <div className="value">
                     {carro.aro_roda ? `Aro ${carro.aro_roda}` : ''}
-                    {carro.aro_roda && carro.modelo_roda ? ' - ' : ''}
+                    {carro.tala_roda !== undefined && carro.tala_roda !== null && carro.tala_roda !== '' ? ` (Tala ${carro.tala_roda})` : ''}
+                    {(carro.aro_roda || (carro.tala_roda !== undefined && carro.tala_roda !== null && carro.tala_roda !== '')) && carro.modelo_roda ? ' - ' : ''}
                     {carro.modelo_roda || ''}
+                  </div>
+                </SpecItem>
+              )}
+              {(carro.tipo_suspensao || carro.marca_suspensao) && (
+                <SpecItem>
+                  <div className="label">Suspensão</div>
+                  <div className="value">
+                    {carro.tipo_suspensao || ''}
+                    {carro.tipo_suspensao && carro.marca_suspensao ? ` (${carro.marca_suspensao})` : (carro.marca_suspensao || '')}
                   </div>
                 </SpecItem>
               )}
@@ -652,11 +808,11 @@ export default function CarroDetails() {
               </>
             )}
 
-            {(carro.modificacao_motor || carro.modificacao_suspensao) && (
+            {(carro.modificacao_motor || carro.modificacoes_motor?.length > 0 || carro.potencia_motor || carro.modificacao_suspensao || carro.tipo_suspensao || carro.marca_suspensao) && (
               <div style={{ marginTop: '2rem' }}>
                 <SectionTitle>Modificações</SectionTitle>
                 
-                {carro.modificacao_motor && (carro.modificacoes_motor?.length > 0 || carro.potencia_motor) && (
+                {(carro.modificacao_motor || (carro.modificacoes_motor && carro.modificacoes_motor.length > 0) || carro.potencia_motor) && (
                   <div style={{ marginBottom: '1.5rem' }}>
                     <h4 style={{ color: '#ccc', margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}>
                       <i className="fas fa-cogs"></i> Motor {carro.potencia_motor ? `(${carro.potencia_motor} cv)` : ''}
@@ -669,12 +825,20 @@ export default function CarroDetails() {
                   </div>
                 )}
 
-                {carro.modificacao_suspensao && (
+                {(carro.modificacao_suspensao || carro.tipo_suspensao || carro.marca_suspensao) && (
                   <div style={{ marginBottom: '1.5rem' }}>
                     <h4 style={{ color: '#ccc', margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}><i className="fas fa-tools"></i> Suspensão</h4>
                     <TagsContainer style={{ marginTop: 0 }}>
-                      {carro.tipo_suspensao && <Tag style={{ background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', borderColor: 'rgba(59, 130, 246, 0.3)' }}>{carro.tipo_suspensao}</Tag>}
-                      {carro.marca_suspensao && <Tag style={{ background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', borderColor: 'rgba(59, 130, 246, 0.3)' }}>{carro.marca_suspensao}</Tag>}
+                      {carro.tipo_suspensao && (
+                        <Tag style={{ background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', borderColor: 'rgba(59, 130, 246, 0.3)' }}>
+                          <i className="fas fa-wrench" style={{ marginRight: '6px' }}></i>{carro.tipo_suspensao}
+                        </Tag>
+                      )}
+                      {carro.marca_suspensao && (
+                        <Tag style={{ background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', borderColor: 'rgba(59, 130, 246, 0.3)' }}>
+                          <i className="fas fa-tag" style={{ marginRight: '6px' }}></i>{carro.marca_suspensao}
+                        </Tag>
+                      )}
                     </TagsContainer>
                   </div>
                 )}
@@ -738,6 +902,22 @@ export default function CarroDetails() {
                 )}
               </SaleBox>
             )}
+
+            {history.length > 0 && (
+              <HistoryBox>
+                <h4><i className="fas fa-history"></i> Histórico de Donos</h4>
+                {history.map(h => (
+                  <HistoryItem key={h.id}>
+                    <div className="date">{new Date(h.created_at).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })}</div>
+                    <div className="transfer">
+                      <Link to={`/u/${h.fromUser?.username}`}>@{h.fromUser?.username}</Link>
+                      <i className="fas fa-arrow-right"></i>
+                      <Link to={`/u/${h.toUser?.username}`}>@{h.toUser?.username}</Link>
+                    </div>
+                  </HistoryItem>
+                ))}
+              </HistoryBox>
+            )}
           </Sidebar>
         </ContentGrid>
 
@@ -786,6 +966,21 @@ export default function CarroDetails() {
           slides={fotos.map((url: string) => ({ src: url }))}
         />
       </Container>
+      {showExport && (
+        <ExportPanel onClick={() => setShowExport(false)}>
+          <div className="content" onClick={event => event.stopPropagation()}>
+            <h2>Exportar carta</h2>
+            <p>Baixe a carta de {carro.modelo} para compartilhar no Instagram.</p>
+            <div className="actions">
+              <button type="button" onClick={() => exportSuperTrunfoCard(`details-${carro.id}-169`, carro.modelo, owner?.username)}><i className="fab fa-instagram" /> Stories 9:16</button>
+              <button type="button" onClick={() => exportSuperTrunfoCard(`details-${carro.id}-45`, carro.modelo, owner?.username)}><i className="fab fa-instagram" /> Feed 4:5</button>
+            </div>
+            <button type="button" onClick={() => setShowExport(false)} style={{ marginTop: '1rem', background: 'transparent', color: '#999' }}>Cancelar</button>
+            <SuperTrunfoCard id={`details-${carro.id}-169`} carName={carro.modelo} ownerUsername={owner?.username} photoUrl={fotos[0] || ''} ratio="9:16" points={points} hp={carro.potencia_motor} placaPreta={carro.placa_preta} />
+            <SuperTrunfoCard id={`details-${carro.id}-45`} carName={carro.modelo} ownerUsername={owner?.username} photoUrl={fotos[0] || ''} ratio="4:5" points={points} hp={carro.potencia_motor} placaPreta={carro.placa_preta} />
+          </div>
+        </ExportPanel>
+      )}
     </CommunityLayout>
   );
 }

@@ -52,6 +52,15 @@ export const media = {
 
 // Estilo global - Tema escuro
 export const GlobalStyle = createGlobalStyle`
+  @font-face {
+    font-family: 'Volkswagen';
+    src: url('/fonts/volkswagen-serial-bold.woff') format('woff'),
+         url('/fonts/volkswagen-serial-bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
   * {
     margin: 0;
     padding: 0;
@@ -124,6 +133,20 @@ export const GlobalStyle = createGlobalStyle`
     user-select: none;
     -webkit-touch-callout: none;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  // Padronização e remoção de marcador nativo de details/summary
+  details > summary::-webkit-details-marker {
+    display: none !important;
+  }
+  details > summary {
+    list-style: none !important;
+  }
+  details > summary i.fa-chevron-down {
+    transition: transform 0.2s ease;
+  }
+  details[open] > summary i.fa-chevron-down {
+    transform: rotate(180deg);
   }
 
   // Permitir seleção e interação em elementos específicos

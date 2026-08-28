@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { colors, media } from '../styles/GlobalStyles';
 import { getObjectPosition } from '../utils/imagePos';
 import CommunityLayout from '../components/CommunityLayout';
+import SuperTrunfoCard, { exportSuperTrunfoCard } from '../components/SuperTrunfoCard';
+import { calculateSuperTrunfoPoints } from '../utils/superTrunfo';
 
 const Container = styled.div`
   max-width: 1000px;
@@ -236,12 +238,28 @@ const ToastContainer = styled.div<{ $show: boolean }>`
   }
 `;
 
+const ExportModal = styled.div`
+  position: fixed; inset: 0; z-index: 30; display: flex; align-items: center; justify-content: center; padding: 1rem; background: rgba(0,0,0,0.8);
+  .content { width: min(100%, 420px); background: #171717; border: 1px solid #444; border-radius: 12px; padding: 1.5rem; text-align: center; color: white; }
+  h2 { margin: 0 0 0.5rem; } p { color: #aaa; margin: 0 0 1rem; }
+  .actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+  button { padding: 0.75rem 1rem; border: 0; border-radius: 6px; background: ${colors.primary}; color: white; font-weight: bold; cursor: pointer; }
+  button:last-child { background: #333; }
+`;
+
+const ExportButton = styled.button`
+  margin-top: 1rem; width: 100%; padding: 0.65rem 1rem; border: 1px solid #444; border-radius: 6px; background: #222; color: white; font-weight: bold; cursor: pointer;
+  &:hover { border-color: ${colors.primary}; }
+`;
+
 export default function MinhaGaragem() {
   const [profile, setProfile] = useState<any>(null);
   const [carros, setCarros] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [activePhotoIndexes, setActivePhotoIndexes] = useState<Record<string, number>>({});
   const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [tags, setTags] = useState<any[]>([]);
+  const [exportCarro, setExportCarro] = useState<any | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -257,6 +275,9 @@ export default function MinhaGaragem() {
     }
     
     fetchGaragem(isSuccess);
+    supabase.from('mk3_car_tags').select('nome, tipo, pontuacao').then(({ data }) => {
+      if (data) setTags(data);
+    });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -396,14 +417,35 @@ export default function MinhaGaragem() {
                   onClick={() => navigate(`/editar-carro/${carro.id}`)}
                   style={{ marginTop: '1rem', background: 'transparent', color: colors.primary, border: `1px solid ${colors.primary}`, padding: '0.5rem 1rem', borderRadius: '4px', cursor: 'pointer' }}
                 >
-                  <i className="fas fa-edit"></i> Editar Projeto
+                  <i className="fas fa-edit"></i> Editar / Transferir
                 </button>
+                <ExportButton
+                  type="button"
+                  onClick={() => setExportCarro(carro)}
+                >
+                  <i className="fas fa-download"></i> Exportar carta
+                </ExportButton>
               </CarInfo>
             </CarCard>
           ))
         )}
 
       </Container>
+      {exportCarro && (
+        <ExportModal onClick={() => setExportCarro(null)}>
+          <div className="content" onClick={event => event.stopPropagation()}>
+            <h2>Exportar carta</h2>
+            <p>Baixe a carta de {exportCarro.modelo} para compartilhar no Instagram.</p>
+            <div className="actions">
+              <button type="button" onClick={() => exportSuperTrunfoCard(`garage-${exportCarro.id}-169`, exportCarro.modelo, profile?.username)}><i className="fab fa-instagram" /> Stories 9:16</button>
+              <button type="button" onClick={() => exportSuperTrunfoCard(`garage-${exportCarro.id}-45`, exportCarro.modelo, profile?.username)}><i className="fab fa-instagram" /> Feed 4:5</button>
+            </div>
+            <button type="button" onClick={() => setExportCarro(null)} style={{ marginTop: '1rem', background: 'transparent', color: '#999' }}>Cancelar</button>
+            <SuperTrunfoCard id={`garage-${exportCarro.id}-169`} carName={exportCarro.modelo} ownerUsername={profile?.username} photoUrl={exportCarro.fotos?.[0] || ''} ratio="9:16" points={calculateSuperTrunfoPoints(exportCarro, tags)} hp={exportCarro.potencia_motor} placaPreta={exportCarro.placa_preta} />
+            <SuperTrunfoCard id={`garage-${exportCarro.id}-45`} carName={exportCarro.modelo} ownerUsername={profile?.username} photoUrl={exportCarro.fotos?.[0] || ''} ratio="4:5" points={calculateSuperTrunfoPoints(exportCarro, tags)} hp={exportCarro.potencia_motor} placaPreta={exportCarro.placa_preta} />
+          </div>
+        </ExportModal>
+      )}
       
       <ToastContainer $show={showSuccessToast}>
         <i className="fas fa-trophy"></i>
