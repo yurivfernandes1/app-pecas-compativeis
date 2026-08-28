@@ -246,13 +246,12 @@ const TagGrid = styled.ul`
     }
 
     .tag-title {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       word-break: break-word;
+      overflow-wrap: break-word;
       flex: 1;
       padding-right: 0.5rem;
+      line-height: 1.35;
     }
 
     .tag-actions {
@@ -314,6 +313,23 @@ const TagGrid = styled.ul`
   }
 `;
 
+const DEFAULT_VERSOES = [
+  { id: 'def-cabrio', tipo: 'versao_carro', nome: 'Cabrio', pontuacao: 60.00 },
+  { id: 'def-vr6', tipo: 'versao_carro', nome: 'VR6', pontuacao: 50.00 },
+  { id: 'def-gti', tipo: 'versao_carro', nome: 'GTI', pontuacao: 40.00 },
+  { id: 'def-gt', tipo: 'versao_carro', nome: 'GT', pontuacao: 30.00 },
+  { id: 'def-glx', tipo: 'versao_carro', nome: 'GLX', pontuacao: 25.00 },
+  { id: 'def-highline', tipo: 'versao_carro', nome: 'Highline', pontuacao: 20.00 },
+  { id: 'def-tdi', tipo: 'versao_carro', nome: 'TDi', pontuacao: 20.00 },
+  { id: 'def-gl', tipo: 'versao_carro', nome: 'GL', pontuacao: 15.00 },
+  { id: 'def-cl', tipo: 'versao_carro', nome: 'CL', pontuacao: 10.00 },
+  { id: 'def-outro', tipo: 'versao_carro', nome: 'Outro', pontuacao: 5.00 },
+];
+
+const DEFAULT_PLACA_PRETA = [
+  { id: 'def-placa-preta', tipo: 'placa_preta', nome: 'Placa Preta', pontuacao: 50.00 }
+];
+
 export default function AdminTags() {
   const [opcionais, setOpcionais] = useState<any[]>([]);
   const [pecasRaras, setPecasRaras] = useState<any[]>([]);
@@ -322,6 +338,8 @@ export default function AdminTags() {
   const [tiposSuspensao, setTiposSuspensao] = useState<any[]>([]);
   const [marcasSuspensao, setMarcasSuspensao] = useState<any[]>([]);
   const [faixasTala, setFaixasTala] = useState<any[]>([]);
+  const [versoesCarro, setVersoesCarro] = useState<any[]>(DEFAULT_VERSOES);
+  const [placaPretaTags, setPlacaPretaTags] = useState<any[]>(DEFAULT_PLACA_PRETA);
 
   // Accordion state
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
@@ -332,6 +350,8 @@ export default function AdminTags() {
     faixa_tala: false,
     tipo_suspensao: false,
     marca_suspensao: false,
+    versao_carro: false,
+    placa_preta: false,
   });
 
   const toggleSection = (key: string) => {
@@ -347,6 +367,8 @@ export default function AdminTags() {
       faixa_tala: true,
       tipo_suspensao: true,
       marca_suspensao: true,
+      versao_carro: true,
+      placa_preta: true,
     });
   };
 
@@ -359,6 +381,8 @@ export default function AdminTags() {
       faixa_tala: false,
       tipo_suspensao: false,
       marca_suspensao: false,
+      versao_carro: false,
+      placa_preta: false,
     });
   };
 
@@ -368,6 +392,7 @@ export default function AdminTags() {
   const [newRoda, setNewRoda] = useState('');
   const [newTipoSuspensao, setNewTipoSuspensao] = useState('');
   const [newMarcaSuspensao, setNewMarcaSuspensao] = useState('');
+  const [newVersaoCarro, setNewVersaoCarro] = useState('');
   
   const formatPts = (val: any): string => {
     if (val === undefined || val === null || val === '') return '0,00';
@@ -382,6 +407,7 @@ export default function AdminTags() {
   const [ptsRoda, setPtsRoda] = useState('20,00');
   const [ptsTipoSuspensao, setPtsTipoSuspensao] = useState('20,00');
   const [ptsMarcaSuspensao, setPtsMarcaSuspensao] = useState('15,00');
+  const [ptsVersaoCarro, setPtsVersaoCarro] = useState('20,00');
   
   const [editingTag, setEditingTag] = useState<{ id: string, name: string, pts: string, tipo?: string } | null>(null);
 
@@ -417,6 +443,10 @@ export default function AdminTags() {
       setTiposSuspensao(data.filter(t => t.tipo === 'tipo_suspensao'));
       setMarcasSuspensao(data.filter(t => t.tipo === 'marca_suspensao'));
       setFaixasTala(data.filter(t => t.tipo === 'faixa_tala'));
+      const vDb = data.filter(t => t.tipo === 'versao_carro').sort((a, b) => (Number(b.pontuacao) || 0) - (Number(a.pontuacao) || 0));
+      setVersoesCarro(vDb.length > 0 ? vDb : DEFAULT_VERSOES);
+      const pDb = data.filter(t => t.tipo === 'placa_preta');
+      setPlacaPretaTags(pDb.length > 0 ? pDb : DEFAULT_PLACA_PRETA);
     }
     setLoading(false);
   };
@@ -436,7 +466,11 @@ export default function AdminTags() {
 
     const { error } = await supabase.from('mk3_car_tags').insert({ tipo, nome: value.trim(), pontuacao: parsedPts });
     if (error) {
-      alert(`Aviso: ${error.message}`);
+      if (error.message && error.message.includes('mk3_car_tags_tipo_check')) {
+        alert('Aviso: Para cadastrar novas versões ou placa preta, execute no SQL Editor do Supabase:\nALTER TABLE mk3_car_tags DROP CONSTRAINT IF EXISTS mk3_car_tags_tipo_check;');
+      } else {
+        alert(`Aviso: ${error.message}`);
+      }
       return;
     }
     setter('');
@@ -465,13 +499,29 @@ export default function AdminTags() {
 
       const parsedPts = Math.round(num * 100) / 100;
 
-      const { error } = await supabase.from('mk3_car_tags').update({
-        nome: editingTag.name.trim(),
-        pontuacao: parsedPts
-      }).eq('id', editingTag.id);
+      let error;
+      if (editingTag.id.startsWith('def-')) {
+        const itemTipo = editingTag.tipo || (editingTag.id.includes('placa') ? 'placa_preta' : 'versao_carro');
+        const res = await supabase.from('mk3_car_tags').insert({
+          tipo: itemTipo,
+          nome: editingTag.name.trim(),
+          pontuacao: parsedPts
+        });
+        error = res.error;
+      } else {
+        const res = await supabase.from('mk3_car_tags').update({
+          nome: editingTag.name.trim(),
+          pontuacao: parsedPts
+        }).eq('id', editingTag.id);
+        error = res.error;
+      }
 
       if (error) {
-        alert(`Erro ao salvar: ${error.message}`);
+        if (error.message && error.message.includes('mk3_car_tags_tipo_check')) {
+          alert('Aviso: Para salvar no banco, execute no SQL Editor do Supabase:\nALTER TABLE mk3_car_tags DROP CONSTRAINT IF EXISTS mk3_car_tags_tipo_check;');
+        } else {
+          alert(`Erro ao salvar: ${error.message}`);
+        }
         return;
       }
       
@@ -481,6 +531,10 @@ export default function AdminTags() {
   };
 
   const handleDelete = async (id: string) => {
+    if (id.startsWith('def-')) {
+      alert('Esta versão é padrão do Golf MK3 e não pode ser excluída, mas você pode editar sua pontuação clicando no botão de editar.');
+      return;
+    }
     if (window.confirm('Tem certeza que deseja remover este item? Ele deixará de aparecer para novos carros.')) {
       await supabase.from('mk3_car_tags').delete().eq('id', id);
       fetchTags();
@@ -880,6 +934,104 @@ export default function AdminTags() {
                         </button>
                         <button className="delete-btn" onClick={() => handleDelete(tag.id)} title="Remover">
                           <i className="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </li>
+                  ))}
+                </TagGrid>
+              </AccordionContent>
+            )}
+          </SectionAccordion>
+
+          {/* 8. VERSÕES DO CARRO */}
+          <SectionAccordion $isOpen={openSections.versao_carro}>
+            <AccordionHeader $isOpen={openSections.versao_carro} onClick={() => toggleSection('versao_carro')}>
+              <div className="header-left">
+                <h3><i className="fas fa-car-side"></i> Versões do Carro (Raridade)</h3>
+                <span className="badge-count">{versoesCarro.length} versões</span>
+              </div>
+              <div className="header-right">
+                <i className="fas fa-chevron-down chevron"></i>
+              </div>
+            </AccordionHeader>
+            {openSections.versao_carro && (
+              <AccordionContent>
+                <p style={{ color: '#888', fontSize: '0.85rem', margin: '0 0 1rem 0' }}>
+                  Pontuação atribuída automaticamente ao carro com base no modelo/versão cadastrado (ex: Cabrio, VR6, GTI, GLX, GL, CL).
+                </p>
+                <FormRow onSubmit={(e) => handleAdd(e, 'versao_carro', newVersaoCarro, ptsVersaoCarro, setNewVersaoCarro)}>
+                  <input 
+                    className="name-input"
+                    type="text" 
+                    placeholder="Nova Versão (Ex: Harlekin, Variant)" 
+                    value={newVersaoCarro}
+                    onChange={e => setNewVersaoCarro(e.target.value)}
+                  />
+                  <input 
+                    className="pts-input"
+                    type="text" 
+                    inputMode="decimal"
+                    placeholder="0,00"
+                    value={ptsVersaoCarro}
+                    onChange={e => setPtsVersaoCarro(e.target.value)}
+                    title="Pontuação"
+                  />
+                  <button className="add-btn" type="submit"><i className="fas fa-plus"></i> Adicionar</button>
+                </FormRow>
+
+                <TagGrid>
+                  {versoesCarro.map(tag => (
+                    <li key={tag.id}>
+                      <span className="tag-title" style={{ cursor: 'pointer' }} onClick={() => handleEditTag(tag.id, tag.nome, tag.pontuacao, 'versao_carro')}>
+                        <strong>{tag.nome}</strong>
+                      </span>
+                      <div className="tag-actions">
+                        <span className="pts-badge" onClick={() => handleEditTag(tag.id, tag.nome, tag.pontuacao, 'versao_carro')}>
+                          {formatPts(tag.pontuacao)} pts <i className="fas fa-pen" style={{ fontSize: '0.65rem' }}></i>
+                        </span>
+                        <button className="edit-btn" onClick={() => handleEditTag(tag.id, tag.nome, tag.pontuacao, 'versao_carro')} title="Editar nome e pontos">
+                          <i className="fas fa-edit"></i>
+                        </button>
+                        <button className="delete-btn" onClick={() => handleDelete(tag.id)} title="Remover">
+                          <i className="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </li>
+                  ))}
+                </TagGrid>
+              </AccordionContent>
+            )}
+          </SectionAccordion>
+
+          {/* 9. PLACA PRETA / COLECIONADOR */}
+          <SectionAccordion $isOpen={openSections.placa_preta}>
+            <AccordionHeader $isOpen={openSections.placa_preta} onClick={() => toggleSection('placa_preta')}>
+              <div className="header-left">
+                <h3><i className="fas fa-award"></i> Placa Preta / Colecionador</h3>
+                <span className="badge-count">{placaPretaTags.length > 0 ? `${formatPts(placaPretaTags[0]?.pontuacao)} pts` : 'Configurar'}</span>
+              </div>
+              <div className="header-right">
+                <i className="fas fa-chevron-down chevron"></i>
+              </div>
+            </AccordionHeader>
+            {openSections.placa_preta && (
+              <AccordionContent>
+                <p style={{ color: '#888', fontSize: '0.85rem', margin: '0 0 1rem 0' }}>
+                  Pontuação bônus concedida automaticamente a qualquer Golf com a flag <strong>Placa Preta</strong> marcada no cadastro.
+                </p>
+
+                <TagGrid>
+                  {placaPretaTags.map(tag => (
+                    <li key={tag.id} style={{ borderColor: '#d4af37' }}>
+                      <span className="tag-title" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }} onClick={() => handleEditTag(tag.id, tag.nome, tag.pontuacao, 'placa_preta')}>
+                        <span>⬛</span> Certificado de Originalidade / <strong>{tag.nome}</strong>
+                      </span>
+                      <div className="tag-actions">
+                        <span className="pts-badge" onClick={() => handleEditTag(tag.id, tag.nome, tag.pontuacao, 'placa_preta')}>
+                          {formatPts(tag.pontuacao)} pts <i className="fas fa-pen" style={{ fontSize: '0.65rem' }}></i>
+                        </span>
+                        <button className="edit-btn" onClick={() => handleEditTag(tag.id, tag.nome, tag.pontuacao, 'placa_preta')} title="Editar pontuação">
+                          <i className="fas fa-edit"></i>
                         </button>
                       </div>
                     </li>
